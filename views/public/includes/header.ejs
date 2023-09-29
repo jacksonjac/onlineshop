@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GenQMobiles</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <style>
+        #head{
+
+            font-size: 20px;
+            font-weight: bolder;
+           font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+        }
+       
+  .content {
+    padding-top: 80px; /* Adjust this value to match the header height */
+    padding-bottom: 20px; /* Add padding to the bottom */
+  }
+
+    </style>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <!-- <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span> -->
+                <!-- <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li> -->
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="/home"><img src="img/logo" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="/loginpage">Login</a>
+            <a href="/signinpage">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header fixed-top ">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo d-flex align-items-center">
+                        <a href="/home"><img style="width: 60px; height: 40px;" src="https://img.freepik.com/premium-vector/jk-logo_773552-192.jpg" alt=""></a>
+                        <h1 id="head" class="ml-3 mb-0  ">Genqmobz</h1>
+                      </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                           
+                            
+                           
+                            <li><a href="#">PROFILE</a>
+                                <ul class="dropdown">
+                                    <li><a href="/profilepage">MY PROFILE</a></li>
+                                    <li><a href="/linkaddtocart">CART</a></li>
+                                    <li><a href="/Orderlist">ORDERS</a></li>
+                                    <li><a href="/whishlistproducts">WHISHLIST</a></li>
+                                    <li><a href="/home">GO TO HOME</a></li>
+                                </ul>
+                            </li>
+                            
+                           
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <% if (userid) { %>
+                                <a href="/logout">Logout</a>
+                            <% } else { %>
+                                <a href="/login">Login</a>
+                            <% } %>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="/whishlistproducts"><span class="icon_heart_alt"></span>
+                                
+                            </a></li>
+                            <li><a href="/linkaddtocart"><span class="icon_bag_alt"></span>
+                                
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+    <!-- Your content here -->
+</div>
+    <!-- Header Section End -->

@@ -1,0 +1,505 @@
+
+<%- include("./includes/header") %>
+<style>
+  #imgdic{
+
+    height: 391px !important;
+  }
+  #box{
+
+    height: 510px !important;
+  }
+</style>
+<!-- Categories Section Begin -->
+<section id="box" class="categories">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-6 p-0">
+              <div class="categories__item categories__large__item set-bg"
+
+              
+              data-setbg="/publicimage/<%= firstFourBannerImages[3] %>" >
+              <div class="categories__text">
+                  <h1>SMART WORLD FASHION</h1>
+                  <p>“It is okay to own a technology, what is not okay is to be owned by technology"</p>
+                  <a href="/login">Shop now</a>
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                  <div class="categories__item set-bg" data-setbg="/publicimage/<%= firstFourBannerImages[0] %>">
+                      <div class="categories__text">
+                          <h4>Men’s fashion</h4>
+                          <p>358 items</p>
+                          <a href="/login">Shop now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                  <div class="categories__item set-bg" data-setbg="/publicimage/<%= firstFourBannerImages[1] %>">
+                      <div class="categories__text">
+                          <h4> fashion on Lapz</h4>
+                          <p>273 items</p>
+                          <a href="/login">Shop now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                  <div class="categories__item set-bg" data-setbg="/publicimage/<%= firstFourBannerImages[4] %>">
+                      <div class="categories__text">
+                          <h4>Smartwatches</h4>
+                          <p>159 items</p>
+                          <a href="/login">Shop now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                  <div class="categories__item set-bg" data-setbg="/publicimage/<%= firstFourBannerImages[2] %>">
+                      <div class="categories__text">
+                          <h4>headphones</h4>
+                          <p>792 items</p>
+                          <a href="/login">Shop now</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4">
+        <div class="section-title">
+          <h4>our product</h4>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8">
+        <ul class="filter__controls">
+          <li class="active" data-filter="*">All</li>
+          <% categorylist.forEach(category => { %>
+            <li class="category-item" data-category="<%= category.name %>"><%= category.name %></li>
+          <% }); %>
+        </ul>
+      </div>
+    <div class="row property__gallery">
+     
+      <div id="product-list" class="row">
+      <% allproducts.forEach(products => { %>
+
+      <div class="col-lg-3 col-md-4 col-sm-6 mix men" style="width: 500px; height: 500px;">
+        <div class="product__item">
+          <div
+            class="product__item__pic set-bg" id="smartphonelist"
+            data-setbg="/publicimage/<%= products.images[0] %>"
+          >
+            <ul class="product__hover">
+              <li>
+                <a href="/publicimage/<%= products.images[0] %>" class="image-popup"
+                  ><span class="arrow_expand"></span
+                ></a>
+              </li>
+              <li>
+                <a href="/login"><span class="icon_heart_alt"></span></a>
+              </li>
+              <li>
+                <a href="/login"><span class="icon_bag_alt"></span></a>
+              </li>
+            </ul>
+          </div>
+          <div class="product__item__text">
+            <h6><a href="/productdetailpage?model=<%= products.model %>"><%= products.model %></a></h6>
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <div class="product__price"><%= products.price %>/-</div>
+          </div>
+        </div>
+      </div>
+
+      <% }); %>
+      </div>
+     </div>
+
+ </div>
+ </div>
+
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+<!-- Product Section End -->
+
+<!-- Banner Section Begin -->
+<section class="banner set-bg" data-setbg="./assets/img/banner/banner-1.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-7 col-lg-8 m-auto">
+        <div class="banner__slider owl-carousel">
+          <div class="banner__item">
+            <div class="banner__text">
+              <span>The Chloe Collection</span>
+              <h1>The SMARTPHONE</h1>
+              <a href="/login">Shop now</a>
+            </div>
+          </div>
+          <div class="banner__item">
+            <div class="banner__text">
+              <span>The Chloe Collection</span>
+              <h1>The HIGH END LAPTOPS</h1>
+              <a href="/login">Shop now</a>
+            </div>
+          </div>
+          <div class="banner__item">
+            <div class="banner__text">
+              <span>The Chloe Collection</span>
+              <h1>The BUDGET FRENDLY ACCESSORIES</h1>
+              <a href="/login">Shop now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Banner Section End -->
+
+<!-- Trend Section Begin -->
+<section class="trend spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Hot Trend</h4>
+          </div>
+          <% for (let i = 0; i < 3 && i < allproducts.length; i++) { %>
+          <div class="trend__item">
+            <div class="trend__item__pic">
+              <img style="width: 100px; height: 100px;" src="/publicimage/<%= allproducts[i].images[0] %>" alt="" />
+            </div>
+            <div class="trend__item__text">
+              <h6><%= allproducts[i].model %></h6>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+              <div class="product__price"><%= allproducts[i].price %>/-</div>
+            </div>
+          </div>
+          <% } %>
+
+
+         
+
+
+
+       
+
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Best seller</h4>
+          </div>
+
+
+            <% for (let i = 8; i < 11 && i < allproducts.length; i++) { %>
+          <div class="trend__item">
+            <div class="trend__item__pic">
+              <img style="width: 100px; height: 100px;" src="/publicimage/<%= allproducts[i].images[0] %>" alt="" />
+            </div>
+            <div class="trend__item__text">
+              <h6><%= allproducts[i].model %></h6>
+              <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+              <div class="product__price"><%= allproducts[i].price %>/-</div>
+            </div>
+          </div>
+          <% } %>
+
+
+          
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="trend__content">
+          <div class="section-title">
+            <h4>Feature</h4>
+          </div>
+
+          <% for (let i = 10; i < 13 && i < allproducts.length; i++) { %>
+            <div class="trend__item">
+              <div class="trend__item__pic">
+                <img style="width: 100px; height: 100px;" src="/publicimage/<%= allproducts[i].images[0] %>" alt="" />
+              </div>
+              <div class="trend__item__text">
+                <h6><%= allproducts[i].model %></h6>
+                <div class="rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <div class="product__price"><%= allproducts[i].price %>/-</div>
+              </div>
+            </div>
+            <% } %>
+
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Trend Section End -->
+
+<!-- Discount Section Begin -->
+<section class="discount">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 p-0">
+        <div class="discount__pic">
+          <img  id="imgdic" src="https://images.unsplash.com/photo-1558742569-fe6d39d05837?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-6 p-0">
+        <div class="discount__text">
+          <div class="discount__text__title">
+            <span>Discount</span>
+            <h2>Christmas 2023</h2>
+            <h5><span>Sale</span> 50%</h5>
+          </div>
+          <div class="discount__countdown" id="countdown-time">
+            <div class="countdown__item">
+              <span>22</span>
+              <p>Days</p>
+            </div>
+            <div class="countdown__item">
+              <span>18</span>
+              <p>Hour</p>
+            </div>
+            <div class="countdown__item">
+              <span>46</span>
+              <p>Min</p>
+            </div>
+            <div class="countdown__item">
+              <span>05</span>
+              <p>Sec</p>
+            </div>
+          </div>
+          <a href="/login">Shop now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Discount Section End -->
+
+<!-- Services Section Begin -->
+<section class="services spad">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="services__item">
+          <i class="fa fa-car"></i>
+          <h6>Free Shipping</h6>
+          <p>For all oder over 99/-</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="services__item">
+          <i class="fa fa-money"></i>
+          <h6>Money Back Guarantee</h6>
+          <p>If good have Problems</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="services__item">
+          <i class="fa fa-support"></i>
+          <h6>Online Support 24/7</h6>
+          <p>Dedicated support</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="services__item">
+          <i class="fa fa-headphones"></i>
+          <h6>Payment Secure</h6>
+          <p>100% secure payment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Services Section End -->
+
+<!-- Instagram Begin -->
+<div class="instagram">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1650765815188-6263096f101c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1604212666403-8af98b2081e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">>@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1571599164516-bacd34e651f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">>@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1470052992574-c7fbd9a8e906?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">>@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1526662092594-e98c1e356d6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">>@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+        <div
+          class="instagram__item set-bg"
+          data-setbg="https://images.unsplash.com/photo-1527170475566-1ef2f6a1881f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+        >
+          <div class="instagram__text">
+            <i class="fa fa-instagram"></i>
+            <a href="/login">>@ Genqmobz</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Instagram End -->
+
+
+<script>//listed by category
+  var categoryItems = document.querySelectorAll(".category-item");
+  var productListContainer = document.getElementById("product-list");
+
+  categoryItems.forEach(function(categoryItem) {
+    categoryItem.addEventListener("click", function() {
+      var selectedCategory = categoryItem.getAttribute("data-category");
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/category?name=" + selectedCategory, true);
+
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          var responseData = JSON.parse(xhr.responseText);
+          console.log(responseData); // Handle the response data here
+
+          // Clear the existing product list
+          productListContainer.innerHTML = "";
+
+          // Populate the product list with new data
+          responseData.products.forEach(function(product) {
+  var productHTML = 
+  
+  `
+    <div class="col-lg-3 col-md-4 col-sm-6 mix men">
+      <div class="product__item">
+        <div class="product__item__pic set-bg"
+             style="background-image: url('/publicimage/${product.images[0]}'); width: 300px; height: 300px;">
+          <ul class="product__hover">
+            <li>
+              <a href="#"><span class="arrow_expand"></span></a>
+            </li>
+            <li>
+              <a href="#"><span class="icon_heart_alt"></span></a>
+            </li>
+            <li>
+              <a href="#"><span class="icon_bag_alt"></span></a>
+            </li>
+          </ul>
+        </div>
+        <div class="product__item__text">
+          <h6><a href="/productdetailpage?model=${product.model}">${product.model}</a></h6>
+          <div class="rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <div class="product__price">${product.price}/-</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  productListContainer.insertAdjacentHTML("beforeend", productHTML);
+});
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      xhr.send();
+    });
+  });
+</script>
+
+
+<%- include("./includes/footer") %>

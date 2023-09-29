@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      rel="apple-touch-icon"
+      type="image/png"
+      href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png"
+    />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen" />
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico"
+    />
+
+    <link
+      rel="mask-icon"
+      type="image/x-icon"
+      href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg"
+      color="#111"
+    />
+
+    <title>RED Mobiles.com</title>
+    <!-- <link rel="canonical" href="https://codepen.io/ebubekirtabak/pen/mXPdqd" /> -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css"
+    />
+
+    <style>
+      .progress-svg {
+        width: 65px;
+        height: 65px;
+        margin-top: -20px;
+      }
+      .progress-svg path {
+        fill: #fff;
+      }
+
+      body {
+        background-image: linear-gradient(red, black);
+      }
+
+      /* ********* INPUT *********** */
+      /* @media screen and (min-width: 1200px) {
+        html,
+        body,
+        app-root {
+          height: 100%;
+        }
+      } */
+      .l-login {
+        transition: opacity 0.8s ease-in-out;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+       background-color: #757575;
+        opacity: 1;
+        z-index: 100;
+        text-align: center;
+        vertical-align: middle;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .l-login__form-logo {
+        width: 300px;
+        margin-bottom: 45px;
+      }
+      .l-login__form__button {
+        max-height: 50px;
+        background-color: #01579b;
+        color: #ffffff;
+        padding: 13px 10px;
+        border-radius: 30px;
+        font-size: 18px;
+        width: 90%;
+        margin: 0 auto;
+        border: none;
+        outline: none;
+        fill: transparent;
+        transition: all 0.5s;
+        box-shadow: 0px 1px 11px 1px rgba(110, 106, 106, 0.8);
+      }
+      .l-login__form__button:hover {
+        box-shadow: 0px 3px 13px 3px rgba(110, 106, 106, 0.8);
+      }
+      .l-login .square {
+        width: 250px;
+        height: 250px;
+        position: absolute;
+        border-radius: 30px;
+        -ms-transform: rotate(20deg);
+        -webkit-transform: rotate(20deg);
+        transform: rotate(20deg);
+      }
+      .l-login .square.blue-dark {
+        background-color: #01579b;
+      }
+      .l-login .square.red {
+        background-color: #d75a4a;
+      }
+      .l-login .square.left-bottom {
+        bottom: -40px;
+        left: -100px;
+        box-shadow: 1px 4px 25px rgba(0, 0, 0, 0.33);
+      }
+      .l-login .square.top-right {
+        top: -40px;
+        right: -100px;
+        box-shadow: -5px 4px 9px rgba(0, 0, 0, 0.31);
+      }
+      .l-login__progress-img {
+        height: 40px;
+        width: 40px;
+        animation-duration: 1.5s;
+        animation-delay: 0.7s;
+      }
+
+      /* ------- MATERIAL-INPUT ------- */
+      .material-input__group {
+        position: relative;
+        margin-bottom: 25px;
+      }
+      .material-input__group i {
+        position: absolute;
+        top: 6px;
+        left: 5px;
+        color: #ee3b33;
+        font-size: 23px;
+      }
+      .material-input__group__error {
+        margin-top: 4px;
+        margin-left: 4px;
+        color: #d75a4a;
+        display: block;
+        text-align: left;
+      }
+      .material-input__group__label {
+        font-size: 18px;
+        font-weight: normal;
+        position: absolute;
+        pointer-events: none;
+        left: 5px;
+        top: 10px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        color: #999;
+      }
+      .material-input__group__label.iconic {
+        left: 40px;
+      }
+      .material-input__group__input {
+        font-family: "Ubuntu", sans-serif;
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #757575;
+        background: transparent;
+        transition: all 0.7s;
+        -webkit-transition: all 0.5s;
+        color: #000;
+      }
+      .material-input__group__input.textarea {
+        resize: vertical;
+        overflow: auto;
+      }
+      .material-input__group__input.iconic {
+        padding: 10px 10px 5px 40px;
+      }
+      .material-input__group__input.iconic:focus ~ label {
+        top: -20px;
+        left: 5px;
+        color: #000;
+        font-size: 14px;
+      }
+      .material-input__group__input.iconic:focus
+        ~ label
+        ~ .material-input__group-bar:after {
+        width: 50%;
+      }
+      .material-input__group__input.iconic:focus
+        ~ label
+        ~ .material-input__group-bar:before {
+        width: 50%;
+      }
+      .material-input__group__input:focus {
+        outline: none;
+        border-bottom: 1px solid #d75a4a;
+      }
+      .material-input__group__input:focus ~ label {
+        top: -20px;
+        font-size: 14px;
+      }
+      .material-input__group__input:focus ~ .material-input__group-bar:before {
+        width: 50%;
+      }
+      .material-input__group__input:focus ~ .material-input__group-bar:after {
+        width: 50%;
+      }
+      .material-input__group-bar {
+        position: relative;
+        display: block;
+      }
+      .material-input__group-bar:before {
+        content: "";
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        background: #d75a4a;
+        left: 50%;
+      }
+      .material-input__group-bar:after {
+        content: "";
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        background: #d75a4a;
+        right: 50%;
+      }
+      .material-input__group__highlight {
+        position: absolute;
+        height: 60%;
+        width: 100px;
+        top: 25%;
+        left: 0;
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .c-wind-turbine {
+        position: absolute;
+        bottom: 20px;
+        right: 100px;
+        height: 128px;
+        width: 128px;
+      }
+      .c-wind-turbine.big {
+        position: absolute;
+        bottom: 20px;
+        right: 200px;
+        height: 128px;
+        width: 128px;
+      }
+      .c-wind-turbine__inner {
+        position: relative;
+      }
+      .c-wind-turbine__propeller {
+        width: 128px;
+        height: 128px;
+        -webkit-animation-name: rotate;
+        -webkit-animation-delay: 0;
+        -webkit-animation-duration: 0.9s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-name: rotate;
+        -moz-animation-delay: 0;
+        -moz-animation-duration: 0.9s;
+        -moz-animation-fill-mode: forwards;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: linear;
+        animation-name: rotate;
+        animation-delay: 0;
+        animation-duration: 0.9s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+      .c-wind-turbine__propeller polyline {
+        stroke: #d75a4a;
+      }
+      .c-wind-turbine__propeller.big {
+        top: -32px;
+        position: absolute;
+        left: 25px;
+      }
+      .c-wind-turbine__propeller.big polyline {
+        stroke: #d75a4a;
+      }
+      .c-wind-turbine__poll {
+        width: 150px;
+        height: 350px;
+        position: absolute;
+        top: -95px;
+        left: -10px;
+      }
+      .c-wind-turbine__poll polygon {
+        fill: #d75a4a;
+      }
+      .c-wind-turbine__poll circle {
+        fill: #d75a4a;
+      }
+      .c-wind-turbine__poll.big {
+        width: 200px;
+        height: 500px;
+        top: -195px;
+      }
+      .c-wind-turbine__poll.big polygon {
+        fill: #d75a4a;
+      }
+      .c-wind-turbine__poll.big circle {
+        fill: #d75a4a;
+      }
+
+      @media screen and (max-width: 650px) {
+        .wind-turbine-parent {
+          visibility: hidden;
+        }
+      }
+      @media screen and (max-height: 800px) {
+        .square {
+          width: 175px;
+          height: 175px;
+        }
+      }
+      @media screen and (max-height: 580px) {
+        .square.top-right {
+          top: -80px;
+        }
+
+        .square.left-bottom {
+          bottom: -80px;
+        }
+      }
+      .circular-loader {
+        margin: -20px 5px;
+        fill: #009688;
+      }
+      .circular-loader.speed-slow {
+        -webkit-animation: spin 0.8s linear infinite;
+        -moz-animation: spin 0.8s linear infinite;
+        animation: spin 0.8s linear infinite;
+      }
+      .circular-loader.speed-normal {
+        -webkit-animation: spin 0.4s linear infinite;
+        -moz-animation: spin 0.4s linear infinite;
+        -ms-animation: spin 0.4s linear infinite;
+        animation: spin 0.4s linear infinite;
+      }
+      .circular-loader.speed-fast {
+        -webkit-animation: spin 0.2s linear infinite;
+        -moz-animation: spin 0.2s linear infinite;
+        animation: spin 0.2s linear infinite;
+      }
+
+      @-webkit-keyframes hu__hu__ {
+        0% {
+          left: -100px;
+        }
+        50% {
+          left: -80px;
+        }
+        100% {
+          left: -100px;
+        }
+      }
+      @-moz-keyframes hu__hu__ {
+        0% {
+          left: -100px;
+        }
+        50% {
+          left: -80px;
+        }
+        100% {
+          left: -100px;
+        }
+      }
+      @keyframes hu__hu__ {
+        0% {
+          left: -100px;
+        }
+        50% {
+          left: -80px;
+        }
+        100% {
+          left: -100px;
+        }
+      }
+      @-webkit-keyframes hu__hu_r_ {
+        0% {
+          right: -100px;
+        }
+        50% {
+          right: -80px;
+        }
+        100% {
+          right: -100px;
+        }
+      }
+      @-moz-keyframes hu__hu_r_ {
+        0% {
+          right: -100px;
+        }
+        50% {
+          right: -80px;
+        }
+        100% {
+          right: -100px;
+        }
+      }
+      @keyframes hu__hu_r_ {
+        0% {
+          right: -100px;
+        }
+        50% {
+          right: -80px;
+        }
+        100% {
+          right: -100px;
+        }
+      }
+      @-webkit-keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @-moz-keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes inputHighlighter {
+        to {
+          width: 0;
+          background: transparent;
+        }
+      }
+      @-moz-keyframes inputHighlighter {
+        to {
+          width: 0;
+          background: transparent;
+        }
+      }
+      @keyframes inputHighlighter {
+        to {
+          width: 0;
+          background: transparent;
+        }
+      }
+      @-webkit-keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+          transform-origin: center;
+        }
+        50% {
+          transform: rotate(180deg);
+          transform-origin: center;
+        }
+        100% {
+          transform: rotate(360deg);
+          transform-origin: center;
+        }
+      }
+      @-moz-keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+          transform-origin: center;
+        }
+        50% {
+          transform: rotate(180deg);
+          transform-origin: center;
+        }
+        100% {
+          transform: rotate(360deg);
+          transform-origin: center;
+        }
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+          transform-origin: center;
+        }
+        50% {
+          transform: rotate(180deg);
+          transform-origin: center;
+        }
+        100% {
+          transform: rotate(360deg);
+          transform-origin: center;
+        }
+      }
+      .hu_hu_animation {
+        -webkit-animation-name: hu__hu__;
+        -webkit-animation-delay: 0;
+        -webkit-animation-duration: 2.5s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: ease-in-out;
+        -moz-animation-name: hu__hu__;
+        -moz-animation-delay: 0;
+        -moz-animation-duration: 2.5s;
+        -moz-animation-fill-mode: forwards;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: ease-in-out;
+        animation-name: hu__hu__;
+        animation-delay: 0;
+        animation-duration: 2.5s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+
+      .hu__hu_r_ {
+        -webkit-animation-name: hu__hu__r_;
+        -webkit-animation-delay: 0;
+        -webkit-animation-duration: 2.5s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: ease-in-out;
+        -moz-animation-name: hu__hu__r_;
+        -moz-animation-delay: 0;
+        -moz-animation-duration: 2.5s;
+        -moz-animation-fill-mode: forwards;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: ease-in-out;
+        animation-name: hu__hu__r_;
+        animation-delay: 0;
+        animation-duration: 2.5s;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+    </style>
+  </head>
+
+  <body translate="no">
+    <div class="l-login">
+      <div class="square blue-dark left-bottom hu_hu_animation"></div>
+      <div class="square red top-right hu__hu_r_"></div>
+      <div class="l-login__form">
+        <h1>Welcome Admin</h1>
+        <form action="/admin/adminlogin" method="post">
+            <div class="material-input__group">
+                <input
+                    type="text"
+                    name="name"
+                    class="material-input__group__input iconic"
+                    required
+                    onkeyup="validateInput(this.value)"
+                />
+    
+                <label class="material-input__group__label iconic">Enter Your Name</label>
+            </div>
+            <div class="material-input__group">
+                <i class="mdi mdi-account"></i>
+                <input
+                    type="password"
+                    name="password"
+                    class="material-input__group__input iconic"
+                    required
+                    onkeyup="validateInput(this.value)"
+                />
+    
+                <label class="material-input__group__label iconic">Password</label>
+            </div>
+            <error id="errorlog" style="color: rgb(248, 242, 242);"></error>
+    
+            <button type="submit" id="submitbutton" class="l-login__form__button">Login</button>
+        </form>
+        
+        <% if (typeof message !== "undefined") { %>
+            <p style="color: rgb(227, 236, 227)"><%= message %></p>
+        <% } %>
+    </div>
+    
+      <div class="c-wind-turbine big">
+        <div class="c-wind-turbine__inner">
+          <svg
+            version="1.1"
+            id="Capa_1"
+            class="c-wind-turbine__propeller big"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 50 50"
+            style="enable-background: new 0 0 50 50"
+            xml:space="preserve"
+          >
+            <circle style="fill: transparent" cx="25" cy="25" r="25" />
+            <polyline
+              style="
+                fill: none;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+              "
+              points="16,34 25,25 34,16"
+            />
+            <polyline
+              style="
+                fill: none;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+              "
+              points="16,16 25,25 34,34"
+            />
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
+          <svg
+            version="1.1"
+            id="Capa_1_poll"
+            class="c-wind-turbine__poll big"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            width="100"
+            height="225"
+            width="554.625px"
+            height="554.625px"
+            viewBox="0 0 554.625 554.625"
+            style="enable-background: new 0 0 554.625 554.625"
+            xml:space="preserve"
+          >
+            <g>
+              <polygon
+                points="293.772,554.625 280.222,258.188 265.486,258.188 253.925,554.625"
+              />
+              <circle cx="273.853" cy="212.766" r="19.823" />
+            </g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
+        </div>
+      </div>
+      <div class="c-wind-turbine">
+        <div class="c-wind-turbine__inner">
+          <svg
+            version="1.1"
+            id="Capa_1"
+            class="c-wind-turbine__propeller"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 50 50"
+            style="enable-background: new 0 0 50 50"
+            xml:space="preserve"
+          >
+            <circle style="fill: transparent" cx="25" cy="25" r="25" />
+            <polyline
+              style="
+                fill: none;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+              "
+              points="16,34 25,25 34,16"
+            />
+            <polyline
+              style="
+                fill: none;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+              "
+              points="16,16 25,25 34,34"
+            />
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
+          <svg
+            version="1.1"
+            id="Capa_1_poll"
+            class="c-wind-turbine__poll"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            width="100"
+            height="225"
+            width="554.625px"
+            height="554.625px"
+            viewBox="0 0 554.625 554.625"
+            style="enable-background: new 0 0 554.625 554.625"
+            xml:space="preserve"
+          >
+            <g>
+              <polygon
+                points="293.772,554.625 280.222,258.188 265.486,258.188 253.925,554.625 	"
+              />
+              <circle cx="273.853" cy="212.766" r="19.823" />
+            </g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-44fe83e49b63affec96918c9af88c0d80b209a862cf87ac46bc933074b8c557d.js"></script>
+
+    <script type="text/javascript">
+      var pattern = /\s/g;
+      var alertmsg = document.getElementById("errorlog"); // Use the correct id
+      var submitButton = document.getElementById("submitbutton");
+  
+      function validateInput(data) {
+          var isSpace = pattern.test(data);
+          var isNegativeNumber = parseFloat(data) < 0; // Convert input to float and check if negative
+  
+          if (isSpace || isNegativeNumber) {
+              alertmsg.innerHTML = "Invalid input";
+              submitButton.style.display = "none"; // Hide the submit button
+          } else {
+              alertmsg.innerHTML = "";
+              submitButton.style.display = "block"; // Show the submit button
+          }
+      }
+  </script>
+  </body>
+</html>

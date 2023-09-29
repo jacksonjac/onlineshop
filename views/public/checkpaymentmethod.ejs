@@ -1,0 +1,377 @@
+
+<%- include("./includes/header") %>
+<body>
+  
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="row d-flex justify-content-center pb-5">
+            <div class="col-md-7 col-xl-5 mb-4 mb-md-0">
+             
+              <hr />
+              <div class="pt-2">
+                <div class="d-flex pb-2">
+                  <div>
+                    <p>
+                   
+                    </p>
+                  </div>
+                 
+                </div>
+                <!-- <p>
+                  This is an estimate for the portion of your order (not covered by
+                  insurance) due today . once insurance finalizes their review refunds
+                  and/or balances will reconcile automatically.
+                </p> -->
+                <form class="pb-3" action="/paymentoptionscheckout" method="post">
+                  <div class="d-flex flex-row pb-3">
+                    <div class="d-flex align-items-center pe-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="paymentmethod"
+                        id="radioNoLabel1"
+                        value=""
+                        aria-label="..."
+                        checked
+                      />
+                    </div>
+                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                      <p class="mb-0">
+                        <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>Visa Debit
+                        Card
+                      </p>
+                      <div class="ms-auto">************3456</div>
+                    </div>	
+                  </div>
+
+				  <div class="d-flex flex-row pb-3">
+                    <div class="d-flex align-items-center pe-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="paymentmethod"
+                        id="radioNoLabel1"
+                        value="card"
+                        aria-label="..."
+                        checked
+                      />
+                    </div>
+                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                      <p class="mb-0">
+                        <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>Visa Debit
+                        Card
+                      </p>
+                      <div class="ms-auto">************3456</div>
+                    </div>	
+                  </div>
+
+				  <div class="d-flex flex-row pb-3">
+                    <div class="d-flex align-items-center pe-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="paymentmethod"
+                        id="radioNoLabel1"
+                        value="upi"
+                        aria-label="..."
+                        checked
+                      />
+                    </div>
+                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                      <p class="mb-0">
+                        <i class="fab fa-cc-visa fa-lg text-primary pe-2"></i>UPI
+                      </p>
+                      <div class="ms-auto">****yourname@bankname</div>
+                    </div>	
+                  </div>
+  
+  
+  
+                  <div class="d-flex flex-row">
+                    <div class="d-flex align-items-center pe-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="paymentmethod"
+                        id="radioNoLabel2"
+                        value="cod"
+                        aria-label="..."
+                      />
+                    </div>
+                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                      <p class="mb-0">
+                        <i class="fab fa-cc-mastercard fa-lg text-dark pe-2"></i> Cash On Delivery
+                        
+                      </p>
+                      
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row">
+                    <div class="d-flex align-items-center pe-2">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="paymentmethod"
+                        id="wallet"
+                        value="wallet"
+                        aria-label="..."
+                      />
+                    </div>
+                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                      <p class="mb-0">
+                        <i class="fab fa-cc-mastercard fa-lg text-dark pe-2"></i> Wallet
+                        
+                      </p>
+                      
+                    </div>
+                    
+                  </div>
+                  <input type="text" hidden name="totalprice" id="totalprice" value="<%= totalprice %>">
+                  <input type="text" hidden name="discount" id="discount" value="<%= discount %>">
+                  <div id="balance">
+
+                  </div>
+				  <button type="submit" class="btn btn-primary mt-4"> Proceed to Payment</button>
+
+                </form>
+
+                 
+              </div>
+
+              <p id="response" style="color: red;">
+               
+              </p>
+            </div>
+  
+            <div class="col-md-5 col-xl-4 offset-xl-1">
+              <div class="py-4 d-flex justify-content-end">
+                <h6><a href="/home">Cancel and return to HOME</a></h6>
+              </div>
+              <div
+                class="rounded d-flex flex-column p-2"
+                style="background-color: #f8f9fa;"
+              >
+                <div class="p-2 me-3">
+                  <h4>Order Details</h4>
+                </div>
+                <div class="p-2 d-flex">
+                  <div class="col-8">  Total Product Price</div>
+                  <div class="ms-auto"><%= totalprice%>/-</div>
+                </div>
+                <div class="p-2 d-flex">
+                    <div class="col-8">  Total Product Items</div>
+                    <div class="ms-auto"><%= totalItems%>/-</div>
+                  </div>
+                <div class="p-2 d-flex">
+                  <div class="col-8">Coupon Discount</div>
+                  <div class="ms-auto"><%= discount %></div>
+                </div>
+                <div class="p-2 d-flex">
+                  <div class="col-8">Delivery charge</div>
+                  <div class="ms-auto">00.00/-</div>
+                </div>
+               
+                </div>
+                <div class="border-top px-2 mx-2"></div>
+                <div class="p-2 d-flex pt-3">
+                  <div class="col-8">Other Services</div>
+                  <div class="ms-auto"><b>00.0</b></div>
+                </div>
+                <div class="p-2 d-flex">
+                  <div class="col-8">
+                    Sub Total<span class="fa fa-question-circle text-dark"></span>
+                  </div>
+                  <div class="ms-auto"><b><%= totalprice%>/-</b></div>
+                </div>
+                <div class="border-top px-2 mx-2"></div>
+                <div class="p-2 d-flex pt-3">
+                  <div class="col-8"><b>Total Amount</b></div>
+                  <div class="ms-auto"><b class="text-success"></b><%= totalprice%>/-</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const paymentMethod = document.querySelector('input[name="paymentmethod"]:checked').value;
+           const totalprice = document.getElementById('totalprice').value;      
+           const discount = document.getElementById('discount').value;     
+           const xhr = new XMLHttpRequest();          
+           const url = "/paymentoptionscheckout"; 
+
+           
+            const data = {
+                paymentmethod: paymentMethod,
+                totalprice: totalprice,
+                discount:discount
+            };
+
+           
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+           
+            xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText); 
+
+            if (data.walletmessage === true) {
+
+              window.location.href = '/sucess';
+
+              
+               
+    }else{
+     document.getElementById("response").innerHTML = data.error
+    }
+
+
+            if(data.codmessage === true){
+
+              window.location.href = '/sucess';
+              
+            }
+
+            if(data.razorpayOrder){
+          var options = {
+         "key": "rzp_test_jYuvgdereCJGfM", // Enter the Key ID generated from the Dashboard
+          "amount":data.razorpayOrder.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+         "currency": data.razorpayOrder.currency,
+           "name": "Genqmobz", //your business name
+          "description": "Payment Transaction",
+            "image": "/admin/images/1690050860743.png",
+           "order_id": data.razorpayOrder.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+             "handler": function (response){
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature)
+
+        console.log("respo",response, data.razorpayOrder);
+
+        verifyPayment(response,data.razorpayOrder)
+        
+    },
+    "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+        "name": "Gaurav Kumar", //your customer's name
+        "email": "gaurav.kumar@example.com", 
+        "contact": "9000090000"  //Provide the customer's phone number for better conversion rates 
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+
+
+    rzp1.open();
+    e.preventDefault();
+
+}}};           xhr.send(JSON.stringify(data));
+        });
+    });
+
+
+
+  function verifyPayment(payment, data) {
+  console.log(payment, data);
+  fetch('/verifyPayment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      payment: payment,
+      data: data,
+    }),
+  })
+    .then((response) => response.json())
+    .then((verificationResult) => {
+      if (verificationResult.success) {
+           
+       
+        window.location.href = '/sucess '; // Change this to the actual URL of your confirmation page
+        
+      } else {
+        // Handle payment verification failure
+        console.log('Payment verification failed');
+      }
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+}
+</script>
+
+
+  </script>
+
+
+  <script>
+    // Get the wallet radio button element by its ID
+    const walletRadioButton = document.getElementById("wallet");
+  
+    // Add a click event listener to the radio button
+    walletRadioButton.addEventListener("click", function () {
+      if (walletRadioButton.checked) {
+        // Retrieve the totalprice value from the input field
+        const totalprice = parseFloat(document.getElementById("totalprice").value);
+  
+        // Create a new XMLHttpRequest object
+        const xhr = new XMLHttpRequest();
+  
+        // Define the backend URL to fetch wallet data
+        const backendURL = "/walletinput"; // Replace with your actual URL
+  
+        // Configure the GET request to the backend
+        xhr.open("GET", backendURL, true);
+  
+        // Set up a callback function to handle the response
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            // Parse the response as needed (assuming JSON response)
+            const responseData = JSON.parse(xhr.responseText);
+  
+            // Calculate the balance amount
+            const balanceAmount =  responseData.walletbalance - totalprice
+  
+            // Update the "balance" div with the retrieved data
+            const balanceDiv = document.getElementById("balance");
+balanceDiv.innerHTML = `
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Current Wallet Balance: ${responseData.walletbalance}/-</h4>
+      <h5 class="card-subtitle mb-2 text-muted">Total amount: ${totalprice}/-</h5>
+      <h5 class="card-subtitle mb-2 text-muted">Balance amount: ${balanceAmount}/-</h5>
+    </div>
+  </div>`;
+          }
+        };
+  
+        // Send the XMLHttpRequest to the backend
+        xhr.send();
+      }
+    });
+  </script>
+</body>
+
+
+  
+<%- include("./includes/footer") %>

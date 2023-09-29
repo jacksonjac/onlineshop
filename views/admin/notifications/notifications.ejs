@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <link
+      rel="apple-touch-icon"
+      type="image/png"
+      href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png"
+    />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen" />
+
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico"
+    />
+
+    <link
+      rel="mask-icon"
+      type="image/x-icon"
+      href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg"
+      color="#111"
+    />
+
+    <title>CodePen - admin-dashboard-alt</title>
+    <link rel="canonical" href="https://codepen.io/dpnilsen/pen/XWqGwOO" />
+
+    <style>
+      /* || VARIABLES */
+      :root {
+        --window-width: 100vw;
+        --body-background-color: #fff;
+        --main-font-size: 14pt;
+
+        --default-border-radius: 0.4rem;
+
+        --header-bg-color: rgb(235, 6, 6);
+        --header-color: white;
+
+        --page-footer-bg-color: rgb(235, 6, 6);
+        --page-footer-text-color: #fff;
+
+        --page-left-sidebar-bg-color: rgb(0, 0, 0);
+        --page-left-sidebar-text-color: #fff;
+
+        --main-header-box-bg-color: rgb(235, 6, 6);
+        --main-header-box-border: thin solid #00bfff;
+        --main-header-box-text-color: #fff;
+
+        --card-bg-color: smokewhite;
+        --card-border: thin solid #d12b2b;
+        --card-radius: var(--default-border-radius);
+        --card-shadow: -1px 7px 5px 0px rgba(204, 192, 192, 0.64);
+        --card-padding: 1rem;
+        --card-header-text-color: #000;
+        --card-header-bg-color: #efefef;
+        --card-header-font-size: 110%;
+        --card-section-title-bg-color: #efefef;
+        --card-section-title-padding: 1rem;
+
+        --button-color: blue;
+        --button-text-color: #fff;
+        --input-border: thin solid #ddee;
+      }
+      /* || RESETS */
+      html,
+      body,
+      div,
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      ul,
+      ol,
+      li,
+      dl,
+      dt,
+      dd,
+      form,
+      fieldset,
+      caption,
+      legend,
+      table,
+      tr,
+      td,
+      th,
+      address,
+      blockquote,
+      img {
+        margin: 0;
+        padding: 0;
+      }
+
+      img,
+      fieldset {
+        border: none;
+      }
+
+      blockquote,
+      q {
+        quotes: none;
+      }
+
+      body *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      button,
+      summary {
+        cursor: pointer;
+      }
+      /* || GENERAL STYLES */
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      body {
+        font-family: system-ui;
+        font-size: var(--main-font-size);
+
+        background-color: var(--body-background-color);
+        width: var(--window-width);
+        font-size: calc(12px + (24 – 12) * ((100vw – 400px) / (800 – 400)));
+      }
+
+      .main-page {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+          "page-header page-header page-header page-header"
+          "main-content main-content main-content main-content"
+          "page-footer page-footer page-footer page-footer";
+
+        width: 100%;
+
+        height: 100%;
+      }
+
+      .page-header {
+        grid-area: page-header;
+        color: var(--header-color);
+        background-color: var(--header-bg-color);
+        padding: 1rem;
+        max-height: 4rem;
+
+        display: flex;
+        align-items: center;
+
+        position: fixed;
+        width: 100%;
+      }
+
+      .page-header nav {
+        display: flex;
+      }
+      .page-header > span {
+        padding: 0 0.5rem;
+        text-transform: uppercase;
+      }
+      .page-header img {
+        width: 2rem;
+        border-radius: 0.5rem;
+      }
+      .page-header > input {
+        border-radius: var(--default-border-radius);
+        padding: 0.5rem;
+        padding-left: 2rem;
+        margin-left: 4rem;
+        min-width: 50%;
+      }
+      /* .input__search { 
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 22a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm6.321-1.096l5.386 5.39a1 1 0 1 1-1.414 1.413l-5.386-5.388a8 8 0 1 1 1.414-1.415z' fill='black' fill-rule='nonzero'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  padding: 10px 40px;
+} */
+      .main-content {
+        grid-area: main-content;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto 1fr 1fr auto;
+        grid-template-areas:
+          "left-sidebar content-header"
+          "left-sidebar content-1"
+          "left-sidebar content-2"
+          "left-sidebar content-3"
+          "content-footer content-footer";
+
+        height: 100%;
+        width: 100%;
+        margin-top: 4rem;
+      }
+
+      aside.left-sidebar {
+        grid-area: left-sidebar;
+        background-color: var(--page-left-sidebar-bg-color);
+        color: var(--page-left-sidebar-text-color);
+
+        padding: 1rem;
+        height: 100%;
+
+        transition: width 0.1s ease-in-out;
+      }
+      aside.left-sidebar {
+        position: fixed;
+      }
+      .left-sidebar nav {
+        display: flex;
+        overflow-y: auto;
+      }
+      .left-sidebar nav ul {
+        list-style: none;
+      }
+
+      .left-sidebar nav ul li {
+        padding: 1rem 0.9rem;
+        padding-left: 0;
+      }
+
+      .left-sidebar ul label {
+        text-transform: uppercase;
+        font-weight: 100;
+      }
+      .left-sidebar nav ul li span {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      main.main-content {
+        overflow: auto;
+      }
+
+      .main-content header {
+        grid-area: content-header;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+
+      .main-content header div.card {
+        display: flex;
+        padding: 0.5rem;
+        margin: 1rem 0;
+        min-width: 11rem;
+      }
+      .main-content header div {
+        display: flex;
+        color: var(--main-header-box-text-color);
+        background-color: var(--main-header-box-bg-color);
+
+        padding: 1rem;
+        align-items: center;
+
+        border-radius: var(--default-border-radius);
+        box-shadow: 0 0 10px gray;
+      }
+
+      /* image */
+      .main-content header div div:nth-child(1) {
+        display: flex;
+        justify-content: center;
+
+        background-color: #fff;
+
+        border-radius: 50%;
+        border: none;
+        box-shadow: none;
+
+        color: #02020a;
+      }
+      /* numbers and text */
+      .main-content header div div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+
+        align-items: flex-end;
+        flex: 1;
+
+        box-shadow: none;
+      }
+      /* numbers */
+      .main-content header div div:nth-child(2) span:nth-child(1) {
+        font-size: 120%;
+        font-weight: 700;
+      }
+
+      .page-footer {
+        grid-area: page-footer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: var(--page-footer-text-color);
+        background-color: var(--page-footer-bg-color);
+
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .section table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .section table thead {
+        background-color: #f8f8f8;
+        width: 100%;
+      }
+      .section table tbody {
+        width: 100%;
+      }
+      .section table th {
+        font-weight: 100;
+        padding: 1em 0.5em;
+        text-align: left;
+      }
+      .section table td {
+        font-weight: 300;
+        padding: 1em 0.5em;
+      }
+      .section-1 {
+        grid-area: content-1;
+
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+      }
+
+      .section {
+        margin-top: 1rem;
+        width: 100%;
+      }
+
+      .card-x {
+        display: flex;
+        flex-direction: column;
+
+        background-color: var(--card-bg-color);
+        border: var(--card-border);
+        box-shadow: var(--card-shadow);
+        border-radius: var(--card-radius);
+        padding: var(--card-padding);
+
+        margin: 0.5rem;
+        flex: 1;
+      }
+      .card-x header {
+        display: flex;
+        flex-direction: row;
+
+        justify-content: flex-start;
+        align-items: center;
+
+        color: var(--card-header-text-color);
+
+        font-size: var(--card-header-font-size);
+      }
+
+      .card-x header label {
+        color: red;
+      }
+
+      .spacer {
+        flex: 1;
+        background: none;
+      }
+
+      .card-x header button {
+        display: flex;
+        margin-left: auto;
+
+        border: none;
+        background-color: rgb(204, 31, 39);
+        color: #fff;
+        border-radius: var(--default-border-radius);
+        padding: 0.5rem 0.7rem;
+      }
+
+      x.card-x main div:nth-child(1) {
+        background-color: var(--card-section-title-bg-color);
+        padding: 0.5rem;
+
+        margin: 0.5rem 0;
+      }
+      .traffic-perct {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+      .traffic-perct span:nth-child(1) {
+        margin-right: 10px;
+      }
+      .pill {
+        border: thin solid grey;
+        min-width: 10rem;
+        display: block;
+        border-radius: 1rem;
+        height: 10px;
+        width: 100%;
+      }
+      .fill {
+        background-color: rgb(243, 21, 21);
+        border-radius: 1rem;
+        display: block;
+        height: 9px;
+      }
+
+      .fill-30 {
+        width: 30%;
+      }
+      .fill-40 {
+        width: 40%;
+      }
+      .fill-45 {
+        width: 45%;
+      }
+      .fill-60 {
+        width: 60%;
+      }
+      .fill-70 {
+        width: 70%;
+      }
+      #heeder {
+        padding-left: 249px;
+      }
+
+      svg.home {
+        width: 1.5rem;
+        padding-right: 10px;
+      }
+      svg.mail {
+        width: 1.5rem;
+        padding-right: 10px;
+      }
+      svg.message {
+        width: 1.5rem;
+        padding-right: 10px;
+      }
+      svg.bell {
+        width: 1.5rem;
+        padding-right: 10px;
+      }
+      svg.home {
+        width: 1.5rem;
+      }
+
+      table.std {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table.std thead th {
+        text-transform: uppercase;
+        font-weight: 200;
+
+        padding: 1em 0.5em;
+        text-align: left;
+      }
+
+      table.std tbody tr {
+        border-bottom: thin solid #ededed;
+      }
+
+      table.std tbody td img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+      table.std tbody td span.name {
+        color: #9f9f9f;
+        font-weight: 700;
+
+        padding-left: 1em;
+      }
+
+      @media screen and (max-width: 950px) {
+        aside.left-sidebar {
+          display: flex;
+          width: 3.5rem;
+          transition: width 0.1s ease-in-out;
+        }
+        aside.left-sidebar ul li span label {
+          display: none;
+        }
+
+        aside.left-sidebar ul label {
+          display: none;
+        }
+        main.main-content {
+          width: 100%;
+          margin: 0;
+        }
+      }
+    </style>
+
+    <script>
+      window.console = window.console || function (t) {};
+    </script>
+  </head>
+
+  <body translate="no">
+    <div class="main-page">
+      <header class="page-header">
+        <img
+          src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg"
+        />
+        <span>Admin</span>
+
+        <nav class="top-nav"></nav>
+      </header>
+
+      <main class="main-content">
+        <aside class="left-sidebar">
+          <nav>
+            <ul>
+              <label>main</label>
+              <li>
+                <a href="/admin/admindashboard"  style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>Dashboard</label>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/adminproducts"  style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>products</label>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/userOrders"  style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>Orders</label>
+                  </span>
+                </a>
+              </li>
+                  <li>
+                    <a href="/admin/adminusers"  style="color: #efefef;">
+                      <span>
+                        <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <label>users</label>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/admin/adminnotifications" style="color: #efefef;">
+                      <span>
+                        <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <label>New Notifications</label>
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/admin/logout" style="color: #efefef;">
+                      <span>
+                        <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <label>Logout</label>
+                      </span>
+                    </a>
+                  </li>
+            </ul>
+          </nav>
+        </aside>
+        <header>
+          <div class="card">
+            <div>
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <span>1,257</span>
+              <span>Visitors</span>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <span>557</span>
+              <span>Orders</span>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <span>$11,257</span>
+              <span>Sales</span>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <svg
+                width="30"
+                height="30"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                class="stroke-current text-blue-800 dark:text-gray-800 transform transition-transform duration-500 ease-in-out"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <div>
+              <span>$75,257</span>
+              <span>Balances</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="section section-2">
+          <table class="std">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span>
+                    <img
+                      class="object-cover w-full h-full rounded-full"
+                      src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                      alt=""
+                      loading="lazy"
+                  /></span>
+                  <span class="name">Hans Burger</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span>
+                    <img
+                      class="object-cover w-full h-full rounded-full"
+                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=200&amp;facepad=3&amp;fit=facearea&amp;s=707b9c33066bf8808c934c8ab394dff6"
+                      alt=""
+                      loading="lazy"
+                  /></span>
+                  <span class="name">Jolina Angelie</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section class="section-3">
+          <h1 id="heeder">All Notifications</h1>
+        </section>
+        <footer class="content-footer"></footer>
+      </main>
+      <footer class="page-footer">copyright@jack.com</footer>
+    </div>
+  </body>
+</html>

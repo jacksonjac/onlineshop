@@ -1,0 +1,449 @@
+<%- include("./includes/header") %>
+<style>
+    #sidebar {
+    position: fixed ;
+    }
+
+</style>
+
+
+<!-- Product Section End -->
+
+<section class="shop spad">
+  
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-3 col-md-3 ">
+              <div class="shop__sidebar"  id="sticky-sidebar">
+                  <div class="sidebar__categories">
+                      <div class="section-title">
+                          <h4>Categories</h4>
+                      </div>
+                      <div class="categories__accordion">
+                          <div class="accordion" id="accordionExample">
+
+
+                            <% categorylist.forEach(category => { %>
+
+                              <div class="card">
+                                  <div class="card-heading active">
+                                      <a class="category-item" data-category="<%= category.name %>" data-toggle="collapse" data-target="#collapseOne"><%= category.name %></a>
+                                  </div>
+                                  <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
+                                      
+                                  </div>
+                              </div>
+
+                              <% }); %>
+
+
+
+                             
+                            
+                          </div>
+                      </div>
+                  </div>
+                  <div class="sidebar__filter">
+                      <div class="section-title">
+                          <h4>Shop by price</h4>
+                      </div>
+                      <!-- <div class="filter-range-wrap">
+                          <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                          data-min="33" data-max="99"></div>
+                          <div class="range-slider">
+                              <div class="price-input">
+                                  <p>Price:</p>
+                                  
+                              </div>
+                          </div>
+                      </div> -->
+                     
+                  </div>
+
+                  <div class="sidebar__sizes">
+                    
+                  </div>
+
+
+
+
+                  <div>
+                    <img src="https://adespresso.com/wp-content/uploads/2020/05/complete-guide-to-mobile-advertising.png" alt="">
+                  </div>
+
+
+        
+
+
+              </div>
+          </div>
+
+
+
+          <div class="col-lg-9 col-md-9">
+            <div class="row">
+              <div class="input-group rounded p-4">
+                <input type="search" class="form-control rounded" id="searchInput" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button id="searchButton" class="btn btn-primary">Search</button>
+              </div>
+              <h4 style="padding: 10px !important;" id="message"></h4>
+              <div id="product-list" class="row">
+                <% allproducts.forEach(products => { %>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="product__item">
+                      <div class="product__item__pic set-bg" data-setbg="/publicimage/<%= products.images[0] %>" style="width: 230px; height: 300px; padding: 10px;">
+                        <div class="label new">New</div>
+                        <ul class="product__hover">
+                          <li><a href="/publicimage/<%= products.images[0] %>" class="image-popup"><span class="arrow_expand"></span></a></li>
+                          <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                          <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                        </ul>
+                      </div>
+                      <div class="product__item__text">
+                        <h6><a href="/productdetailpage?model=<%= products.model %>"><%= products.model %></a></h6>
+                        <div class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product__price">&#8377;<%= products.price %>/-</div>
+                      </div>
+                    </div>
+                  </div>
+                <% }); %>
+              </div>
+          
+              <div class="col-lg-12 text-center">
+                <div class="pagination__option">
+                  <% for(let j = 1; j <= totalpage; j++) { %>
+                    <a href="?page=<%= j %>"><%= j %></a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      </div>
+  </div>
+</section>
+<!-- Shop Section End -->
+
+<!-- Instagram Begin -->
+<div class="instagram">
+  <div class="container-fluid">
+      <div class="row">
+
+
+        <% for (let i = 0; i < 6 && i < allproducts.length; i++) { %>
+            <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+              <div class="instagram__item set-bg" data-setbg="/publicimage/<%= allproducts[i].images[0] %>">
+                <div class="instagram__text">
+                  <i class="fa fa-instagram"></i>
+                  <a href="#">@genqmobx</a>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          
+          </div>
+      </div>
+  </div>
+ 
+</div>
+<!-- Instagram End -->
+
+
+
+
+<script>//listed by category
+  var categoryItems = document.querySelectorAll(".category-item");
+  var productListContainer = document.getElementById("product-list");
+  var textcenter = document.querySelector(".text-center")
+  var search = document.querySelector(".input-group")
+  var sort = document.querySelector(".sidebar__sizes")
+
+  categoryItems.forEach(function(categoryItem) {
+    categoryItem.addEventListener("click", function() {
+      var selectedCategory = categoryItem.getAttribute("data-category");
+      
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "/category?name=" + selectedCategory, true);
+
+      xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          var responseData = JSON.parse(xhr.responseText);
+          console.log(responseData); // Handle the response data here
+
+          // Clear the existing product list
+          productListContainer.innerHTML = "";
+          search.innerHTML = `
+<div class="container mt-4">
+  <form action="/categorysearch" method="post">
+    <div class="input-group">
+      <input type="search" name="searchInput" class="form-control rounded" id="searchInput" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      <input type="hidden" name="category" value="${selectedCategory}" />
+      <button type="submit" id="searchButton" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+</div>
+`;
+          textcenter.innerHTML= ""
+     sort.innerHTML = ""
+          sort.innerHTML = `
+  <form id="checkboxForm" action="/pricebysort" method="get">
+    <div class="size__list">
+      <label for="amount-1">
+        1000/- - 10000/-
+        <input type="checkbox" id="amount-1" name="priceRange" value="1000-10000">
+        <input type="hidden" id="category-1" name="category" value="${selectedCategory}">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-2">
+        10000/- - 20000/-
+        <input type="checkbox" id="amount-2" name="priceRange" value="10000-20000">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-3">
+        20000/- - 30000/-
+        <input type="checkbox" id="amount-3" name="priceRange" value="20000-30000">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-4">
+        30000/- - 40000/-
+        <input type="checkbox" id="amount-4" name="priceRange" value="30000-40000">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-5">
+        40000/- - 50000/-
+        <input type="checkbox" id="amount-5" name="priceRange" value="40000-50000">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-6">
+        50000/- - 75000/-
+        <input type="checkbox" id="amount-6" name="priceRange" value="50000-75000">
+        <span class="checkmark"></span>
+      </label>
+      <label for="amount-7">
+        75000/- - 100000/-
+        <input type="checkbox" id="amount-7" name="priceRange" value="75000-100000">
+        <span class="checkmark"></span>
+      </label>
+     
+    </div>
+    <input type="submit" value="Filter" class="btn btn-primary">
+  </form>
+`
+
+          
+
+
+          // Populate the product list with new data
+          responseData.products.forEach(function(product) {
+           
+            var productHTML =
+             `
+              <div class="col-lg-3 col-md-4 col-sm-6 mix men">
+                <div class="product__item">
+                  <div
+                    class="product__item__pic set-bg"
+                   
+                    style="background-image: url('/publicimage/${product.images[0]}'); padding: 10px !important; width: 200px !important; height: 300px !important;">
+                   
+                    <ul class="product__hover">
+                      <li>
+                        <a href="./assets/img/product/product-2.jpg" class="image-popup"
+                          ><span class="arrow_expand"></span
+                        ></a>
+                      </li>
+                      <li>
+                        <a href="#"><span class="icon_heart_alt"></span></a>
+                      </li>
+                      <li>
+                        <a href="#"><span class="icon_bag_alt"></span></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6><a href="/productdetailpage?model=${product.model}">${product.model}</a></h6>
+                    <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product__price">&#8377;${product.price}/-</div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            productListContainer.insertAdjacentHTML("beforeend", productHTML);
+          });
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      xhr.send();
+    });
+  });
+</script>
+
+<script>
+  // Get references to the input and button elements
+  const searchInput = document.getElementById('searchInput');
+  const searchButton = document.getElementById('searchButton');
+  var productListContainer = document.getElementById("product-list");
+
+  // Add a click event listener to the search button
+  searchButton.addEventListener('click', () => {
+      // Get the search query from the input field
+      const query = searchInput.value;
+
+      
+     
+
+      // You should replace 'backend_url' with the actual URL of your backend search API
+      const backendURL = '/searchproduct';
+
+      // Create an XMLHttpRequest object
+      const xhr = new XMLHttpRequest();
+
+      // Set up the GET request with the query as a parameter
+      xhr.open('GET', `${backendURL}?query=${query}`, true);
+    
+      // Define a callback function to handle the response
+      xhr.onload = function () {
+          if (xhr.status === 200) {
+
+
+             
+              const response = JSON.parse(xhr.responseText);
+
+
+              if(response.error === false){
+
+               console.log("slfksldfksflksf")
+               var message = document.getElementById("message")
+
+               message.innerHTML = "No products found"
+               
+              }
+
+              productListContainer.innerHTML = "";
+
+              response.forEach(function(product) {
+            var productHTML =
+             `
+              <div class="col-lg-3 col-md-4 col-sm-6 mix men">
+                <div class="product__item">
+                  <div
+                    class="product__item__pic set-bg"
+                   
+                    style="background-image: url('/publicimage/${product.images[0]}'); padding: 10px !important; width: 200px !important; height: 300px !important;">
+                  
+                    <ul class="product__hover">
+                      <li>
+                        <a href="./assets/img/product/product-2.jpg" class="image-popup"
+                          ><span class="arrow_expand"></span
+                        ></a>
+                      </li>
+                      <li>
+                        <a href="#"><span class="icon_heart_alt"></span></a>
+                      </li>
+                      <li>
+                        <a href="#"><span class="icon_bag_alt"></span></a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="product__item__text">
+                    <h6><a href="/productdetailpage?model=${product.model}">${product.model}</a></h6>
+                    <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product__price">&#8377;${product.price}/-</div>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            productListContainer.insertAdjacentHTML("beforeend", productHTML);
+          });
+             
+
+
+
+
+
+
+          } else {
+              console.error('Request failed with status:', xhr.status);
+          }
+      };
+
+      // Handle network errors
+      xhr.onerror = function () {
+          console.error('Network error occurred');
+      };
+
+      // Send the GET request
+      xhr.send();
+  });
+</script>
+
+<script>
+document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+  checkbox.addEventListener("click", function () {
+    if (checkbox.checked) {
+      var label = checkbox.parentNode;
+      var priceRange = checkbox.value; // Get the price range from the checkbox value
+
+      // Extract the first and second prices
+      var prices = priceRange.split('-');
+
+      if (prices && prices.length === 2) {
+        var firstPrice = prices[0];
+        var secondPrice = prices[1];
+
+        // Get the selected category from the hidden input
+        var selectedCategory = label.querySelector('input[name="category"]').value;
+
+        // Construct the price range string to send in the request
+        var priceRangeString = firstPrice + "-" + secondPrice;
+
+        // Create the URL with the price range and selected category
+        var url = "/pricebysort?priceRange=" + priceRangeString + "&category=" + selectedCategory;
+            alert(priceR)
+        // Send the XHR request
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              var response = JSON.parse(xhr.responseText);
+              // Update your webpage with the retrieved product data
+              console.log(response);
+            } else {
+              console.error("XHR Request Failed");
+            }
+          }
+        };
+
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
+    }
+  });
+});
+ </script> 
+
+
+
+
+<%- include("./includes/footer") %>

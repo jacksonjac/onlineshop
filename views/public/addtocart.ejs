@@ -1,0 +1,426 @@
+<%- include("./includes/header") %>
+<style>
+    .quantity-control {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-button {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  text-align: center;
+  border: none;
+  background-color: #f0f0f0; /* Background color for buttons */
+  color: #333; /* Text color */
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.decrease-button {
+  border-radius: 4px 0 0 4px;
+}
+
+.increase-button {
+  border-radius: 0 4px 4px 0;
+}
+
+.quantity-button:hover {
+  background-color: #ddd; /* Hover background color */
+  color: #000; /* Hover text color */
+}
+#checkoutLink {
+  cursor: pointer; /* Set the default cursor style to pointer */
+}
+
+#checkoutLink:hover {
+  cursor: grab; /* Change the cursor style on hover to 'grab' (or any other desired style) */
+}
+#findcoupon {
+  cursor: pointer; /* Set the default cursor style to pointer */
+}
+
+#findcoupon:hover {
+  cursor: grab; /* Change the cursor style on hover to 'grab' (or any other desired style) */
+}
+</style>
+<div class="breadcrumb-option">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="breadcrumb__links">
+                  <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                  <span>Shopping cart</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Cart Section Begin -->
+<section class="shop-cart spad">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="shop__cart__table">
+                <% if (cartproducts.length === 0) { %>
+                  <p>Your cart is empty.</p>
+                <% } else { %>
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Product</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Total</th>
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+
+                        <% cartproducts.forEach(product => { %>
+                          <tr>
+                              <td class="cart__product__item">
+                                  <img src="img/shop-cart/cp-1.jpg" alt="">
+                                  <div class="cart__product__item__title">
+                                    <h6>
+                                        <a href="/productdetailpage?model=<%= encodeURIComponent(product.model) %>"><%= product.model %></a>
+                                    </h6>
+                                      <div class="rating">
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                          <i class="fa fa-star"></i>
+                                      </div>
+                                  </div>
+                                  <div>
+                                    <img style="width: 50px; height: 50px;" src="/publicimage/<%= product.image %>" alt="imag">
+                                  </div>
+                              </td>
+                              <td class="cart__price" >&#8377;<%= product.price %>/-</td>
+                              <td class="cart__quantity">
+                                <div class="quantity-control">
+                                    <button class="quantity-button decrease-button" onclick="decreaseQuantity('<%= product.model %>')">-</button>
+                                    <input class="quantity-input" type="text" style="width: 38px;" value="<%= product.quantity %>" min="1" id="quantity_<%= product.model %>" readonly>
+                                    <button class="quantity-button increase-button" onclick="increaseQuantity('<%= product.model %>')">+</button>
+                                </div>
+                            </td>
+                              <td class="cart__total " id="Amount_<%= product.model %>"><%= product.price %>/- </td>
+                              <td class="cart__close">
+                                <a href="/removecartproduct?model=<%= encodeURIComponent(product.model) %>&grandTotal=<%= grandTotal %>" class="remove-product">
+                                    <span class="icon_close"></span>
+                                </a>
+                            </td>
+                            
+                          </tr>
+
+                          <% }) %>
+
+
+                          
+                      </tbody>
+                  </table>
+                 
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="cart__btn">
+                <a id="findcoupon">find my coupons</a>
+              
+              <p id="couponList"></p>
+             
+                <!-- Coupon codes will be displayed here -->
+              </div>
+              <p style="color: red;"  id="message"></p>
+              <p style="color: rgb(13, 49, 2);"  id="messagesucess"></p>
+          </div>
+          <span id="close" style="color: red;"></span>
+
+         
+         
+      </div>
+      <div class="row">
+          <div class="col-lg-6">
+            <div class="discount__content">
+                <h6>Discount codes</h6>
+                <form id="couponForm">
+                    <input type="text" id="couponCodeInput" name="couponCode" placeholder="Enter your coupon code">
+                    <button type="submit" class="site-btn">Apply</button>
+                   
+                    
+                    <input type="hidden" id="couponStatus" name="couponStatus" value="">
+                </form>
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-2">
+              <div class="cart__total__procced">
+                  <h6>Cart total</h6>
+                  <ul>
+                    <li>Subtotal </span><span id="cart-total"><%= grandTotal %></span></li>
+                    <li>Coupon Discount <span id="coupon-discount">-0.00</span></li>
+                    <li>Total <span id="cart-total2"><%= grandTotal %>/-</span></li>
+                  </ul>
+                  <a id="checkoutLink" class="primary-btn">Proceed to checkout</a>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <% } %>
+</section>
+<!-- Shop Cart Section End -->
+
+<script>
+   async function increaseQuantity(productModel) {
+  try {
+    const response = await fetch('/increment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productModel }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const quantityInput = document.getElementById(`quantity_${productModel}`);
+      const amountElement = document.getElementById(`Amount_${productModel}`);
+      const grandTotalElement = document.getElementById('cart-total');
+      const grandTotalElement2 = document.getElementById('cart-total2');
+
+      // Update quantity input and product amount
+      quantityInput.value = data.theproductquandity;
+      amountElement.innerText = data.productPrice;
+      grandTotalElement.innerText = ` ${data.thetotalprice}/-`;
+      grandTotalElement2.innerText = ` ${data.thetotalprice}/-`;
+
+    } else {
+      console.error('Failed to increase quantity');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+var couponList = document.getElementById("couponList");
+var closeSpan = document.getElementById("close");
+var couponvalue = document.getElementById("coupon-discount")
+var couponinput = document.getElementById("couponCodeInput")
+
+// Add a click event listener to the span element
+closeSpan.addEventListener("click", function () {
+  // Remove the coupon discount by setting it to 0.00
+  document.getElementById("coupon-discount").textContent = "-0.00";
+  
+  // Clear the coupon code input field
+  document.getElementById("couponCodeInput").value = "";
+  
+  // Update the "cart-total2" value to be the same as "cart-total"
+  var cartTotalValue = document.getElementById("cart-total").textContent;
+  document.getElementById("cart-total2").textContent = cartTotalValue;
+  
+  couponList.innerHTML = "";
+  closeSpan.innerHTML = "";
+});
+
+
+
+
+async function decreaseQuantity(productModel) {
+    try {
+        const response = await fetch('/decrement', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productModel })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            
+            const quantityInput = document.getElementById(`quantity_${productModel}`);
+            const amountElement = document.getElementById(`Amount_${productModel}`);
+            const grandTotalElement = document.getElementById('cart-total');
+            const grandTotalElement2 = document.getElementById('cart-total2');
+            
+            quantityInput.value = data.theproductquandity;
+            amountElement.innerText = data.productPrice;
+            grandTotalElement.innerText =` ${data.thetotalprice}/-`;
+            grandTotalElement2.innerText =` ${data.thetotalprice}/-`;
+            
+           
+        } else {
+            console.error('Failed to decrease quantity');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+document.getElementById("findcoupon").addEventListener("click", function () {
+  // Create a new XMLHttpRequest object
+  var xhr = new XMLHttpRequest();
+
+  // Define the backend API URL where you fetch coupon codes
+  var apiUrl = "/getcoupons"; // Replace with your actual API endpoint
+
+  // Configure the request
+  xhr.open("GET", apiUrl, true);
+
+  // Set up the callback function to handle the response
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // Request was successful, parse the JSON response
+        var coupons = JSON.parse(xhr.responseText);
+
+        // Display the coupon codes in the UI
+        displayCouponCodes(coupons);
+
+        // Log the response data
+        console.log("Response Data:");
+        console.log(coupons);
+      } else {
+        // Request failed or returned an error status
+        console.error("Failed to fetch coupons. Status code: " + xhr.status);
+      }
+    }
+  };
+
+  // Send the request
+  xhr.send();
+});
+
+
+
+
+
+
+
+
+
+
+document.getElementById("couponForm").addEventListener("submit", function (e) {
+  e.preventDefault(); 
+
+  // Get the entered coupon code
+  var enteredCouponCode = document.getElementById("couponCodeInput").value.trim();
+
+  // Check if the entered coupon code is empty or not a negative number
+  if (!enteredCouponCode  || parseFloat(enteredCouponCode) < 0) {
+    document.getElementById("message").innerHTML = "Enter a valid Coupon Code";
+  } else {
+    // If the coupon code is valid, proceed with the XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/checkcoupon", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    // Define the data to send to the server
+    var data = {
+      couponCode: enteredCouponCode
+    };
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // Request was successful, handle the response from the backend
+          var response = JSON.parse(xhr.responseText);
+
+          // Check if the response is valid
+          if (response.valid) {
+            document.getElementById("messagesucess").innerHTML = "Coupon code is valid.";
+             
+            // Call the function to update the total amount
+            updateTotalAmount(response.discountPercentage);
+          } else {
+            // Coupon code is not valid, show the message
+            document.getElementById("message").innerHTML = response.message;
+          }
+        }
+      }
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+});
+
+function updateTotalAmount(discountPercentage) {
+  // Get the grand total element
+  var totalAmountElement = document.getElementById("cart-total2");
+  var couponamount = document.getElementById("coupon-discount");
+  var  grandtotal = document.getElementById("grandtotal");
+
+  // Get the current grand total value
+  var currentTotal = parseFloat(totalAmountElement.textContent);
+     console.log(currentTotal,"this is current total")
+  // Calculate the discount amount
+  var discountAmount = (currentTotal * discountPercentage) / 100;
+
+  // Calculate the new total amount after applying the discount
+  var newTotal = currentTotal - discountAmount;
+  couponamount.textContent = discountAmount;
+     
+  // Update the total amount element with the new total
+  totalAmountElement.textContent = newTotal.toFixed(2) + "/-";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function displayCouponCodes(coupons) {
+  var couponList = document.getElementById("couponList");
+  var closebutton = document.getElementById("close")
+  couponList.innerHTML = ""; // Clear any previous content
+
+  if (coupons.length === 0) {
+    // No coupons found
+    couponList.innerHTML = "<p>No coupons found.</p>";
+  } else {
+    // Create a list to display coupon details
+    var ul = document.createElement("ul");
+    coupons.forEach(function (coupon) {
+      var li = document.createElement("li");
+      li.textContent = "Coupon Code: " + coupon.couponCode + " - " + coupon.description;
+      ul.appendChild(li);
+      closebutton.innerHTML = `X`
+
+    });
+    couponList.appendChild(ul);
+  }
+}
+
+
+
+document.getElementById("checkoutLink").addEventListener("click", function() {
+  // Get the value of the cart-total2 and coupon-discount elements
+  var cartTotal2Value = document.getElementById("cart-total2").textContent;
+  var couponDiscountValue = document.getElementById("coupon-discount").textContent;
+  
+  // Encode the values to make them URL-safe
+  var encodedCartTotal2Value = encodeURIComponent(cartTotal2Value);
+  var encodedCouponDiscountValue = encodeURIComponent(couponDiscountValue);
+  
+  // Create the checkout URL with both values as query parameters
+  var checkoutURL = "/checkout?total=" + encodedCartTotal2Value + "&coupon=" + encodedCouponDiscountValue;
+  
+  // Redirect the user to the checkout URL
+  window.location.href = checkoutURL;
+});
+</script>
+
+
+<%- include("./includes/footer") %>

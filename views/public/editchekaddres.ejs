@@ -1,0 +1,127 @@
+<%- include("./includes/header") %>
+
+
+
+<div class="row mt-3 mx-3" style="margin-top:25px ;">
+	<div class="col-md-3">
+	  <div style="margin-top: 50px; margin-left: 10px;" class="text-center">
+		
+		<img style="width: 350px; height: 300px;" src="https://img.freepik.com/premium-vector/delivery-truck-van-isolated-white-background_165488-2791.jpg?w=2000" alt="">
+	  </div>
+	  <div class="text-center">
+		
+	  </div>
+  
+  
+	</div>
+	<div class="col-md-9 justify-content-center">
+	  <div class="card card-custom pb-4">
+		<div class="card-body mt-0 mx-5">
+		  <div class="text-center mb-3 pb-2 mt-3">
+			<h4 style="color: #495057 ;">Edit Delivery Address</h4>
+		  </div>
+  
+		  <form action="/uploaddefaltchekaddress" method="post" class="mb-0" onsubmit="return validateForm()">
+			<div class="row mb-4">
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="text" id="nameInput" name="name" value="<%= defaltadd.name %>" class="form-control input-custom" required />
+				  <label class="form-label" for="nameInput"></label>
+				</div>
+			  </div>
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="email" id="emailInput" name="email" value="<%= defaltadd.email %>" class="form-control input-custom" required />
+				  <label class="form-label" for="emailInput"></label>
+				</div>
+			  </div>
+			</div>
+			<div class="row mb-4">
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="text" id="addressInput" name="address" value="<%= defaltadd.address %>" class="form-control input-custom" required />
+				  <label class="form-label" for="addressInput">Address</label>
+				</div>
+			  </div>
+			  <div class="col">
+				
+			  </div>
+			</div>
+			<div class="row mb-4">
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="text" id="cityInput" name="city" value="<%= defaltadd.city %>" class="form-control input-custom" required />
+				  <label class="form-label" for="cityInput">City</label>
+				</div>
+			  </div>
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="text" id="phoneNumberInput" name="phoneNumber" value="<%= defaltadd.phonenumber %>" class="form-control input-custom" required />
+				  <label class="form-label" for="phoneNumberInput">Phone Number</label>
+				</div>
+			  </div>
+			  <div class="col">
+				<div class="form-outline">
+				  <input type="text" id="postalCodeInput" name="postalCode" value="<%= defaltadd.postalCode %>" class="form-control input-custom" required />
+				  <label class="form-label" for="postalCodeInput">Pin Code</label>
+				</div>
+			  </div>
+			</div>
+			
+			<div id="error-message" style="color: red;"></div>
+			
+			<div class="float-end">
+			  <input type="text" name="productdata" value="<%= productdata %>" hidden>
+			  <button type="submit" class="btn btn-primary btn-rounded" style="background-color: #0062CC;">Upload</button>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+  <script>
+	function validateForm() {
+	  var name = document.getElementById("nameInput").value;
+	  var email = document.getElementById("emailInput").value;
+	  var address = document.getElementById("addressInput").value;
+	  var city = document.getElementById("cityInput").value;
+	  var phoneNumber = document.getElementById("phoneNumberInput").value;
+	  var postalCode = document.getElementById("postalCodeInput").value;
+	  var error = document.getElementById("error-message");
+	
+	  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	
+	  if (name.trim() === "") {
+		error.innerHTML = "Name can't be blank";
+		return false;
+	  } else if (email.trim() === "") {
+		error.innerHTML = "Email can't be blank";
+		return false;
+	  } else if (!emailRegex.test(email)) {
+		error.innerHTML = "Invalid email address";
+		return false;
+	  } else if (address.trim() === "") {
+		error.innerHTML = "Address can't be blank";
+		return false;
+	  } else if (city.trim() === "") {
+		error.innerHTML = "City can't be blank";
+		return false;
+	  } else if (phoneNumber.trim() === "") {
+		error.innerHTML = "Phone number can't be blank";
+		return false;
+	  } else if (phoneNumber.length !== 10) {
+		error.innerHTML = "Phone number must be 10 digits";
+		return false;
+	  } else if (postalCode.trim() === "") {
+		error.innerHTML = "Pin Code can't be blank";
+		return false;
+	  }
+	
+	  error.innerHTML = ""; // Clear error message if all checks pass
+	  return true; // Form submission will proceed
+	}
+	</script>
+
+  <%- include("./includes/footer") %>

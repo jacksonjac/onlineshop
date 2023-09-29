@@ -1,0 +1,158 @@
+<%- include("./includes/header") %>
+<style>
+	#sectionbox{
+
+		margin: 45px !important;
+	}
+</style>
+
+<section id="sectionbox">
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card mb-4">
+
+
+          
+        </div>
+        
+
+        
+        
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold mb-3 text-font">Default Address</p>
+            <div class="row">
+              <div class="col-md-4">
+                <p id="address"><%= defaultAddress.name %>, <%= defaultAddress.address %>,<%= defaultAddress.city %>,<%= defaultAddress.postalCode %>,</p>             
+              </div>
+              <div class="col-md-7">
+               <a href="/editdefaltaddress?productId=<%= theproduct._id %>"> <button id="editButton" type="button" class="btn btn-outline-dark float-end button-color"
+                  data-mdb-ripple-color="dark">
+                  Edit
+                </button></a>
+              </div>
+            </div>
+          </div>   
+        </div>
+
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="text-uppercase fw-bold mb-3 text-font">Delivery Addresses</p>
+            <% allUserAddresses.forEach(address => { %>
+              <div class="row mb-2">
+                <div class="col-md-4">
+                  <p><%= address.name %>, <%= address.address %>, <%= address.postalCode %>, <%= address.phonenumber %></p>
+                </div>
+                <div class="col-md-7">
+                  <button type="button" class="btn btn-outline-dark float-end button-color"
+                    data-mdb-ripple-color="dark"
+                    data-address-id="<%= address._id %>">
+                   Set as Default
+                  </button>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+        
+        
+
+
+
+
+
+      </div>
+      <div class="col-md-4 mb-4 position-static">
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0 text-font">1 item <span class="float-end mt-1"
+                style="font-size: 13px ;">Edit</span></h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="/publicimage/<%= theproduct.images[0] %>"
+                  class="rounded-3" style="width: 100px;" alt="Blue Jeans Jacket" />
+              </div>
+              <div class="col-md-6 ms-3">
+                <span class="mb-0 text-price">&#8377;<%= theproduct.price %>/-</span>
+                <p class="mb-0 text-descriptions"><%= theproduct.model %></p>
+                <span class="text-descriptions fw-bold"><%= theproduct.colour %></span> <span
+                  class="text-descriptions fw-bold"></span>
+                <p class="text-descriptions mt-0">Qty:<span class="text-descriptions fw-bold"><%= theproduct.quantity %></span>
+                </p>
+              </div>
+            </div>
+            <div class="card-footer mt-4">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
+                  Subtotal
+                  <span>&#8377;<%= theproduct.price %>/-</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold text-uppercase">
+                  Total to pay
+                  <span>&#8377;<%= theproduct.price %></span>
+                </li>
+              </ul>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    
+
+        </div>
+        <div class="text-center">
+          <a href="/paymentmethod?productid=<%= theproduct._id %>"><button type="button" class="btn btn-success col-md-10">Continue</button></a>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+    </div>
+
+  </section>
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const setDefaultButtons = document.querySelectorAll(".btn-outline-dark");
+  
+      setDefaultButtons.forEach(button => {
+        button.addEventListener("click", function() {
+          const addressId = button.getAttribute("data-address-id");
+          setDefaultAddress(addressId);
+        });
+      });
+  
+      function setDefaultAddress(addressId) {
+        // Make an AJAX request to the backend with the addressId
+        fetch(`/setdefaltaddress?addressId=${addressId}`, {
+          method: "get",
+        })
+        .then(response => response.json())
+        .then(data => {
+          // Update the default address element with the new address information
+          const defaultAddressElement = document.getElementById("address");
+          defaultAddressElement.textContent = `${data.newDefaultAddress.name}, ${data.newDefaultAddress.address}, ${data.newDefaultAddress.postalCode}, ${data.newDefaultAddress.phonenumber}`;
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+      }
+    });
+  </script>
+
+<%- include("./includes/footer") %>

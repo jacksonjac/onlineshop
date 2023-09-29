@@ -1,0 +1,113 @@
+<%- include("./includes/header") %>
+<style>
+	#loginbox{
+
+		width: 100% !important;
+		height: 990px !important;
+	}
+</style>
+
+<section class="vh-100" style="background-color: #fffcfd;" id="loginbox">
+	<div class="container py-5 h-100">
+	  <div class="row d-flex justify-content-center align-items-center h-100">
+		<div class="col col-xl-10">
+		  <div class="card" style="border-radius: 1rem;">
+			<div class="row g-0">
+			  <div class="col-md-6 col-lg-5 d-none d-md-block">
+				<img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+				  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+			  </div>
+			  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+				<div class="card-body p-4 p-lg-5 text-black">
+  
+					
+						<div class="d-flex align-items-center mb-3 pb-1">
+							<i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+							<span class="h1 fw-bold mb-0">Genqmobz</span>
+						</div>
+						<form action="/insertdata" method="post" onsubmit="return validateForm()">
+							<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register your account</h5>
+							
+							<div class="form-outline mb-4">
+							  <input type="text" id="nameInput" name="name" class="form-control form-control-lg"  required />
+							  <label class="form-label" for="nameInput">Enter Your Name</label>
+							</div>
+							
+							<div class="form-outline mb-4">
+							  <input type="email" id="emailInput" name="email" class="form-control form-control-lg" required />
+							  <label class="form-label" for="emailInput">Enter your Email Address</label>
+							</div>
+							
+							<div class="form-outline mb-4">
+							  <input type="text" id="phoneInput" name="number" class="form-control form-control-lg" minlength="10" maxlength="10" required />
+							  <label class="form-label" for="phoneInput">Phone Number</label>
+							</div>
+							
+							<div class="form-outline mb-4">
+							  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg" required />
+							  <label class="form-label" for="passwordInput">Create Number password</label>
+							</div>
+							
+							<div class="form-outline mb-4">
+							  <input type="password" id="confirmPasswordInput" name="Cpassword" class="form-control form-control-lg" required />
+							  <label class="form-label" for="confirmPasswordInput">Confirm password</label>
+							</div>
+							
+							<div id="error-message" style="color: red;"></div>
+							
+							<div class="pt-1 mb-4">
+							  <button class="btn btn-dark btn-lg btn-block" type="submit">Submit</button>
+							</div>
+						  </form>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </section>
+  
+  <script>
+	function validateForm() {
+	  var name = document.getElementById("nameInput").value;
+	  var email = document.getElementById("emailInput").value;
+	  var phone = document.getElementById("phoneInput").value;
+	  var password = document.getElementById("passwordInput").value;
+	  var confirmPassword = document.getElementById("confirmPasswordInput").value;
+	  var error = document.getElementById("error-message");
+	
+	  var alphanumericRegex = /^[a-zA-Z0-9]*$/;
+	
+	  if (name === ""||name.trim() === "") {
+		error.innerHTML = "Name can't be blank";
+		return false;
+	  } else if (email === ""||email.trim() === "") {
+		error.innerHTML = "Email can't be blank";
+		return false;
+	  } else if (phone === "") {
+		error.innerHTML = "Phone number can't be blank";
+		return false;
+	  } else if (phone.length !== 10) {
+		error.innerHTML = "Phone number must be 10 digits";
+		return false;
+	  } else if (password.length < 6) {
+		error.innerHTML = "Password must be at least 6 characters long";
+		return false;
+	  } else if (confirmPassword !== password) {
+		error.innerHTML = "Passwords do not match. Please re-enter.";
+		return false;
+	  } else if (!alphanumericRegex.test(password)) {
+		error.innerHTML = "Password must be alphanumeric only";
+		return false;
+	  }
+	
+	  error.innerHTML = ""; // Clear error message if all checks pass
+	  return true; // Form submission will proceed
+	}
+	</script>
+	
+    
+  
+
+  <%- include("./includes/footer") %>

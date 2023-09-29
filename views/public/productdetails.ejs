@@ -1,0 +1,331 @@
+<%- include("./includes/header") %>
+
+
+
+
+<style>
+	/* Keep your existing CSS styles */
+	.img_zoom_container {
+	  position: relative;
+	  overflow: hidden;
+	  cursor: zoom-in;
+	}
+  
+	.img_zoom {
+	  transition: transform 0.9s ease-in-out;
+	  transform-origin: center center;
+	}
+  
+	/* Remove the background-image style from figure.zoom */
+	figure.zoom {
+	  background-position: 50% 50%;
+	  position: relative;
+	  margin: 10px auto;
+	  border: 5px solid white;
+	  box-shadow: -1px 5px 15px black;
+	  height: 500px;
+	  width: 500px;
+	  overflow: hidden;
+	  cursor: zoom-in;
+	}
+  
+	/* Add a rule to hide the img inside the figure */
+	figure.zoom img {
+	  display: none;
+	}
+	 .img_zoom_container {
+	  position: relative;
+	  overflow: hidden;
+	  cursor: zoom-in;
+	}
+  
+	.img_zoom {
+	  transition: transform 0.9s ease-in-out;
+	  transform-origin: center center;
+	}
+  </style>
+
+
+  <!-- Product Details Section Begin -->
+  <section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__left product__thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img src="/publicimage/<%= theproduct.images[0] %>" alt="">
+                        </a>
+                        <a class="pt" href="#product-2">
+                            <img src="/publicimage/<%= theproduct.images[1] %>" alt="">
+                        </a>
+                        <a class="pt" href="#product-3">
+                            <img src="/publicimage/<%= theproduct.images[2] %>" alt="">
+                        </a>
+                        <a class="pt" href="#product-4">
+                            <img src="/publicimage/<%= theproduct.images[3] %>" alt="">
+                        </a>
+                    </div>
+                    <div class="product__details__slider__content">
+                        <div class="product__details__pic__slider owl-carousel">
+                            <figure class="zoom" onmousemove="zoom(event)" onmouseout="resetZoom(event)">
+                                <img data-hash="product-1" class="product__big__img" style="height: 570px" src="/publicimage/<%= theproduct.images[0] %>" alt="">
+                            </figure>
+
+
+                            <figure class="zoom" onmousemove="zoom(event)" onmouseout="resetZoom(event)">
+                                <img data-hash="product-2" class="product__big__img"  style="height: 570px"src="/publicimage/<%= theproduct.images[1] %>" alt="">
+                            </figure>
+
+
+                            <figure class="zoom" onmousemove="zoom(event)" onmouseout="resetZoom(event)">
+                            <img data-hash="product-3" class="product__big__img" style="height: 570px" src="/publicimage/<%= theproduct.images[2] %>" alt="">
+                          </figure>
+
+
+                            <figure class="zoom" onmousemove="zoom(event)" onmouseout="resetZoom(event)">
+                            <img data-hash="product-4" class="product__big__img"  style="height: 570px"src="/publicimage/<%= theproduct.images[3] %>" alt="">
+                        </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product__details__text">
+                    <h3><%= theproduct.model %> <span><%= theproduct.description %>/span></h3>
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <span>( 138 reviews )</span>
+                    </div>
+                    <div class="product__details__price">&#8377;<%= theproduct.price %>/- <span>$ 100000.0</span></div>
+                    <p><%= theproduct.description %></p>
+                    
+                    <div class="d-flex justify-content-between">
+                        <div class="product__details__button mb-0">
+                            <a href="/addtocart?productid=<%= theproduct._id %>" class="cart-btn"><span class="icon_bag_alt"></span> Add to Cart</a>
+                            <ul>
+                                <li><a href="#"><span id="addwhishlist" class="icon_heart_alt" data-product-id="<%= theproduct._id %>"></span></a></li>
+                            </ul>
+                            <p id="message" style="color: green;"></p>
+                           
+                        </div>
+                        <p id="message" style="color: green;"></p>
+                        
+                    </div>
+                    <div class="product__details__widget">
+                        <ul>
+                            <li>
+                                <span>Availability:</span>
+                                <div class="stock__checkbox">
+                                    <label for="stockin">
+                                        In Stock
+                                        <input type="checkbox" id="stockin">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Available color:</span>
+                                <div class="color__checkbox">
+                                    <label for="red">
+                                        <input type="radio" name="color__radio" id="red" checked>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label for="black">
+                                        <input type="radio" name="color__radio" id="black">
+                                        <span class="checkmark black-bg"></span>
+                                    </label>
+                                    <label for="grey">
+                                        <input type="radio" name="color__radio" id="grey">
+                                        <span class="checkmark grey-bg"></span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Available ram:</span>
+                                <div class="size__btn">
+                                    <label for="xs-btn" class="active">
+                                        <input type="radio" id="xs-btn">
+                                       4Gb
+                                    </label>
+                                    <label for="s-btn">
+                                        <input type="radio" id="s-btn">
+                                       6Gb
+                                    </label>
+                                    <label for="m-btn">
+                                        <input type="radio" id="m-btn">
+                                        8Gb
+                                    </label>
+                                    <label for="l-btn">
+                                        <input type="radio" id="l-btn">
+                                        
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span>Promotions:</span>
+                                <p>Free shipping</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <h6>Description</h6>
+                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                            consequat massa quis enim.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                            quis, sem.</p>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <h6>Specification</h6>
+                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                            consequat massa quis enim.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                            quis, sem.</p>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <h6>Reviews ( 2 )</h6>
+                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                            consequat massa quis enim.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                            quis, sem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="related__title">
+                    <h5>RELATED PRODUCTS</h5>
+                </div>
+            </div>
+            <% Relatedproduct.forEach(products => { %>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="product__item">
+                  <div class="product__item__pic set-bg" data-setbg="/publicimage/<%= products.images[0] %>">
+                      <ul class="product__hover">
+                          <li><a href="./assets/img/product/related/rp-2.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                          <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                          <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                      </ul>
+                  </div>
+                  <div class="product__item__text">
+                      <h6><a href="/productdetailpage?model=<%= products.model %>"><%= products.model %></a></h6>
+                      <div class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                      </div>
+                      <div class="product__price">&#8377;<%= products.price %>/-</div>
+                  </div>
+              </div>
+          </div>
+          <% }); %>
+           
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var whishlistIcon = document.getElementById("addwhishlist");
+        var messageElement = document.getElementById("message");
+
+        whishlistIcon.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default link behavior
+
+            // Get the product ID from the data-product-id attribute
+            const productId = this.getAttribute("data-product-id");
+
+            // Create a new XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Set up the request
+            xhr.open("POST", "/addwhishlist");
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            // Set up the event listener for when the request completes
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Request was successful, handle the response
+                    var response = JSON.parse(xhr.responseText); // Parse JSON response
+                    messageElement.textContent = response.message; // Update the message element
+                } else {
+                    // Request failed
+                    messageElement.textContent = "An error occurred while adding to wishlist.";
+                    console.error("Request failed with status:", xhr.status);
+                }
+            };
+
+            // Send the request with the product ID as data
+            xhr.send(`productId=${productId}`);
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function zoom(event) {
+      var zoomer = event.currentTarget;
+      var offsetX = event.offsetX ? event.offsetX : event.touches[0].pageX;
+      var offsetY = event.offsetY ? event.offsetY : event.touches[0].pageY;
+      var x = (offsetX / zoomer.offsetWidth) * 100;
+      var y = (offsetY / zoomer.offsetHeight) * 100;
+      zoomer.querySelector('img').style.transform = 'scale(1.9)';
+      zoomer.querySelector('img').style.transformOrigin = x + '% ' + y + '%';
+    }
+  
+    function resetZoom(event) {
+      var zoomer = event.currentTarget;
+      zoomer.querySelector('img').style.transform = 'none';
+ }
+
+
+
+ 
+  </script>
+
+
+<%- include("./includes/footer") %>

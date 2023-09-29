@@ -1,0 +1,132 @@
+<%- include("./includes/header") %>
+
+<section style="background-color: #eee;">
+	<div class="container py-5">
+	  <div class="row">
+		
+	  </div>
+  
+	  <div class="row">
+		<div class="col-lg-4">
+		  <div class="card mb-4">
+			<div class="card-body text-center">
+			  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+				class="rounded-circle img-fluid" style="width: 150px;">
+			  <h5 class="my-3"><%= userdata.name %></h5>
+			  <!-- <p class="text-muted mb-1"></p> -->
+			  <p class="text-muted mb-4"><%= userdata.email %></p>
+			
+			  <div class="d-flex justify-content-center mb-2">
+				<!-- <button type="button" class="btn btn-primary">Follow</button>
+				<button type="button" class="btn btn-outline-primary ms-1">Message</button> -->
+			  </div>
+			</div>
+		  </div>
+		
+
+
+
+		</div>
+		<div class="col-lg-8">
+			<div class="card mb-4">
+				<div class="card-body">
+					<form action="/personalinfoupload" method="POST" onsubmit="return validateForm()">
+						<div class="row">
+						  <div class="col-sm-3">
+							<label for="fullName" class="mb-0">Full Name</label>
+						  </div>
+						  <div class="col-sm-9">
+							<input type="text" id="fullName" name="newUsername" class="form-control" value="<%= userdata.name %>" required>
+						  </div>
+						</div>
+						<hr>
+						<div class="row">
+						  <div class="col-sm-3">
+							<label for="email" class="mb-0">Email</label>
+						  </div>
+						  <div class="col-sm-9">
+							<input type="email" id="email" name="newUserEmail" class="form-control" value="<%= userdata.email %>" required>
+						  </div>
+						</div>
+						<hr>
+						<div class="row">
+						  <div class="col-sm-3">
+							<label for="phone" class="mb-0">Phone</label>
+						  </div>
+						  <div class="col-sm-9">
+							<input type="tel" id="phone" name="phone" class="form-control" value="<%= userdata.number %>" readonly required>
+						  </div>
+						</div>
+						<hr>
+						<div class="row">
+						  <div class="col-sm-3">
+							<!-- Empty cell for alignment -->
+						  </div>
+						  <div class="col-sm-9">
+							<div id="error-message" style="color: red;"></div>
+							<button type="submit" class="btn btn-success">Update</button>
+						  </div>
+						</div>
+					  </form>
+				</div>
+			</div>
+		</div>
+
+
+
+		
+		</div>
+
+
+
+		
+	  </div>
+	
+  </section>
+ 
+
+		</div>
+
+
+
+		
+	  </div>
+	</div>
+  </section>
+
+  <script>
+	function validateForm() {
+	  var fullName = document.getElementById("fullName").value;
+	  var email = document.getElementById("email").value;
+	  var error = document.getElementById("error-message");
+	
+	  // Simple email validation regex
+	  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	
+	  if (fullName === ""||fullName.trim() === "") {
+		error.innerHTML = "Full Name can't be blank";
+		return false;
+	  } else if (email === "") {
+		error.innerHTML = "Email can't be blank";
+		return false;
+	  } else if (!emailRegex.test(email)) {
+		error.innerHTML = "Invalid email address";
+		return false;
+	  }
+	
+	  error.innerHTML = ""; // Clear error message if all checks pass
+	  return true; // Form submission will proceed
+	}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+<%- include("./includes/footer") %>

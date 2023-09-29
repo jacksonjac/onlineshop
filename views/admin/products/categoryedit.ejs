@@ -1,0 +1,1074 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Add Category</h2>
+  <form action="/admin/process-category" method="post">
+    <label for="categoryName">Category Name:</label>
+    <input type="text" id="categoryName" name="categoryname" placeholder="Enter category name" required>
+    <button type="submit">Add Category</button>
+  </form>
+</div>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+  <title>CodePen - admin-dashboard-alt</title>
+    <link rel="canonical" href="https://codepen.io/dpnilsen/pen/XWqGwOO" />
+  
+  
+  
+  
+<style>
+/* || VARIABLES */
+:root {
+  --window-width: 100vw;
+  --body-background-color: #eceaea;
+  --main-font-size: 14pt;
+
+  --default-border-radius: 0.4rem;
+
+  --header-bg-color: rgb(255, 255, 255);
+  --header-color: white;
+
+  --page-footer-bg-color: rgb(235, 6, 6);
+  --page-footer-text-color: #fff;
+
+  --page-left-sidebar-bg-color: rgb(0, 0, 0);
+  --page-left-sidebar-text-color: #fff;
+
+  --main-header-box-bg-color: rgb(235, 6, 6);
+  --main-header-box-border: thin solid #00bfff;
+  --main-header-box-text-color: #fff;
+  
+  --card-bg-color: smokewhite;
+  --card-border: thin solid #d12b2b;
+  --card-radius: var(--default-border-radius);
+  --card-shadow: -1px 7px 5px 0px rgba(204,192,192,0.64);
+  --card-padding: 1rem;
+  --card-header-text-color: #000;
+  --card-header-bg-color: #efefef;
+  --card-header-font-size: 110%;
+  --card-section-title-bg-color:#efefef;
+  --card-section-title-padding: 1rem;
+
+  --button-color: blue;
+  --button-text-color: #fff;
+  --input-border: thin solid #ddee;
+}
+/* || RESETS */
+html,
+body,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+form,
+fieldset,
+caption,
+legend,
+table,
+tr,
+td,
+th,
+address,
+blockquote,
+img {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+fieldset {
+  border: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+body *,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+button,
+summary {
+  cursor: pointer;
+}
+/* || GENERAL STYLES */
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.main-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "page-header page-header page-header page-header"
+    "main-content main-content main-content main-content"
+    "page-footer page-footer page-footer page-footer";
+
+  width: 100%;
+
+  height: 100%;
+}
+
+.page-header {
+  grid-area: page-header;
+  color: var(--header-color);
+  background-color: rgb(242 242 242);
+  padding: 1rem;
+  max-height: 4rem;
+  
+  display:flex;
+  align-items: center;
+  
+  position:fixed;
+  width:100%;
+}
+
+.page-header nav {
+  display: flex;
+}
+.page-header > span {
+  padding: 0 .5rem;
+  text-transform: uppercase
+}
+.page-header img {
+  width: 2rem;
+  border-radius: .5rem;
+}
+.page-header > input {
+   border-radius: var(--default-border-radius);
+  padding: .5rem;
+  padding-left: 2rem;
+  margin-left: 4rem;
+  min-width: 50%;
+
+}
+/* .input__search { 
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 22a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm6.321-1.096l5.386 5.39a1 1 0 1 1-1.414 1.413l-5.386-5.388a8 8 0 1 1 1.414-1.415z' fill='black' fill-rule='nonzero'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  padding: 10px 40px;
+} */
+.main-content {
+  grid-area: main-content;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr 1fr auto;
+  grid-template-areas:
+    "left-sidebar content-header"
+    "left-sidebar content-1"
+    "left-sidebar content-2"
+    "left-sidebar content-3"
+    "content-footer content-footer";
+
+  height: 100%;
+  width:100%;
+  margin-top:4rem;
+}
+
+
+aside.left-sidebar {
+  grid-area: left-sidebar;
+  background-color: var(--page-left-sidebar-bg-color);
+  color: var(--page-left-sidebar-text-color);
+
+  padding: 1rem;
+  height: 100%;
+  
+  transition: width .10s ease-in-out;
+  
+  
+}
+aside.left-sidebar{
+  position:fixed;
+  
+}
+.left-sidebar nav
+{
+  display: flex;
+  overflow-y: auto;
+  
+}
+.left-sidebar nav ul {
+  list-style: none;
+}
+
+.left-sidebar nav ul li {
+  padding: 1rem 0.9rem;
+  padding-left: 0;
+}
+
+.left-sidebar ul label {
+  text-transform: uppercase;
+  font-weight: 100;
+}
+.left-sidebar nav ul li span {
+  display:inline-flex;
+  align-items: center;
+}
+
+  main.main-content {
+overflow: auto;
+  }
+
+.main-content header {
+  grid-area: content-header;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.main-content header div.card {
+  display: flex;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  min-width: 11rem;
+}
+.main-content header div {
+  display: flex;
+  color: var(--main-header-box-text-color);
+  background-color: var(--main-header-box-bg-color);
+
+  padding: 1rem;
+  align-items: center;
+
+  border-radius: var(--default-border-radius);
+  box-shadow: 0 0 10px gray;
+}
+
+/* image */
+.main-content header div div:nth-child(1) {
+  display: flex;
+  justify-content: center;
+
+  background-color: #fff;
+
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+
+  color: #02020a;
+}
+/* numbers and text */
+.main-content header div div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+  flex: 1;
+
+  box-shadow: none;
+}
+/* numbers */
+.main-content header div div:nth-child(2) span:nth-child(1) {
+  font-size: 120%;
+  font-weight: 700;
+}
+
+.page-footer {
+  grid-area: page-footer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--page-footer-text-color);
+  background-color: var(--page-footer-bg-color);
+  
+  position: fixed;
+  bottom:0;
+  width:100%;
+}
+
+
+
+.section table {
+  border-collapse:collapse;
+  width: 100%;
+}
+.section table thead {
+  background-color: #f8f8f8;
+  width:100%;
+}
+.section table tbody {
+  width: 100%;
+  
+}
+.section table th{
+  font-weight: 100;
+  padding:1em 0.5em;
+  text-align:left;
+}
+.section table td{
+  font-weight: 300;
+  padding:1em 0.5em;
+}
+.section-1 {
+  grid-area: content-1;
+  
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+/* .section {
+  
+  margin-top: 1rem;
+  width: 100%;
+} */
+
+.card-x {
+  
+  display: flex;
+  flex-direction:column;
+  
+  background-color: var(--card-bg-color);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  
+  margin: .5rem;
+  flex: 1;
+  
+  
+}
+.card-x header {
+  
+  display: flex;
+  flex-direction:row;
+  
+  justify-content: flex-start;
+  align-items: center;
+  
+  color: var(--card-header-text-color);
+ 
+  font-size: var(--card-header-font-size);
+  
+  
+  
+}
+
+.card-x header label {
+  
+  color: red;
+  
+}
+
+.spacer {
+  flex:1;
+  background: none;
+}
+
+.card-x header button {
+  display: flex;
+  margin-left: auto;
+ 
+  
+  border:none;
+  background-color: rgb(129 14 14);
+  color: #fff;
+  border-radius: var(--default-border-radius);
+  padding: .5rem .7rem;
+  
+  
+  
+  
+}
+
+x.card-x main div:nth-child(1) {
+  background-color: var( --card-section-title-bg-color);
+  padding: .5rem;
+    
+  margin: .5rem 0;
+  
+  
+  
+}
+.traffic-perct {
+  display: flex;
+  align-items: center;
+  width:100%;
+}
+.traffic-perct span:nth-child(1){
+  margin-right: 10px;
+}
+.pill {
+  
+  border: thin solid grey;
+  min-width: 10rem;
+  display: block;
+  border-radius:1rem;
+  height: 10px;
+  width:100%;
+}
+.fill {
+  background-color: rgb(243, 21, 21);
+  border-radius:1rem;
+  display: block;
+  height: 9px;
+}
+
+.fill-30 {
+  width: 30%;
+}
+.fill-40 {
+  width: 40%;
+}
+.fill-45 {
+  width: 45%;
+}
+.fill-60 {
+  width: 60%;
+}
+.fill-70 {
+  width: 70%;
+}
+
+#tableid{
+  padding-left: 249px;
+}
+#tableid th, #tableid td {
+          border: 1px solid black;
+          padding: 31px;
+          text-align: center;
+        }
+
+#thcap{
+  
+  padding-bottom: 40px;
+}
+.button-link {
+          display: inline-block;
+          padding: 6px 12px;
+          text-align: center;
+          text-decoration: none;
+          background-color: #d61010;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-right: 5px;
+        }
+        #tableid tbody td {
+    text-align: center;
+  }
+  #tableid thead th {
+    text-align: center;
+  }
+
+
+
+svg.home {
+  width: 1.5rem;
+  padding-right: 10px;
+  
+}
+svg.mail {
+  width: 1.5rem;
+  padding-right: 10px;
+}
+svg.message {
+  width: 1.5rem;
+  padding-right: 10px;
+  
+}
+svg.bell {
+  width: 1.5rem;
+  padding-right: 10px;
+  
+}
+svg.home {
+  width: 1.5rem;
+  
+}
+
+
+#listdiv{
+    padding-left: 250px;
+}
+
+@media screen and (max-width: 950px) {
+  aside.left-sidebar {
+    display: flex;
+    width: 3.5rem;
+    transition: width .10s ease-in-out;
+  }
+  aside.left-sidebar ul li span label {
+    display:none;
+  }
+  
+  aside.left-sidebar ul label {
+    display:none;
+  }
+  main.main-content {
+    width:100%;
+    margin:0;
+  }
+}
+.headsty{
+  padding: 10px;
+}
+</style>
+<style>
+    /* Style for the form container */
+    #uplodform {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-left: 604px;
+    }
+
+    /* Style for the form header */
+    
+
+    /* Style for form labels */
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* Style for form inputs */
+    input[type="text"],
+    input[type="number"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style for submit button */
+    input[type="submit"] {
+        background-color: #df1313;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+    #alert{
+      margin-top: 20px;
+    }
+</style>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 20px;
+    font-family: emoji;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #head{
+
+    padding-left: 297px;
+    width: 800px;
+    margin: 41px;
+  }
+</style>
+<style>
+  /* Add your styles here */
+  #del {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #del:hover {
+    text-decoration: underline;
+  }
+</style>
+<style>
+  #head {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+    color: #333;
+  }
+
+  #upload-link {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    background-color: #565669;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 3px;
+  }
+
+  p {
+    color: #777;
+    margin-bottom: 20px;
+  }
+
+  .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  #del {
+    text-decoration: none;
+    color: red;
+    margin-left: 10px;
+  }
+
+  #submitbtn {
+    background-color: #565669;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 17px;
+  }
+
+  #submitbtn:hover {
+    background-color: #0056b3;
+  }
+
+  #errorlog {
+    color: rgb(121, 9, 9);
+    font-size: 10px;
+  }
+
+  #success-message {
+    color: green;
+    display: none;
+  }
+  #box{
+    padding-left: 300px !important;
+  }
+
+</style>
+<style>
+  /* Style the table */
+  .category-table table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+
+  .category-table th, .category-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .category-table th {
+    background-color: #f2f2f2;
+  }
+
+  .category-table tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Style the delete link */
+  .category-table a#del {
+    text-decoration: none;
+    color: #f00;
+  }
+
+  /* Style the submit button */
+  .category-table button#submitbtn {
+    display: block;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Style the error message */
+  .category-table error#errorlog {
+    color: rgb(121, 9, 9);
+    font-size: 10px;
+    padding-top: 5px;
+  }
+</style>
+
+
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <div class="main-page">
+  <header class="page-header">
+    <img src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg">
+    <span>Admin</span>
+    
+    <nav class="top-nav">
+
+    </nav>
+  </header>
+
+  <main class="main-content">
+
+    <aside class="left-sidebar">
+      <nav>
+
+        <ul><label>main</label>
+          <li>
+            <li>
+              <a href="/admin/dashboard"  style="color: #efefef;">
+                <span>
+                  <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                  </svg>
+                  <label>Dashboard</label>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="/admin/salesReportpage"  style="color: #efefef;">
+                <span>
+                  <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                  </svg>
+                  <label>Sales Report</label>
+                </span>
+              </a>
+            </li>
+          <li>
+            <a href="/admin/adminproducts"  style="color: #efefef;">
+              <span>
+                <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                </svg>
+                <label>products</label>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/userOrders"  style="color: #efefef;">
+              <span>
+                <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                </svg>
+                <label>Orders</label>
+              </span>
+            </a>
+          </li>
+              <li>
+                <a href="/admin/adminusers"  style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>users</label>
+                  </span>
+                </a>
+              </li>
+           
+              <li>
+                <a href="/admin/editcategory" style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>CATEGORY MANAGE</label>
+                  </span>
+                </a>
+              </li>
+                <li>
+                  <a href="/admin/bannerlist " style="color: #efefef;">
+                    <span>
+                      <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                      </svg>
+                      <label>BANNER MANAGE</label>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/admin/couponlists " style="color: #efefef;">
+                    <span>
+                      <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                      </svg>
+                      <label>COUPON MANAGE</label>
+                    </span>
+                  </a>
+                </li>
+                <li>
+                <a href="/admin/logout" style="color: #efefef;">
+                  <span>
+                    <svg class="bell" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <label>Logout</label>
+                  </span>
+                </a>
+              </li>
+        </ul>
+      </nav>
+    </aside>
+    <!-- admin/products/categoryedit.ejs -->
+<div id="box">
+
+  <div id="head">
+    <h2>ALL CATEGORIES</h2><br><br>
+
+    <a id="upload-link" href="/admin/addcatergory">Add Category</a>
+
+    <P>You can edit the category name</P>
+   
+    <div class="category-table">
+      <form action="/admin/updatecategory" method="post">
+        <table>
+          <tr>
+            <th>Category Name</th>
+            <th>Action</th>
+          </tr>
+          <% categorylist.forEach(category => { %>
+            <tr>
+              <td>
+                <input type="text" name="category_<%= category._id %>" value="<%= category.name %>" placeholder="Enter category name" required onkeyup="validateInput(this.value)">
+              </td>
+              <td>
+                <a id="del" href="/admin/editcategoryname?categoryId=<%= category._id %>&categoryName=<%= category.name %>">Edit</a>
+              </td>
+              <td>
+                <a id="del" href="/admin/deletecategory?categoryId=<%= category._id %>">Delete</a>
+              </td>
+            </tr>
+          <% }); %>
+        </table>
+       
+        <error id="errorlog" style="color: rgb(121, 9, 9); font-size: 10px;"></error>
+     
+      <% if (typeof message!== "undefined") { %> 
+				
+        <p style="color: rgb(3, 61, 3);"><%= message %></p>
+     <% } %> 
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    <% if (typeof message!== "undefined") { %>
+
+        <p style="color: rgb(3, 54, 3)"><%= message %></p>
+        <% } %>
+  </div>
+  
+</div>
+
+  
+
+    
+    
+            
+           
+        </div>
+       
+       
+        
+        
+     
+      
+  
+
+  
+
+</div>
+  
+  
+<script type="text/javascript">
+  var pattern = /\s/g;
+  var errorLog = document.getElementById("errorlog");
+  var submitButton = document.getElementById("submitbtn");
+
+  function validateInput(data, inputId) {
+      var inputElement = document.getElementById(inputId);
+      var isSpace = pattern.test(data);
+      var isNegativeNumber = parseFloat(data) < 0;
+
+      if (isSpace || isNegativeNumber) {
+          errorLog.innerHTML = "Invalid input";
+          submitButton.style.display = "none"; // Hide the submit button
+      } else {
+          errorLog.innerHTML = "";
+          submitButton.style.display = "block"; // Show the submit button
+      }
+  }
+</script>
+<script>
+  function deleteCategory(categoryId) {
+    if (confirm("Are you sure you want to delete this category?")) {
+      // Perform the category deletion using fetch
+      fetch(`/admin/deletecategory/${categoryId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          // Category deleted successfully, you can update the UI accordingly
+          // For example, remove the deleted category from the DOM
+          const categoryItem = document.querySelector(`[data-category-id="${categoryId}"]`);
+          if (categoryItem) {
+            categoryItem.parentElement.remove();
+
+            // Show the success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+          }
+        } else {
+          // Handle error if deletion was not successful
+          console.error('Failed to delete category');
+        }
+      })
+      .catch(error => {
+        console.error('Error occurred while deleting category:', error);
+      });
+    }
+  }
+</script>
+  
+</body>
+
+</html>
+
+
