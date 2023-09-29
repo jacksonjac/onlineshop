@@ -16,7 +16,7 @@ app.use(
 );
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/genqmobiles", {
+mongoose.connect("mongodb+srv://jacksonjack333r:VWSbWKQw5eMjmI3V@cluster0.jykgsxw.mongodb.net/", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

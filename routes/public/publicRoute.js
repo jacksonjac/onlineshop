@@ -44,7 +44,7 @@ publicRoute.get("/buynow",authentication.userlogged,controller.userstatus,contro
 //cart
 publicRoute.get("/addtocart",authentication.userlogged,controller.userstatus,controller.addtocart);
 publicRoute.get("/linkaddtocart",authentication.userlogged,controller.userstatus,controller.linkaddtocart);
-publicRoute.get("/removecartproduct",authentication.userloggedcontroller.userstatus,controller.removecartproduct);
+publicRoute.get("/removecartproduct",authentication.userlogged,controller.userstatus,controller.removecartproduct);
 publicRoute.post("/increment",authentication.userlogged,controller.userstatus,controller.increments);
 publicRoute.post("/decrement",authentication.userlogged,controller.userstatus,controller.decrement);
 
@@ -60,7 +60,7 @@ publicRoute.get("/Editaddressshow",authentication.userlogged,controller.userstat
 publicRoute.post("/uploaddefaltchekaddress",authentication.userlogged,controller.userstatus,controller.Uploaddefultcheckaddress);
 publicRoute.post("/uploadaddress",authentication.userlogged,controller.addressupload);
 publicRoute.post("/uploadnewaddress",authentication.userlogged,controller.userstatus, controller.uploadnewaddress);
-publicRoute.post("/uploadchecknewaddress",authentication.userlogged,ontroller.userstatus,controller.uploadchecknewaddress);
+publicRoute.post("/uploadchecknewaddress",authentication.userlogged,controller.userstatus,controller.uploadchecknewaddress);
 publicRoute.post("/uploaddefaltadd",authentication.userlogged,controller.userstatus,controller.Uploaddefultaddress);
 publicRoute.get("/manageaddress",authentication.userlogged,controller.manageaddress);
 publicRoute.post("/personalinfoupload",authentication.userlogged,controller.userstatus,controller.personalinfoupdate);
