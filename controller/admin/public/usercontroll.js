@@ -45,6 +45,8 @@ const landingpage = async (req, res) => {
     const bannersData = await banner.find().exec();
     const userid = req.session.user_id;
     const categorylist = await category.find();
+
+   
     const allproducts = await product.find({ status: 1 });
 
     // Create an array to store the first four banner images
@@ -107,8 +109,12 @@ const loginpost = async (req, res) => {
     const password = req.body.password;
 
     const user = await Users.findOne({ email });
+
+    console.log(user,"this is user data")
     const status = user.status;
 
+
+ console.log(status,"thsi si s")
     if (status === 0) {
       const userid = false;
       return res.render("/loginpage", { userid });
@@ -135,8 +141,7 @@ const loginpost = async (req, res) => {
 
       // Find the category named "smartphones"
 
-      const allproducts = await product.find({ status: 1 })
-
+      
       const userdata = await Users.findOne({ name: username });
 
       if (!userdata) {
@@ -282,6 +287,8 @@ const verifyupadate = async (req, res) => {
 
 const home = async (req, res) => {
   try {
+
+    console.log("thsi is ")
     if (req.session.user_id) {
       const username = req.session.user_data.name;
       const userdata = await Users.findOne({ name: username });
