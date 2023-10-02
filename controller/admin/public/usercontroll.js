@@ -187,8 +187,7 @@ const verifynumber = async (req, res, next) => {
   try {
     const name = req.body.name;
     const number = req.body.number;
-    client.verify
-      .services(verifySid)
+    client.verify.v2.services(verifySid)
       .verifications.create({ to: "+91" + number, channel: "sms" })
       .then((verification) => {
         console.log(verification.status);
@@ -242,8 +241,7 @@ const verify_otp = async (req, res, next) => {
 
     const otpCode = req.body.otp;
 
-    const verificationCheck = await client.verify
-      .services(verifySid)
+    const verificationCheck = await client.verify.v2.services(verifySid)
       .verificationChecks.create({ to: "+91" + mobile, code: otpCode });
 
     console.log(verificationCheck.status);
