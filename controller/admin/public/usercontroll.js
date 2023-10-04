@@ -1621,7 +1621,7 @@ const userstatus = async (req, res, next) => {
     const User = await Users.findById(userid);
 
     const status = User.status;
-    console.log(status, "this is status");
+   
 
     if (status === 0) {
       console.log("if conditions");
