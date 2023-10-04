@@ -171,7 +171,7 @@
           // Update the default address element with the new address information
           const defaultAddressElement = document.getElementById("address");
           defaultAddressElement.textContent = `${data.newDefaultAddress.name}, ${data.newDefaultAddress.address}, ${data.newDefaultAddress.postalCode}, ${data.newDefaultAddress.phonenumber}`;
-          location.reload();
+          window.Location.reload();
         })
         .catch(error => {
           console.error("Error:", error);
