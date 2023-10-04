@@ -76,7 +76,7 @@
 		if (countdown > 0) {
 		  resendButton.textContent = `${countdown}s`; // Show the countdown time
 		  countdown--;
-		  setTimeout(updateCountdown, 1500); // Update every second
+		  setTimeout(updateCountdown, 2500); // Update every second
 		} else {
 		  resendButton.textContent = "Resend OTP"; // Show "Resend OTP" when the countdown reaches zero
 		  resendButton.removeAttribute("disabled"); // Enable the button

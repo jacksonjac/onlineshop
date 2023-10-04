@@ -9,28 +9,24 @@ const bycrpt = require("bcrypt");
 const path = require('path')
 var easyinvoice = require('easyinvoice');
 const fs = require('fs')
-
-
-
-
-
+const dotenv = require('dotenv').config()
 
 //Otp working data
-const dotenv = require("dotenv").config();
-const accountSid = "AC9ddd92d8f3f55f6f21bfa7ad405c845f";
-const authToken = "c02b321ea722f82a9353b99f0579d44f";
-const verifySid = "VA37b47d3c160352891689221e106e08ce";
+const accountSid =process.env.TWILIO_SID;
+const authToken =process.env.TWILIO_AUTH_TOKEN;
+const verifySid =process.env.VERIFY_SID;
 const client = require("twilio")(accountSid, authToken);
 
-
-
+//razropay working-data
 const razorPayInstance = new Razorpay({
   key_id:"rzp_test_jYuvgdereCJGfM",
   key_secret:"dkOQ8mMw1PsK6imUPURGnOTK"
 })
 
-//password bcrypt function
 
+
+
+//password bcrypt function
 const securedpassword = async (password) => {
   try {
     const passwordhash = await bycrpt.hash(password, 10);
@@ -39,6 +35,10 @@ const securedpassword = async (password) => {
     console.log(error.message);
   }
 };
+
+
+
+
 //landig page controlling
 const landingpage = async (req, res) => {
   try {
@@ -72,6 +72,9 @@ const landingpage = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+
 
 //signin button click function
 const login = async (req, res) => {
@@ -107,6 +110,7 @@ const loginpost = async (req, res) => {
     console.log("this is loggin page");
     const email = req.body.email;
     const password = req.body.password;
+    console.log(email, password)
 
     const user = await Users.findOne({ email });
 
@@ -182,7 +186,7 @@ const namecheck = async (req, res, next) => {
     next();
   }
 };
-
+ //verify Number
 const verifynumber = async (req, res, next) => {
   try {
     const name = req.body.name;
