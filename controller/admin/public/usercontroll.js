@@ -12,6 +12,8 @@ const fs = require('fs')
 const dotenv = require('dotenv').config()
 
 //Otp working data
+
+console.log("sid",process.env.TWILIO_SID)
 const accountSid =process.env.TWILIO_SID;
 const authToken =process.env.TWILIO_AUTH_TOKEN;
 const verifySid =process.env.VERIFY_SID;
