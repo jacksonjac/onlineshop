@@ -1889,7 +1889,7 @@ const thakyoupage = async (req,res)=>{
      
     const userid = req.session.user_id
 
-    res.render("public/sucess",{userid})
+    res.render("public/Sucess",{userid})
     
   } catch (error) {
 
