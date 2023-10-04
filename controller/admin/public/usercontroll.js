@@ -2041,6 +2041,18 @@ const checkpaymentmethod = async (req, res) => {
       totalprice += cartItem.price * cartItem.quantity;
     }
 
+    if (!user.defaultaddress) {
+      // User doesn't have a default address, render the page with a message
+      return res.render("public/checkpaymentmethod", {
+        userid,
+        totalItems,
+        totalprice, // You can set this to 0 or any default value
+        discount, // You can set this to 0 or any default value
+        message: "Please set your default address.", // Add the message here
+      });
+    }
+
+   
     res.render("public/checkpaymentmethod", { userid, totalItems, totalprice ,discount});
   } catch (error) {
     console.log(error.message);

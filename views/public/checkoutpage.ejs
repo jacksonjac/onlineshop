@@ -135,7 +135,9 @@
               <button type="button" class="btn btn-success col-md-10">Continue</button>
             </a>
           </div>
-  
+          <% if (typeof message !== "undefined") { %>
+						<p style="color: rgb(228, 21, 21)"><%= message %></p>
+					<% } %>
 
       </div>
 
