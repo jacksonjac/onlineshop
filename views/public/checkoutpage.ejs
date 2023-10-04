@@ -17,20 +17,29 @@
         </div>
         
 
-        <a href="/newcheckaddresspage?totalamount= <%=  grandTotal %>"><button class="btn btn-primary mb-3">Add New Address</button></a>
+        <a href="/newcheckaddresspage?totalamount=<%= grandTotal %>&couponprice=<%= couponprice %>">
+          <button class="btn btn-primary mb-3">Add New Address</button>
+        </a>
         
         <div class="card mb-4">
           <div class="card-body">
             <p class="text-uppercase fw-bold mb-3 text-font">Default Address</p>
             <div class="row">
               <div class="col-md-4">
-                <p id="address"><%= defaultAddress.name %>, <%= defaultAddress.address %>,<%= defaultAddress.city %>,<%= defaultAddress.postalCode %>,</p>             
+                <% if (!defaultAddress || !defaultAddress.name || !defaultAddress.address) { %>
+                  <p id="address">Not Defined</p>
+                <% } else { %>
+                  <p id="address"><%= defaultAddress.name %>, <%= defaultAddress.address %>, <%= defaultAddress.city %>, <%= defaultAddress.postalCode %>,</p>
+                <% } %>
               </div>
               <div class="col-md-7">
-               <a href="/editdefaltchekaddress?productdata=<%= allCartProducts %>"> <button id="editButton" type="button" class="btn btn-outline-dark float-end button-color"
-                  data-mdb-ripple-color="dark">
-                  Edit
-                </button></a>
+                <% if (defaultAddress && defaultAddress.name && defaultAddress.address) { %>
+                  <a href="/editdefaltchekaddress?productdata=<%= allCartProducts %>&couponprice=<%= couponprice %>">
+                    <button id="editButton" type="button" class="btn btn-outline-dark float-end button-color" data-mdb-ripple-color="dark">
+                      Edit
+                    </button>
+                  </a>
+                <% } %>
               </div>
             </div>
           </div>   
@@ -38,24 +47,26 @@
 
         
         <div class="card mb-4">
-          <div class="card-body">
-            <p class="text-uppercase fw-bold mb-3 text-font">Delivery Addresses</p>
-            <% allUserAddresses.forEach(address => { %>
-              <div class="row mb-2">
-                <div class="col-md-4">
-                  <p><%= address.name %>, <%= address.address %>, <%= address.postalCode %>, <%= address.phonenumber %></p>
-                </div>
-                <div class="col-md-7">
-                  <input type="radio" class="btn btn-outline-dark float-end button-color"
-                    data-mdb-ripple-color="dark"
-                    data-address-id="<%= address._id %>">
-                  
-                 
-                </div>
-              </div>
-            <% }); %>
+  <div class="card-body">
+    <p class="text-uppercase fw-bold mb-3 text-font">Delivery Addresses</p>
+    <% if (!allUserAddresses || allUserAddresses.length === 0) { %>
+      <p>Not Address</p>
+    <% } else { %>
+      <% allUserAddresses.forEach(address => { %>
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <p><%= address.name %>, <%= address.address %>, <%= address.postalCode %>, <%= address.phonenumber %></p>
+          </div>
+          <div class="col-md-7">
+            <input type="radio" class="btn btn-outline-dark float-end button-color"
+              data-mdb-ripple-color="dark"
+              data-address-id="<%= address._id %>">
           </div>
         </div>
+      <% }); %>
+    <% } %>
+  </div>
+</div>
         
         
 
@@ -118,12 +129,13 @@
     
 
         </div>
-        <div class="text-center">
-          <a href="/checkpaymentmethod?discount=<%= couponprice %>">
-            <button type="button" class="btn btn-success col-md-10">Continue</button>
-          </a>
-
-        </div>
+        <% if (defaultAddress && defaultAddress.name && defaultAddress.address) { %>
+          <div class="text-center">
+            <a href="/checkpaymentmethod?discount=<%= couponprice %>">
+              <button type="button" class="btn btn-success col-md-10">Continue</button>
+            </a>
+          </div>
+        <% } %>
 
       </div>
 
@@ -159,6 +171,7 @@
           // Update the default address element with the new address information
           const defaultAddressElement = document.getElementById("address");
           defaultAddressElement.textContent = `${data.newDefaultAddress.name}, ${data.newDefaultAddress.address}, ${data.newDefaultAddress.postalCode}, ${data.newDefaultAddress.phonenumber}`;
+          location.reload();
         })
         .catch(error => {
           console.error("Error:", error);

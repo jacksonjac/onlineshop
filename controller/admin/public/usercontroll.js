@@ -792,6 +792,7 @@ const Uploaddefultaddress = async (req, res) => {
 
 const Uploaddefultcheckaddress = async (req, res) => {
   try {
+    const couponprice = req.body.couponprice
     const newname = req.body.name;
     const newaddress = req.body.address;
     const newemail = req.body.email;
@@ -849,6 +850,7 @@ const Uploaddefultcheckaddress = async (req, res) => {
       userid,
       allCartProducts,
       grandTotal,
+      couponprice
     });
   } catch (error) {
     console.error("Error updating or adding default address:", error);
@@ -1038,6 +1040,9 @@ const uploadchecknewaddress = async (req, res) => {
   try {
 
     const grandTotal = req.body.totalamount
+    const couponprice = req.body.couponPrice
+
+    console.log(couponprice,"the coupon price")
 
      console.log(grandTotal,"this is the grand total")
     const { name, email, address, city, postalCode, phoneNumber } = req.body;
@@ -1058,6 +1063,7 @@ const uploadchecknewaddress = async (req, res) => {
       city,
       postalCode,
       phonenumber: phoneNumber,
+      
     };
 
     // Add the new address to the user's address array
@@ -1088,6 +1094,7 @@ const uploadchecknewaddress = async (req, res) => {
       number,
       userid,
       allUserAddresses,
+      couponprice
     });
   } catch (error) {
     console.error(error);
@@ -1968,6 +1975,7 @@ const editdefaltcheckaddress = async (req, res) => {
   try {
     const userid = req.session.user_id;
     const productdata = req.query.productdata;
+    const coupon = req.query.couponprice
     const userdata = await Users.findById(userid);
 
     if (!userdata) {
@@ -1979,7 +1987,7 @@ const editdefaltcheckaddress = async (req, res) => {
     const defaltadd = userdata.defaultaddress[0];
 
     // Assuming you're using some template engine like EJS
-    res.render("public/editchekaddres", { defaltadd, userid, productdata });
+    res.render("public/editchekaddres", { defaltadd, userid, productdata,coupon});
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -2109,9 +2117,10 @@ const newcheckaddpage = async (req,res)=>{
   try {
 
     const total = req.query.totalamount
+    const coupon = req.query.couponprice
     const userid = req.session.user_id;
 
-    res.render("public/checkoutnewadd", { userid ,total});
+    res.render("public/checkoutnewadd", { userid ,total,coupon});
   } catch (error) {
     console.log(error.message);
   }
