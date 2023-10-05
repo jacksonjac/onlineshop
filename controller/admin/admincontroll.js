@@ -250,6 +250,8 @@ const adminloginpost = async (req, res) => {
   try {
     const Name = req.body.name;
     const Password = req.body.password;
+
+    console.log(Name,Password,"sfklsdfj")
     const admin = await Admin.findOne({ name: Name });
     const dataname = admin.name;
     const datapassword = admin.password;
@@ -440,7 +442,7 @@ const adminloginpost = async (req, res) => {
         deliveredOrdersCount
       });
     } else {
-      res.render("admin/index", { message: "Incorrect password" });
+      res.render("admin/index",{message:"incorrect password"});
     }
   } catch (error) {
     console.log(error.message);
@@ -467,7 +469,7 @@ const adminproducts = async (req, res) => {
   try {
     const productList = await products.find().populate("category");
     const categorylist = await category.find();
-    res.render("admin/products/products", { productList, categorylist });
+    res.render("admin/products", { productList, categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {

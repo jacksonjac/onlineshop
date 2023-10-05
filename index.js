@@ -28,6 +28,7 @@ app.set("view engine", "ejs");
 app.set("views", "./views/");
 
 app.use(express.static(path.join(__dirname,"views/public"))) 
+app.use(express.static(path.join(__dirname,"views/admin"))) 
 app.use(express.static(path.join(__dirname,"public"))) 
 
 // Routes
