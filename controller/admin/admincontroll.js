@@ -162,7 +162,7 @@ const Dashboard = async (req, res) => {
       
       upiOrderCount,
       upiTotalPrice
-    );
+    ,"upiiiisljfsldc");
 
     function getDayOfWeek(dateString) {
       const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -307,7 +307,7 @@ const adminloginpost = async (req, res) => {
     const upiOrders = await Orderslist.aggregate([
       {
         $match: {
-          paymentMethod: "UPI" // Assuming the payment method field is named "paymentMethod"
+          paymentmethod: "upi" // Assuming the payment method field is named "paymentMethod"
         }
       },
       {
@@ -318,6 +318,12 @@ const adminloginpost = async (req, res) => {
         }
       }
     ]);
+    
+
+    // Extract the UPI order count and total price
+    const upiOrderCount = upiOrders.length > 0 ? upiOrders[0].count : 0;
+    const upiTotalPrice = upiOrders.length > 0 ? upiOrders[0].total : 0;
+
     const cancelOrders = await Orderslist.aggregate([
       {
         $match: {
@@ -419,9 +425,7 @@ const adminloginpost = async (req, res) => {
     const canselOrderprice = cancelOrders.length > 0 ? cancelOrders[0].total : 0;
 
     // Extract the UPI order count and total price
-    const upiOrderCount = upiOrders.length > 0 ? upiOrders[0].count : 0;
-    const upiTotalPrice = upiOrders.length > 0 ? upiOrders[0].total : 0;
-
+   
     const reversedLast7DaysData = last7DaysSalesData.reverse();
 
       res.render("admin/dashboard",{
