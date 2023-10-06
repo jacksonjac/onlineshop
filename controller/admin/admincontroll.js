@@ -777,7 +777,7 @@ const productblock = async (req, res) => {
 
     console.log(productList.status, "number");
     const categorylist = await category.find();
-    return res.render("admin/products/products", { productList, categorylist });
+    return res.render("admin/products", { productList, categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -811,7 +811,7 @@ const productunblock = async (req, res) => {
 
     console.log(productList.status, "number");
     const categorylist = await category.find();
-    return res.render("admin/products/products", { productList, categorylist });
+    return res.render("admin/products", { productList, categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -957,7 +957,7 @@ const uploadcategory = async (req, res) => {
 
       // Save the new category to the database
       const savedCategory = await newCategory.save();
-      res.render("admin/products/addcategory",{
+      res.render("admin/addcategory",{
         message: "Category added successfully",
         category: savedCategory,
       });
@@ -1245,13 +1245,13 @@ const updatecategory = async (req, res) => {
 
     if (categoryNameFound) {
       // If at least one category name is already found, render the same page with a message
-      res.render("admin/products/categoryedit", {
+      res.render("admin/categoryedit", {
         categorylist,
         message: "Category name already exists in the list",
       });
     } else {
       // Otherwise, redirect back to the edit category page with a success message
-      res.render("admin/products/categoryedit", {
+      res.render("admin/categoryedit", {
         categorylist,
         message: "Categories Updated Successfully",
       });
@@ -1499,7 +1499,7 @@ const profile = async (req, res) => {
     console.log(isVerified)
 
     // Assuming you want to render a template with the admin data and isVerified
-    res.render("admin/profile/profile", { adminData, isVerified });
+    res.render("admin/profile", { adminData, isVerified });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");

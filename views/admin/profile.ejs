@@ -1,0 +1,361 @@
+<%- include("./includes/header") %>
+<section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3"><%= adminData.name %></h5>
+              <p class="text-muted mb-1">Full Stack Developer</p>
+              <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+             
+            </div>
+          </div>
+          
+        </div>
+      
+
+        
+           
+           
+       
+
+        <div class="col-lg-8">
+           
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= adminData.name %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= adminData.email %></p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0"><%= adminData.number %></p>
+                </div>
+              </div>   
+             
+             
+<br>
+<br>
+<br>
+
+              <div class="row">
+                <div class="col-sm-3">
+                    <li class="option" id="editpassword">Change password</li>
+                </div>
+                <div class="col-sm-9">
+                
+                </div>
+              </div>   
+              <br>
+
+              <div class="row">
+                <div class="col-sm-3">
+                    <li class="option" id="editprofile">Edit profile</li>
+                </div>
+                <div class="col-sm-9">
+                
+                </div>
+              </div>   
+              <br>
+
+              <div class="row">
+                <div class="col-sm-3">
+                    <% if (isVerified) { %>
+                        <li class="option" id="addnewadminlink">Add new admin</li>
+                    <% } %>
+                </div>
+                <div class="col-sm-9">
+                
+                </div>
+              </div>   
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <div id="editProfileFields" style="display: none;">
+    <form id="editProfileForm" class="mb-4 p-4" >
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="nameInput" value="<%= adminData.name %>">
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="emailInput" value="<%= adminData.email %>">
+      </div>
+  
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" class="form-control" id="phoneNumberInput" value="<%= adminData.number %>">
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <button type="button" class="btn btn-danger" id="close">Close</button>
+    </form>
+  </div>
+  
+
+
+  
+  <p class="text-success alert bold" id="message"></p>
+    <div id="editProfileFields" style="display: none;">
+        <form id="editProfileForm" class="mb-4 p-4">
+           
+           
+            <label for="name">Name:</label>
+            <input type="text" id="nameInput" value="<%= adminData.name %>">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="emailInput" value="<%= adminData.email %>">
+            
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumberInput" value="<%= adminData.number %>">
+          
+            <button type="submit" id="saveChanges" >Save Changes</button>
+            <button style="background-color: red!important;" id="close" >Close</button>
+        </form>
+
+       
+    </div>
+
+
+    <div id="changepass" style="display: none;">
+        <form id="editpasswordform" class="mb-4 p-4">
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="passwordValue" value="<%= adminData.password %>">
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-danger" id="close2">Close</button>
+        </form>
+      </div>
+
+
+     <div id="addnewadmin" style="display: none;">
+  <form id="addnewadminform" class="mb-3 p-4">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="nameinput" value="">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="emailinput" value="">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="passwordinput" value="">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-danger" id="close3">Close</button>
+  </form>
+</div>
+
+      
+    <script>
+        const closeButton = document.getElementById("close");
+        const editProfileLink = document.getElementById("editprofile");
+        const editProfileFields = document.getElementById("editProfileFields");
+        const nameValue = document.getElementById("nameValue");
+        const emailValue = document.getElementById("emailValue");
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        
+        editProfileLink.addEventListener("click", () => {
+            editProfileFields.style.display = "block";
+            closeButton.addEventListener("click", () => {
+                 window.location.reload();
+            });   
+         nameInput.value = nameValue.innerText;
+         emailInput.value = emailValue.innerText;
+           
+        });
+       
+          </script>
+        
+        <script>
+            const editProfileForm = document.getElementById("editProfileForm");
+            const messageElement = document.getElementById("message");
+        
+            // Handle form submission
+            editProfileForm.addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission behavior
+        
+                // Get the input values and trim them
+                const nameInput = document.getElementById("nameInput").value.trim();
+                const emailInput = document.getElementById("emailInput").value.trim();
+                const phoneNumberInput = document.getElementById("phoneNumberInput").value.trim();
+        
+                // Validate the input fields
+                if (nameInput === "" || emailInput === "" || phoneNumberInput === "") {
+                    // Display an error message
+                    messageElement.innerHTML = "All fields are required.";
+                    return; // Prevent further processing
+                }
+        
+                // Collect the form data as an object
+                const formData = {
+                    name: nameInput,
+                    email: emailInput,
+                    phoneNumber: phoneNumberInput,
+                };
+        
+                // Convert the form data to a JSON string
+                const jsonData = JSON.stringify(formData);
+        
+                // Create an XML request object
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "/admin/editprofile", true); // Replace with your backend endpoint URL
+                xhr.setRequestHeader("Content-Type", "application/json"); // Set the content type as JSON
+        
+                // Handle response from the server
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var form = document.getElementById("editProfileFields");
+                        document.getElementById("message").innerHTML = "Update Successful.";
+                    } else {
+                        // Handle errors here, e.g., show an error message
+                        console.error("Request failed");
+                        displayResponseMessage("An error occurred while updating the profile", true);
+                    }
+                };
+        
+                // Send the JSON data as the request body
+                xhr.send(jsonData);
+            });
+        </script>
+
+
+
+
+
+<script>
+     const closeButton2 = document.getElementById("close2");
+    const editpasswordlink = document.getElementById("editpassword");
+    const editpasswordfeild = document.getElementById("changepass");
+    const saveChangesButton = document.getElementById("saveChange");
+    closeButton2.addEventListener("click", () => {
+                 window.location.reload();
+            });   
+        
+    editpasswordlink.addEventListener("click", () => {
+        editpasswordfeild.style.display = "block";
+    });
+
+    
+
+    saveChangesButton.addEventListener("click", () => {
+    const passwordValue = document.getElementById("passwordValue").value;
+
+    // Define the URL for changing the password
+    const apiUrl = '/admin/changepassword'; // Replace with the actual URL for changing the password
+
+    // Send a POST request with the password value as a string
+    fetch(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify({ Password: passwordValue }), // Use "Password" instead of "password"
+        headers: {
+            'Content-Type': 'application/json', // Set the content type to JSON
+        },
+    })
+    .then(response => {
+        // Handle the response from the backend here (e.g., display a success message)
+        if (response.ok) {
+            alert('Password changed successfully.');
+            // You can hide the form or perform other actions as needed
+            editpasswordfeild.style.display = "none";
+        } else {
+            alert('Failed to change password.');
+        }
+    })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while changing the password.');
+        });
+    });
+</script>
+
+
+<script>
+     const closeButton3 = document.getElementById("close3");
+    const addNewAdminButton = document.getElementById("addnewadminlink");
+    const addNewAdminForm = document.getElementById("addnewadmin");
+    const saveButton = document.getElementById("saveChanged");
+
+    addNewAdminButton.addEventListener("click", () => {
+        addNewAdminForm.style.display = "block";
+    });
+    closeButton3.addEventListener("click", () => {
+                 window.location.reload();
+            });   
+
+    saveButton.addEventListener("click", () => {
+        // Get input values
+        const name = document.getElementById("nameinput").value;
+        const email = document.getElementById("emailinput").value;
+        const password = document.getElementById("passwordinput").value;
+
+       
+       
+        // Define the URL for your API endpoint
+        const apiUrl = '/admin/addnewadmin'; // Replace with your actual API URL
+
+        // Create an object to send as JSON data
+        const requestData = {
+            name: name,
+            email: email,
+            password: password
+        };
+
+        // Send a POST request with the JSON data
+        fetch(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify(requestData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Admin added successfully.');
+                addNewAdminForm.style.display = "none";
+                // You can perform further actions as needed
+            } else {
+                alert('Failed to add admin.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding the admin.');
+        });
+    });
+</script>
+
+<%- include("./includes/footer") %>
