@@ -22,7 +22,7 @@ const securedpassword = async (password) => {
 
 const addcategory = async (req, res) => {
   try {
-    res.render("admin/products/addcategory");
+    res.render("admin/addcategory");
   } catch (error) {
     console.log(error.message);
   }
@@ -482,7 +482,7 @@ const adminusers = async (req, res) => {
   try {
     const userslist = await users.find();
 
-    res.render("admin/users/users", { userslist });
+    res.render("admin/users", { userslist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -527,13 +527,13 @@ const userblock = async (req, res) => {
 
       const userslist = await users.find();
 
-      res.render("admin/users/users", {
+      res.render("admin/users", {
         message: "User blocked successfully",
         userslist,
       });
     } else {
       const userslist = await users.find();
-      res.render("admin/users/users", {
+      res.render("admin/users", {
         message: "User not found",
         userslist,
       });
@@ -560,7 +560,7 @@ const userunblock = async (req, res) => {
 
       // Fetch the updated user list and render the page
       const userslist = await users.find();
-      res.render("admin/users/users", {
+      res.render("admin/users", {
         message: "User unblocked successfully",
         userslist,
       });
@@ -583,7 +583,7 @@ const userunblock = async (req, res) => {
 const uplodeproduct = async (req, res) => {
   const categoryid = await category.find();
   console.log(categoryid);
-  res.render("admin/products/newproduct", { categoryid });
+  res.render("admin/newproduct", { categoryid });
 };
 const addproducts = async (req, res) => {
   try {
@@ -660,7 +660,7 @@ const productedit = async (req, res) => {
       return res.status(404).send("Product not found.");
     }
     const categoryid = await category.find();
-    res.render("admin/products/editproduct", { editproduct, categoryid });
+    res.render("admin/editproduct", { editproduct, categoryid });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -740,7 +740,7 @@ const getcategory = async (req, res) => {
       .find({ category: foundCategory._id })
       .populate("category");
     const categorylist = await category.find();
-    res.render("admin/products/products", { productList, categorylist });
+    res.render("admin/products", { productList, categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -818,30 +818,37 @@ const productunblock = async (req, res) => {
 
 const userorderslist = async (req, res) => {
   try {
-    // Retrieve all order list data from the Orderslist model
+    // Retrieve all order list data from the Orders model
     const allOrders = await Orderslist.find();
 
     // Loop through the orders and retrieve user data for each order
     const ordersWithData = await Promise.all(
       allOrders.map(async (order) => {
-        const userdata = await users.findById(order.userid);
-        return {
-          ...order.toObject(),
-          username: userdata.name,
-        };
+        const userData = await users.findById(order.userid);
+
+        if (userData) {
+          return {
+            ...order.toObject(),
+            username: userData.name,
+          };
+        } else {
+          // Handle the case where userData is null or undefined
+          return {
+            ...order.toObject(),
+            username: "Unknown User",
+          };
+        }
       })
     );
 
-    console.log(ordersWithData,"this is the all users orders")
-
-
+    console.log(ordersWithData, "this is all user orders");
 
     // Render the order list page and pass the order list data with user data
-    res.render("admin/products/Orderedproducts", { allOrders: ordersWithData });
+    res.render("admin/Orderedproducts", { allOrders: ordersWithData });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
-      error: " Internal Server Error Try Again later",
+      error: "Internal Server Error. Try again later.",
     });
   }
 };
@@ -855,7 +862,7 @@ const EditOrderstatus = async (req, res) => {
 
     // Find the user data
     const userData = await users.findOne({ name: username });
-
+  console.log("sdfkjsdlfk")
     if (!userData) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -890,6 +897,8 @@ const EditOrderstatus = async (req, res) => {
     // Save the updated global order status
     await globalOrderToUpdate.save();
 
+    console.log(globalOrderToUpdate,"skfjsdflkdsoderdd")
+
     res.json({ message: "Order status updated successfully", status });
   } catch (error) {
     console.error(error.message);
@@ -917,7 +926,7 @@ const editimage = async (req, res) => {
 
     // Now you can use the imageName to load and edit the corresponding image
     // For example, you can render the editimagepage EJS template with the imageName
-    res.render("admin/products/editimagepage", { imageName });
+    res.render("admin/editimagepage", { imageName });
   } catch (error) {
     console.log(error.message);
     // Handle errors as needed
@@ -933,7 +942,7 @@ const uploadcategory = async (req, res) => {
 
     if (isNameTaken) {
       // Category name already exists, so you can return an error message
-      res.render("admin/products/addcategory", {
+      res.render("admin/addcategory", {
         message: "Category name already exists in the list",
       });
     } else {
@@ -960,7 +969,7 @@ const editcategory = async (req, res) => {
   try {
     const categorylist = await category.find();
 
-    res.render("admin/products/categoryedit", { categorylist });
+    res.render("admin/categoryedit", { categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -989,7 +998,7 @@ const editcategoryname = async (req, res) => {
 
     console.log(categoryId, categoryName, "dkfjsldkf");
 
-    res.render("admin/products/editcategory", { categoryId, categoryName });
+    res.render("admin/editcategory", { categoryId, categoryName });
   } catch (error) {
     console.log(error.message);
   }
@@ -1006,7 +1015,7 @@ const updatecategoryname = async (req, res) => {
     if (isNameTaken) {
       console.log("Category name already exists");
       const categorylist = await category.find();
-      res.render("admin/products/editcategory", {
+      res.render("admin/editcategory", {
         categoryId,
         categorylist,
         categoryName,
@@ -1024,7 +1033,7 @@ const updatecategoryname = async (req, res) => {
         // Handle the case where the category with the given ID does not exist
         console.log("Category not found for update");
         const categorylist = await category.find();
-        res.render("admin/products/editcategory", {
+        res.render("admin/editcategory", {
           categoryId,
           categorylist,
           categoryName,
@@ -1033,7 +1042,7 @@ const updatecategoryname = async (req, res) => {
       } else {
         // Category name updated successfully
         const categorylist = await category.find();
-        res.render("admin/products/categoryedit", {
+        res.render("admin/categoryedit", {
           categoryId,
           categorylist,
           categoryName: updatedCategory.name, // Use the updated name
@@ -1166,7 +1175,7 @@ const updateimage = async (req, res) => {
      const imageName = newImageFile
 
     // Redirect or render a success page as needed
-    res.render("admin/products/editimagepage",{imageName,message:"image changed Successfully"} );
+    res.render("admin/editimagepage",{imageName,message:"image changed Successfully"} );
   } catch (error) {
     console.log(error.message);
     // Handle errors as needed
@@ -1274,7 +1283,7 @@ const couponpage = async (req,res)=>{
 
   try {
 
-    res.render("admin/coupon/couponpage")
+    res.render("admin/couponpage")
     
   } catch (error) {
 
@@ -1317,7 +1326,7 @@ const postCoupon = async (req, res) => {
 const couponlists = async (req, res) => {
   try {
     const couponlist = await Coupon.find({});
-    res.render('admin/coupon/couponlist', { couponlist }); // Pass the couponlist data to the template
+    res.render('admin/couponlist', { couponlist }); // Pass the couponlist data to the template
   } catch (error) {
     console.log(error.message);
   }
@@ -1402,7 +1411,7 @@ const deleteimage = async (req, res) => {
       // You can decide how to handle the case when there's only one image left
       const productList = await products.find().populate("category");
       const categorylist = await category.find();
-     return res.render("admin/products/products", { productList, categorylist,message:"One image is Required" });
+     return res.render("admin/products", { productList, categorylist,message:"One image is Required" });
     }
 
     const updatedProduct = await products.findOneAndUpdate(
@@ -1413,7 +1422,7 @@ const deleteimage = async (req, res) => {
 
     const productList = await products.find().populate("category");
     const categorylist = await category.find();
-    res.render("admin/products/products", { productList, categorylist });
+    res.render("admin/products", { productList, categorylist });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Internal Server Error");

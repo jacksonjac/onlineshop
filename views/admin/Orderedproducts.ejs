@@ -1,0 +1,212 @@
+<%- include("./includes/header") %>
+<style>
+    /* Style for the dropdown button */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+  
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 120px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+  
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+  
+    /* Style for the dropdown options */
+    .dropdown-content a {
+      color: #c85e5e;
+      padding: 4px 7px;
+      text-decoration: none;
+      display: block;
+      
+      font-size: 11p
+    }
+  
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+    
+  </style>
+  <div id="detailsshowdiv">
+
+                  
+  </div>
+
+<p  id="heede" class="text-success" ></p>
+    
+  
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">DATE</th>
+        <th scope="col">MODEL</th>
+        <th scope="col">PRICE</th>
+        <th scope="col">USERNAME</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">IMAGE</th>
+        <th scope="col">PAYMENT TYPE</th>
+        <th scope="col">MANAGE STATUS</th>
+        <th scope="col">ORDER DETAILS</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        <% allOrders.forEach(product => { %>
+          <tr>
+            <td><%=product.createdAt.toISOString().split('T')[0] %></td>
+            <td><%= product.model %></td>
+            <td><%= product.price %></td>
+            <td><%= product.username %></td>
+            <td><%= product.orderstatus %></td>
+            <td>
+              <!-- Display the image if available -->
+              <% if (product.image) { %>
+                <img src="/publicimage/<%= product.image %>" alt="Order Image" width="50px">
+              <% } else { %>
+                No Image
+              <% } %>
+            </td>
+            <td><%= product.paymentmethod %></td>
+            <td>
+                <div class="dropdown">
+                  <button class="dropdown-btn btn btn-danger ">Change Status</button>
+                  <div class="dropdown-content">
+                    <a href="#" onclick="changeStatus('PENDING', '<%= product.model %>', '<%= product.username %>','<%= product._id %>')">PENDING</a>
+                    <a href="#" onclick="changeStatus('ARRIVED', '<%= product.model %>', '<%= product.username %>','<%= product._id %>')">ARRIVED</a>
+                    <a href="#" onclick="changeStatus('CANCEL', '<%= product.model %>', '<%= product.username %>','<%= product._id %>')">CANCEL</a>
+                    <a href="#" onclick="changeStatus('DELIVERED', '<%= product.model %>', '<%= product.username %>','<%= product._id %>')">DELIVERED</a>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button class="more-details-button btn btn-info" onclick="showDetails('<%= product.userid %>', '<%= product.model %>', '<%= product.addressname %>', '<%= product.phonenumber %>', '<%= product.orderaddress %>','<%= product.paymentmethod %>')">More Details</button>
+                 
+              </td>
+          </tr>
+        <% }); %>
+      </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    function showDetails(userid, model, addressname, phonenumber, orderaddress,paymentmethod) {
+      // Prepare the data to send to the backend
+      const data = {
+        userid,
+        model,
+        orderaddress,
+        phonenumber,
+        addressname,
+        paymentmethod
+      };
+  
+   console.log(userid,model,orderaddress,phonenumber,addressname,paymentmethod)
+  
+      
+  
+      // Send the data to the backend using a fetch or XMLHttpRequest
+      fetch('/admin/orderdetailshowpage', {
+        method: 'POST', // You can use GET or POST depending on your backend setup
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Populate the corresponding <div> with the response data
+        const detailsDiv = document.getElementById(`detailsshowdiv`);
+        detailsDiv.innerHTML = `
+          
+          <p> Order  id: ${responseData.productdata._id}</p>
+          <p> Order  model: ${responseData.productdata.model}</p>
+          <p> Order  price: ${responseData.productdata.price}/-</p>
+          <p> Order delivery name : ${responseData.orderusername}</p>
+          <p>Order delivery address: ${responseData.orderaddress}</p>
+          <p>Order delivery contact No:: ${responseData.orderphonenumber}</p>
+          <a href="/admin/userOrders">close</a>
+          
+        `;
+  
+        // Show the details <div>
+        detailsDiv.style.display = 'block';
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+<script>
+    function changeStatus(newStatus, productModel, username,orderid) {
+      // Create an object with the data to send
+  
+      var message = document.getElementById("heede")
+  
+      const data = {
+        newStatus,
+        productModel,
+        username,
+        orderid
+      };
+  
+      // Define the URL where you want to send the POST request
+      const url = '/admin/Orderstatus';
+  
+      // Send the data to the backend using a fetch request
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((responseData) => {
+            message.innerHTML="CHANGED SUCCESSFULLY"
+          location.reload()
+          
+         
+        
+  
+          // You can update the UI or take other actions based on the response
+        })
+        .catch((error) => {
+          console.error('Fetch error:', error);
+          // Handle the error (e.g., display an error message to the user)
+        });
+    }
+  </script>
+<%- include("./includes/footer") %>

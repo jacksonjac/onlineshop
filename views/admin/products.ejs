@@ -1,92 +1,125 @@
 <%- include("./includes/header") %>
+<style>
+  .dropdown {
+    float: left;
+    margin-right: 20px;
+}
 
-<section class="intro">
-    <div class="bg-image h-100" style="background-color: #f5f7fa;">
-      <div class="mask d-flex align-items-center h-100">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body p-0">
-                  <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-                    <table class="table table-striped mb-0">
-                      <thead style="background-color: #002d72;">
-                        <tr>
-                          <th scope="col">Model</th>
-                          <th scope="col">Category</th>
-                          <th scope="col">Price</th>
-                          <th scope="col">Color</th>
-                          <th scope="col">Images</th>
-                          <th scope="col">Options</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% if (!productList || productList.length === 0) { %>
-                            <tr>
-                                <td colspan="5">Product is empty</td>
-                            </tr>
-                        <% } else { %>
-                            <% productList.forEach(product => { %>
-                                <tr>
-                                    <td><%= product.model %></td>
-                                    <td><%= product.category.name %></td>
-                                    <td><%= product.price %></td>
-                                    <td><%= product.colour %></td>
-                                    
-                                    <td class="bg-light text-center text-muted">
-                                        <div class="image-row row">
-                                            <% if (product.images && product.images.length > 0) { %>
-                                                <% product.images.forEach(image => { %>
-                                                    <div class="col-md-2">
-                                                        <div class="image-container">
-                                                            <img src="/publicimage/<%= image %>" width="70px" height="50px" class="img-thumbnail" alt="<%= image %>">
-                                                            <div class="image-actions">
-                                                                <a class="btn btn-primary btn-sm mr-1" href="/admin/editimage?imageName=<%= image %>">Edit</a>
-                                                                <a class="btn btn-danger btn-sm" href="/admin/deleteimage?imageName=<%= image %>">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                <% }); %>
-                                            <% } else { %>
-                                                <div class="col-md-2">
-                                                    <div class="image-container">
-                                                        <img src="/publicimage/placeholder.jpg" width="30px" height="30px" class="img-thumbnail" alt="Placeholder Image">
-                                                    </div>
-                                                </div>
-                                            <% } %>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <% if (product.status === 0) { %>
-                                            <form action="/admin/productunblock" method="POST" style="display: inline;">
-                                                <input type="hidden" name="model" value="<%= product.model %>">
-                                                <button type="submit" class="btn btn-success btn-sm">List</button>
-                                            </form>
-                                        <% } else { %>
-                                            <form action="/admin/productblock" method="POST" style="display: inline;">
-                                                <input type="hidden" name="model" value="<%= product.model %>">
-                                                <button type="submit" class="btn btn-danger btn-sm">Unlist</button>
-                                            </form>
-                                        <% } %>
-                                        <form action="/admin/productedit" method="POST" style="display: inline;">
-                                            <input type="hidden" name="productId" value="<%= product._id %>">
-                                            <button type="submit" class="btn btn-primary btn-sm">Edit</button>
-                                        </form>
-                                    </td>
-                                    
-                                </tr>
-                            <% }); %>
-                        <% } %>
-                    </tbody>
-                    </table>
+.dropdown-btn {
+  
+  color: #ffffff;
+    padding: 10px;
+    font-size: 18px;
+    /* border: none; */
+    cursor: pointer;
+    background: #565669;
+    border-radius: 10px;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+</style>
+
+<div class="d-flex justify-content-between my-3">
+  <div class="dropdown">
+    <button class="dropdown-btn">Category ▼</button>
+    <div class="dropdown-content">
+      <a href="/admin/alllist">All</a>
+      <% categorylist.forEach(category => { %>
+        <a href="/admin/category?name=<%= category.name %>"><%= category.name %></a>
+      <% }); %>
+    </div>
+  </div>
+  <a id="upload-link" href="/admin/uplodeproduct" class="btn btn-success" style="margin-left: 10px;">Upload New Product</a>
+</div>
+
+
+
+
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">MODEL</th>
+      <th scope="col">CATEGORY</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">COLOR</th>
+      <th scope="col">IMAGES</th>
+      <th scope="col">OPTIONS</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <% if (!productList || productList.length === 0) { %>
+      <tr>
+        <td colspan="6">Product is empty</td>
+      </tr>
+    <% } else { %>
+      <% productList.forEach(product => { %>
+        <tr>
+          <td><%= product.model %></td>
+          <td><%= product.category.name %></td>
+          <td><%= product.price %></td>
+          <td><%= product.colour %></td>
+          <td>
+            <% if (product.images && product.images.length > 0) { %>
+              <% product.images.forEach(image => { %>
+                <div class="d-flex align-items-center">
+                  <img src="/publicimage/<%= image %>" alt="<%= image.alt %>" width="50px" height="50px">
+                  <div class="ml-2">
+                    <a href="/admin/editimage?imageName=<%= image %>" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="/admin/deleteimage?imageName=<%= image %>" class="btn btn-danger btn-sm ml-1">Delete</a>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+              <% }); %>
+            <% } %>
+          </td>
+          <td>
+            <% if (product.status === 0) { %>
+              <form action="/admin/productunblock" method="POST" class="d-inline">
+                <input type="hidden" name="model" value="<%= product.model %>">
+                <button type="submit" class="btn btn-success btn-sm">List</button>
+              </form>
+            <% } else { %>
+              <form action="/admin/productblock" method="POST" class="d-inline">
+                <input type="hidden" name="model" value="<%= product.model %>">
+                <button type="submit" class="btn btn-danger btn-sm">Unlist</button>
+              </form>
+            <% } %>
+            <form action="/admin/productedit" method="POST" class="d-inline">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    <% } %>
+  </tbody>
+</table>
+
+    
+
+
 
 <%- include("./includes/footer") %>

@@ -1,0 +1,46 @@
+<%- include("./includes/header") %>
+
+<h2 class="font-weight-bold">Edit Category</h2>
+
+
+<form action="/admin/updatecategoryname" method="post">
+    <div class="mb-3 m-2">
+      <input type="hidden" name="id" value="<%= categoryId %>">
+      <label for="categoryName" class="form-label">Category Name</label>
+      <input type="text" class="form-control" id="categoryName" value="<%= categoryName %>" name="categoryname" placeholder="Enter category name" onkeyup="validateInput(this.value)" required>
+      <div id="errorlog" class="text-danger" style="font-size: 10px;"></div>
+    </div>
+    <button id="submitbtn" type="submit" class="btn btn-primary m-2">Save</button>
+  </form>
+
+  <% if (typeof message!== "undefined") { %> 
+				
+    <p style="color: rgb(3, 61, 3);"><%= message %></p>
+ <% } %> 
+
+
+
+
+
+
+ <script type="text/javascript">
+    var pattern = /\s/g;
+    var errorLog = document.getElementById("errorlog");
+    var submitButton = document.getElementById("submitbtn");
+  
+    function validateInput(data, inputId) {
+        var inputElement = document.getElementById(inputId);
+        var isSpace = pattern.test(data);
+        var isNegativeNumber = parseFloat(data) < 0;
+  
+        if (isSpace || isNegativeNumber) {
+            errorLog.innerHTML = "Invalid input";
+            submitButton.style.display = "none"; // Hide the submit button
+        } else {
+            errorLog.innerHTML = "";
+            submitButton.style.display = "block"; // Show the submit button
+        }
+    }
+  </script>
+
+<%- include("./includes/footer") %>

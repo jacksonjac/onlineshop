@@ -1,0 +1,18 @@
+<%- include("./includes/header") %>
+
+<form action="/admin/process-category" class="m-2" method="post">
+    <div class="mb-3">
+      <label for="categoryName" class="form-label">Category Name</label>
+      <input type="text" id="categoryName" name="categoryname" class="form-control" placeholder="Enter category name" onkeyup="validateInput(this.value)" required>
+    </div>
+    <button id="submitbtn" type="submit" class="btn btn-primary">Save</button>
+    <small id="errorlog" class="form-text text-danger"></small>
+  </form>
+  
+  <% if (typeof message !== "undefined") { %> 
+    <p class="text-success"><%= message %></p>
+  <% } %>
+  
+
+
+<%- include("./includes/footer") %>

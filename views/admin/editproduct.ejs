@@ -1,0 +1,49 @@
+<%- include("./includes/header") %>
+
+<form action="/admin/updateproduct" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<%= editproduct._id %>" class="form-control">
+  
+    <div class="mb-3">
+      <label for="model" class="form-label" style="color: #000;">Model</label>
+      <input type="text" id="model" name="model" value="<%= editproduct.model %>" class="form-control" required
+             onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="productCategory" class="form-label" style="color: #000;">Category</label>
+      <select class="form-select" id="productCategory" name="category">
+        <% categoryid.forEach(category => { %>
+          <option value="<%= category._id %>">
+            <%= category.name %>
+          </option>
+        <% }); %>
+      </select>
+    </div>
+  
+    <div class="mb-3">
+      <label for="price" class="form-label" style="color: #000;">Price</label>
+      <input type="text" id="price" name="price" value="<%= editproduct.price %>" class="form-control" required
+             onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="colour" class="form-label" style="color: #000;">Color</label>
+      <input type="text" id="colour" name="colour" value="<%= editproduct.colour %>" class="form-control" required
+             onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="description" class="form-label" style="color: #000;">Description</label>
+      <textarea id="description" name="description" rows="4" class="form-control" required><%= editproduct.description %></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label for="images" class="form-label" style="color: #000;">Image</label>
+      <input type="file" id="images" name="images" class="form-control" multiple>
+    </div>
+  
+    <button type="submit" class="btn btn-primary" id="submitbtn">Update</button>
+    <error id="errorlog" style="color: rgb(241, 234, 234); font-size: 10px;"></error>
+  </form>
+  
+<%- include("./includes/footer") %>

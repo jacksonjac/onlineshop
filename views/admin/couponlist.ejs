@@ -1,0 +1,37 @@
+<%- include("./includes/header") %>
+
+<div id="header">
+    <a id="upload-link" href="/admin/couponpage" class="btn btn-primary m-2">CREATE NEW COUPON</a>
+  </div>
+  
+<table id="tableid" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th id="thcap">Coupon Code</th>
+        <th id="thcap">Validity Date</th>
+        <th id="thcap">Minimum Purchase</th>
+        <th id="thcap">Discount Percentage</th>
+        <th id="thcap">Maximum Discount Value</th>
+        <th id="thcap">Description</th>
+        <th id="thcap">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < couponlist.length; i++) { %>
+        <tr>
+          <td><%= couponlist[i].couponCode %></td>
+          <td><%= couponlist[i].validity.toDateString() %></td>
+          <td><%= couponlist[i].minPurchase %></td>
+          <td><%= couponlist[i].minDiscountPercentage %>%</td>
+          <td><%= couponlist[i].maxDiscountValue %>%</td>
+          <td><%= couponlist[i].description %></td>
+          <td>
+            <a href="/admin/deletecoupon?couponId=<%= couponlist[i]._id %>" id="deletecoupon" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+  
+
+<%- include("./includes/footer") %>

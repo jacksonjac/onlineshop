@@ -1,0 +1,21 @@
+<%- include("./includes/header") %>
+<form action="/admin/updateimage" method="post" class="m-3" enctype="multipart/form-data">
+    <div class="mb-3">
+      <p>Current Image</p>
+      <img src="/publicimage/<%= imageName %>" alt="" width="100">
+    </div>
+    <input type="hidden" value="<%= imageName %>" name="imageName" class="form-control">
+  
+    <div class="mb-3">
+      <label for="images" class="form-label">Select New Image</label>
+      <input type="file" id="images" name="images" class="form-control" required>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  
+    <% if (typeof message !== "undefined") { %>
+      <p style="color: rgb(10, 117, 10);" class="mt-3"><%= message %></p>
+    <% } %>
+  </form>
+
+<%- include("./includes/footer") %>

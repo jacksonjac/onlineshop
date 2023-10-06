@@ -1,0 +1,32 @@
+<%- include("./includes/header") %>
+<a id="upload-link" href="/admin/addcatergory" class="btn btn-primary">Add Category</a>
+
+<div class="category-table">
+    <form action="/admin/updatecategory" method="post">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% categorylist.forEach(category => { %>
+            <tr>
+              <td>
+                <input type="text" class="form-control" name="category_<%= category._id %>" value="<%= category.name %>" placeholder="Enter category name" required readonly onkeyup="validateInput(this.value)">
+              </td>
+              <td>
+                <a class="btn btn-primary" href="/admin/editcategoryname?categoryId=<%= category._id %>&categoryName=<%= category.name %>">Edit</a>
+              </td>
+              <td>
+                <a class="btn btn-danger" href="/admin/deletecategory?categoryId=<%= category._id %>">Delete</a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+<%- include("./includes/footer") %>

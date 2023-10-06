@@ -1,0 +1,79 @@
+<%- include("./includes/header") %>
+<form action="/admin/addproducts" method="post" enctype="multipart/form-data" class="p-2">
+    <div class="mb-3">
+      <label for="model" class="form-label">Model</label>
+      <input type="text" id="model" name="model" class="form-control" required placeholder="Model" onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="productCategory" class="form-label">Category</label>
+      <select class="form-select" id="productCategory" name="category">
+        <% categoryid.forEach(category => { %>
+          <option value="<%= category._id %>">
+            <%= category.name %>
+          </option>
+        <% }); %>
+      </select>
+    </div>
+  
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="text" id="price" name="price" class="form-control" required placeholder="Price" onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="colour" class="form-label">Color</label>
+      <input type="text" id="colour" name="colour" class="form-control" required placeholder="Color" onkeyup="validateInput(this.value)">
+    </div>
+  
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" name="description" class="form-control" rows="4" required placeholder="Description"></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label for="images" class="form-label">Image</label>
+      <input type="file" id="images" name="images" class="form-control" required multiple>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <error id="errorlog" style="color: rgb(190, 15, 15); font-size: 20px;"></error>
+
+  <div id="alert">
+    <% if (typeof message!== "undefined") { %>
+      
+      <p style="color: rgb(10, 117, 10);"><%= message %></p>
+    <% } %>
+
+  </div>
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    var pattern = /\s/g;
+    var errorLog = document.getElementById("errorlog");
+    var submitButton = document.getElementById("submitButton");
+  
+    function validateInput(data, inputId) {
+        var inputElement = document.getElementById(inputId);
+        var isSpace = pattern.test(data);
+        var isNegativeNumber = parseFloat(data) < 0;
+  
+        if (isSpace || isNegativeNumber) {
+            errorLog.innerHTML = "Invalid input";
+            submitButton.style.display = "none"; // Hide the submit button
+        } else {
+            errorLog.innerHTML = "";
+            submitButton.style.display = "block"; // Show the submit button
+        }
+    }
+  </script>
+
+<%- include("./includes/footer") %>
