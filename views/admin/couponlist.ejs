@@ -26,12 +26,38 @@
           <td><%= couponlist[i].maxDiscountValue %>%</td>
           <td><%= couponlist[i].description %></td>
           <td>
-            <a href="/admin/deletecoupon?couponId=<%= couponlist[i]._id %>" id="deletecoupon" class="btn btn-danger">Delete</a>
+            <a href="/admin/deletecoupon?couponId=<%= couponlist[i]._id %>" id="deletecoupon" class="btn btn-danger delete-button">Delete</a>
+
           </td>
         </tr>
       <% } %>
     </tbody>
   </table>
   
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const deleteButtons = document.querySelectorAll(".delete-button");
+  
+      deleteButtons.forEach(function (button) {
+        button.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default link behavior
+  
+          Swal.fire({
+            title: 'Delete Coupon',
+            text: 'Are you sure you want to delete this coupon?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, keep it'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // User confirmed, proceed with the deletion by following the link
+              window.location.href = button.href;
+            }
+          });
+        });
+      });
+    });
+  </script>
 <%- include("./includes/footer") %>

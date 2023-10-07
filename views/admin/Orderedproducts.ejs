@@ -110,7 +110,7 @@
 
 
 
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     function showDetails(userid, model, addressname, phonenumber, orderaddress,paymentmethod) {
@@ -139,19 +139,27 @@
       .then((response) => response.json())
       .then((responseData) => {
         // Populate the corresponding <div> with the response data
-        const detailsDiv = document.getElementById(`detailsshowdiv`);
-        detailsDiv.innerHTML = `
-          
-          <p> Order  id: ${responseData.productdata._id}</p>
-          <p> Order  model: ${responseData.productdata.model}</p>
-          <p> Order  price: ${responseData.productdata.price}/-</p>
-          <p> Order delivery name : ${responseData.orderusername}</p>
-          <p>Order delivery address: ${responseData.orderaddress}</p>
-          <p>Order delivery contact No:: ${responseData.orderphonenumber}</p>
-          <a href="/admin/userOrders">close</a>
-          
-        `;
+          Swal.fire({
+            title: `
+    
+    
+    <p> Order ID: ${responseData.productdata._id}</p>
+    <p> Order Model: ${responseData.productdata.model}</p>
+    <p> Order Price: ${responseData.productdata.price}/-</p>
+    <p> Order Delivery Name: ${responseData.orderusername}</p>
+    <p> Order Delivery Address: ${responseData.orderaddress}</p>
+    <p> Order Delivery Contact No: ${responseData.orderphonenumber}</p>
+   
+  `,
   
+  showClass: {
+    popup: 'animate__animated animate__fadeInDown'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutUp'
+  }
+})
+       
         // Show the details <div>
         detailsDiv.style.display = 'block';
       });
@@ -168,7 +176,7 @@
     function changeStatus(newStatus, productModel, username,orderid) {
       // Create an object with the data to send
   
-      var message = document.getElementById("heede")
+     
   
       const data = {
         newStatus,
@@ -195,8 +203,17 @@
           return response.json();
         })
         .then((responseData) => {
-            message.innerHTML="CHANGED SUCCESSFULLY"
-          location.reload()
+          Swal.fire({
+  title: 'Success',
+  text: 'Status Changed successfully.',
+  icon: 'success'
+}).then((result) => {
+  if (result.isConfirmed) {
+    location.reload(); // Reload the page after user confirms the success message
+  }
+});
+
+         
           
          
         

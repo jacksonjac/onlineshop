@@ -17,7 +17,7 @@
           </td>
           <td>
             <a class="btn btn-primary" href="/admin/editbannerpage?imageid=<%= bannerlist[i]._id %>">Edit</a>
-            <a class="btn btn-danger" href="/admin/deletebanner?imageid=<%= bannerlist[i]._id %>">Delete</a>
+            <a class="btn btn-danger delete-button" href="/admin/deletebanner?imageid=<%= bannerlist[i]._id %>">Delete</a>
           </td>
         </tr>
       <% } %>
@@ -29,5 +29,32 @@
     <p style="color: rgb(24, 228, 24);"><%= message %></p>
  <% } %> 
   
+
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll(".delete-button");
+
+    deleteButtons.forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        Swal.fire({
+          title: 'Delete Banner',
+          text: 'Are you sure you want to delete this banner?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, keep it'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // User confirmed, proceed with the deletion by following the link
+            window.location.href = button.href;
+          }
+        });
+      });
+    });
+  });
+</script>
 
 <%- include("./includes/footer") %>

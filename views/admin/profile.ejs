@@ -124,7 +124,7 @@
   
   <p class="text-success alert bold" id="message"></p>
     <div id="editProfileFields" style="display: none;">
-        <form id="editProfileForm" class="mb-4 p-4">
+        <form id="editProfileForm" class="mb-4 p-4"onsubmit="return validateForm2()">
            
            
             <label for="name">Name:</label>
@@ -145,7 +145,7 @@
 
 
     <div id="changepass" style="display: none;">
-        <form id="editpasswordform" class="mb-4 p-4">
+        <form id="editpasswordform" class="mb-4 p-4" >
           <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="passwordValue" value="<%= adminData.password %>">
@@ -156,7 +156,7 @@
       </div>
 
 
-     <div id="addnewadmin" style="display: none;">
+     <div id="addnewadmin" style="display: none;"onsubmit="return validateForm1()">
   <form id="addnewadminform" class="mb-3 p-4">
     <div class="form-group">
       <label for="name">Name:</label>
@@ -178,7 +178,40 @@
   </form>
 </div>
 
-      
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function validateForm1() {
+    var name = document.getElementById("nameinput").value;
+    var email = document.getElementById("emailinput").value;
+    var password = document.getElementById("passwordinput").value;
+
+    if (name === "" || name.trim() === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Name can't be blank"
+      });
+      return false;
+    } else if (email === "" || email.trim() === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Email can't be blank"
+      });
+      return false;
+    } else if (password === "" || password.trim() === "") {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Password can't be blank"
+      });
+      return false;
+    }
+
+    return true; // Form submission will proceed
+  }
+</script>
+
     <script>
         const closeButton = document.getElementById("close");
         const editProfileLink = document.getElementById("editprofile");
@@ -215,8 +248,12 @@
         
                 // Validate the input fields
                 if (nameInput === "" || emailInput === "" || phoneNumberInput === "") {
-                    // Display an error message
-                    messageElement.innerHTML = "All fields are required.";
+                  Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Something Wrong Check the input fileds"
+      });
+                   
                     return; // Prevent further processing
                 }
         
