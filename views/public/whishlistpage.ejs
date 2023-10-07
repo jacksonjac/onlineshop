@@ -6,7 +6,7 @@
           <div class="col-lg-12">
               <div class="breadcrumb__links">
                   <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                  <span>Whishlists</span>
+                  <span>Wishlists</span>
               </div>
           </div>
       </div>
@@ -57,7 +57,11 @@
                                       <span style="color: green;">instock</span>
                                   </div>
                               </td>
-                              <td><a href=""><button>addtocart</button></a></td>
+                              <td>
+                                <a href="#">
+                                  <button class="btn btn-warning">Add to Cart</button>
+                                </a>
+                              </td>
                               <td class="cart__close">
                                 <a href="/removewhishlist?model=<%= encodeURIComponent(product.model) %>" class="remove-product">
                                     <span class="icon_close"></span>

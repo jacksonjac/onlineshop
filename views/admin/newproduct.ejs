@@ -1,8 +1,9 @@
 <%- include("./includes/header") %>
-<form action="/admin/addproducts" method="post" enctype="multipart/form-data" class="p-2">
+<h1 class="mt-2 mb-4">Add New Product</h1>
+<form action="/admin/addproducts" method="post" enctype="multipart/form-data" class="p-2" onsubmit="return validateForm()">
     <div class="mb-3">
       <label for="model" class="form-label">Model</label>
-      <input type="text" id="model" name="model" class="form-control" required placeholder="Model" onkeyup="validateInput(this.value)">
+      <input type="text" id="model" name="model" class="form-control"  placeholder="Model" >
     </div>
   
     <div class="mb-3">
@@ -18,22 +19,22 @@
   
     <div class="mb-3">
       <label for="price" class="form-label">Price</label>
-      <input type="text" id="price" name="price" class="form-control" required placeholder="Price" onkeyup="validateInput(this.value)">
+      <input type="text" id="price" name="price" class="form-control"  placeholder="Price" >
     </div>
   
     <div class="mb-3">
       <label for="colour" class="form-label">Color</label>
-      <input type="text" id="colour" name="colour" class="form-control" required placeholder="Color" onkeyup="validateInput(this.value)">
+      <input type="text" id="colour" name="colour" class="form-control"  placeholder="Color" >
     </div>
   
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <textarea id="description" name="description" class="form-control" rows="4" required placeholder="Description"></textarea>
+      <textarea id="description" name="description" class="form-control" rows="4"  placeholder="Description"></textarea>
     </div>
   
     <div class="mb-3">
       <label for="images" class="form-label">Image</label>
-      <input type="file" id="images" name="images" class="form-control" required multiple>
+      <input type="file" id="images" name="images" class="form-control" multiple accept=".jpg, .jpeg, .png, .gif">
     </div>
   
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -54,26 +55,47 @@
 
 
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function validateForm() {
+    var model = document.getElementById("model").value;
+    var price = document.getElementById("price").value;
+    var colour = document.getElementById("colour").value;
+    var description = document.getElementById("description").value;
+    var imageInput = document.getElementById("images");
+    
+    var alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    
+    if (model === "" || model.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Name can't be blank"
+        });
+        return false;
+    } else if (price === "" || price.trim() === "" || parseFloat(price) < 0 || !alphanumericRegex.test(password)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Invalid Price"
+        });
+        return false;
+    } else if (description.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Description can't be blank"
+        });
+        return false;
+    } 
+
+    // Clear error message if all checks pass
+    error.innerHTML = "";
+    return true; // Form submission will proceed
+}
 
 
-  <script type="text/javascript">
-    var pattern = /\s/g;
-    var errorLog = document.getElementById("errorlog");
-    var submitButton = document.getElementById("submitButton");
   
-    function validateInput(data, inputId) {
-        var inputElement = document.getElementById(inputId);
-        var isSpace = pattern.test(data);
-        var isNegativeNumber = parseFloat(data) < 0;
-  
-        if (isSpace || isNegativeNumber) {
-            errorLog.innerHTML = "Invalid input";
-            submitButton.style.display = "none"; // Hide the submit button
-        } else {
-            errorLog.innerHTML = "";
-            submitButton.style.display = "block"; // Show the submit button
-        }
-    }
-  </script>
+	</script>
 
 <%- include("./includes/footer") %>

@@ -29,27 +29,27 @@
 							<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register your account</h5>
 							
 							<div class="form-outline mb-4">
-							  <input type="text" id="nameInput" name="name" class="form-control form-control-lg"  required />
+							  <input type="text" id="nameInput" name="name" class="form-control form-control-lg"  />
 							  <label class="form-label" for="nameInput">Enter Your Name</label>
 							</div>
 							
 							<div class="form-outline mb-4">
-							  <input type="email" id="emailInput" name="email" class="form-control form-control-lg" required />
+							  <input type="email" id="emailInput" name="email" class="form-control form-control-lg"  />
 							  <label class="form-label" for="emailInput">Enter your Email Address</label>
 							</div>
 							
 							<div class="form-outline mb-4">
-							  <input type="text" id="phoneInput" name="number" class="form-control form-control-lg" minlength="10" maxlength="10" required />
+							  <input type="text" id="phoneInput" name="number" class="form-control form-control-lg" minlength="10" maxlength="10"  />
 							  <label class="form-label" for="phoneInput">Phone Number</label>
 							</div>
 							
 							<div class="form-outline mb-4">
-							  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg" required />
+							  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg"  />
 							  <label class="form-label" for="passwordInput">Create Number password</label>
 							</div>
 							
 							<div class="form-outline mb-4">
-							  <input type="password" id="confirmPasswordInput" name="Cpassword" class="form-control form-control-lg" required />
+							  <input type="password" id="confirmPasswordInput" name="Cpassword" class="form-control form-control-lg"  />
 							  <label class="form-label" for="confirmPasswordInput">Confirm password</label>
 							</div>
 							
@@ -67,7 +67,7 @@
 	  </div>
 	</div>
   </section>
-  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
 	function validateForm() {
 	  var name = document.getElementById("nameInput").value;
@@ -80,25 +80,73 @@
 	  var alphanumericRegex = /^[a-zA-Z0-9]*$/;
 	
 	  if (name === ""||name.trim() === "") {
-		error.innerHTML = "Name can't be blank";
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: " Name can't be blank"
+  
+})
+		
 		return false;
 	  } else if (email === ""||email.trim() === "") {
-		error.innerHTML = "Email can't be blank";
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Email can't be blank"
+  
+})
+		
 		return false;
-	  } else if (phone === "") {
-		error.innerHTML = "Phone number can't be blank";
+	  } else if (phone.trim() === "") {
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Phone number can't be blank"
+  
+})
+		
 		return false;
 	  } else if (phone.length !== 10) {
-		error.innerHTML = "Phone number must be 10 digits";
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Phone number must be 10 digits"
+  
+})
+	
 		return false;
 	  } else if (password.length < 6) {
-		error.innerHTML = "Password must be at least 6 characters long";
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Password must be at least 6 characters long"
+  
+})
+	
 		return false;
 	  } else if (confirmPassword !== password) {
-		error.innerHTML = "Passwords do not match. Please re-enter.";
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Passwords do not match. Please re-enter."
+  
+})
+
+		
 		return false;
 	  } else if (!alphanumericRegex.test(password)) {
-		error.innerHTML = "Password must be alphanumeric only";
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Passwords do not match. Please re-enter."
+  
+})
+
+		
 		return false;
 	  }
 	

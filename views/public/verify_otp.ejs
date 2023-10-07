@@ -21,21 +21,21 @@
   
 					<h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">OTP VERIFICATION</h5>
 
-					<form id="login-form" action="/verify-otp" method="post">
+					<form id="login-form" action="/verify-otp" method="post" onsubmit="return validateForm()" >
 						<div class="form-outline mb-4">
-							<input type="text" name="name" id="emailInput" value="<%= name %>" class="form-control form-control-lg"  required/>
+							<input type="text" name="name" id="emailInput" value="<%= name %>" class="form-control form-control-lg"  required readonly/>
 						
 						</div>
 					
 						<div class="form-outline mb-4">
-							<input type="text" name="number" id="passwordInput"value="<%= number %>" class="form-control form-control-lg" required/>
+							<input type="text" name="number" id="passwordInput"value="<%= number %>" class="form-control form-control-lg" required readonly/>
 							
 						</div>
 
 
 
             <div class="form-outline mb-4">
-							<input type="text" name="otp" id="passwordInput" class="form-control form-control-lg" placeholder="Enter your OTP" required/>
+							<input type="text" name="otp" id="OtpInput" class="form-control form-control-lg" placeholder="Enter your OTP" required/>
 							
 						</div>
 						
@@ -93,4 +93,33 @@
 	  });
 	});
   </script>
+
+
+
+
+<script>
+	function validateForm() {
+	  var OTP = document.getElementById("OtpInput").value;
+	  var error = document.getElementById("error-message");
+	  var alphanumericRegex = /^[a-zA-Z0-9]*$/;
+  
+	  if (OTP === "" || OTP.trim() === "") {
+		error.innerHTML = "OTP can't be blank";
+		return false;
+	  } else if (!alphanumericRegex.test(OTP)) {
+		error.innerHTML = "OTP must be alphanumeric";
+		return false;
+	  }
+  
+	  error.innerHTML = ""; // Clear error message if all checks pass
+	  return true; // Form submission will proceed
+	}
+  </script>
+  I've added an additional check to ensure that the OTP is alphanumeric, as you mentioned that it should be numeric. If it needs to be purely numeric, you can modify the regular expression accordingly.
+  
+  
+  
+  
+  
+  
 <%- include("./includes/footer") %>

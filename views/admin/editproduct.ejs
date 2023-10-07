@@ -1,12 +1,12 @@
 <%- include("./includes/header") %>
-
-<form action="/admin/updateproduct" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<%= editproduct._id %>" class="form-control">
+<h1 class="mt-2 mb-4">Edit Product Details</h1>
+<form action="/admin/updateproduct" method="post" enctype="multipart/form-data" class="m-3" onsubmit="return validateForm()">
+    <input type="hidden" name="id" value="<%= editproduct._id %>"  class="form-control">
   
     <div class="mb-3">
       <label for="model" class="form-label" style="color: #000;">Model</label>
       <input type="text" id="model" name="model" value="<%= editproduct.model %>" class="form-control" required
-             onkeyup="validateInput(this.value)">
+            >
     </div>
   
     <div class="mb-3">
@@ -22,28 +22,75 @@
   
     <div class="mb-3">
       <label for="price" class="form-label" style="color: #000;">Price</label>
-      <input type="text" id="price" name="price" value="<%= editproduct.price %>" class="form-control" required
-             onkeyup="validateInput(this.value)">
+      <input type="text" id="price" name="price" value="<%= editproduct.price %>" class="form-control" 
+            >
     </div>
   
     <div class="mb-3">
       <label for="colour" class="form-label" style="color: #000;">Color</label>
-      <input type="text" id="colour" name="colour" value="<%= editproduct.colour %>" class="form-control" required
-             onkeyup="validateInput(this.value)">
+      <input type="text" id="colour" name="colour" value="<%= editproduct.colour %>" class="form-control" 
+             >
     </div>
   
     <div class="mb-3">
       <label for="description" class="form-label" style="color: #000;">Description</label>
-      <textarea id="description" name="description" rows="4" class="form-control" required><%= editproduct.description %></textarea>
+      <textarea id="description" name="description" rows="4" class="form-control" ><%= editproduct.description %></textarea>
     </div>
   
     <div class="mb-3">
       <label for="images" class="form-label" style="color: #000;">Image</label>
-      <input type="file" id="images" name="images" class="form-control" multiple>
+      <input type="file" id="images" name="images" class="form-control" multiple accept=".jpg, .jpeg, .png, .gif">
     </div>
   
     <button type="submit" class="btn btn-primary" id="submitbtn">Update</button>
     <error id="errorlog" style="color: rgb(241, 234, 234); font-size: 10px;"></error>
   </form>
   
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+	function validateForm() {
+    var model = document.getElementById("model").value;
+    var price = document.getElementById("price").value;
+    var colour = document.getElementById("colour").value;
+    var description = document.getElementById("description").value;
+    var imageInput = document.getElementById("images");
+    
+    var alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    
+    if (model === "" || model.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Name can't be blank"
+        });
+        return false;
+    } else if (price === "" || price.trim() === "" || parseFloat(price) < 0 || !alphanumericRegex.test(password)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Invalid Price"
+        });
+        return false;
+    } else if (description.trim() === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "Description can't be blank"
+        });
+        return false;
+    } 
+
+    // Clear error message if all checks pass
+    error.innerHTML = "";
+    return true; // Form submission will proceed
+}
+
+
+  
+	</script>
+	
 <%- include("./includes/footer") %>

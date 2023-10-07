@@ -267,7 +267,7 @@
 </section>
 <!-- Product Details Section End -->
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var whishlistIcon = document.getElementById("addwhishlist");
@@ -291,7 +291,13 @@
                 if (xhr.status === 200) {
                     // Request was successful, handle the response
                     var response = JSON.parse(xhr.responseText); // Parse JSON response
-                    messageElement.textContent = response.message; // Update the message element
+                    Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Sucessfully Added',
+  showConfirmButton: false,
+  timer: 1500
+})
                 } else {
                     // Request failed
                     messageElement.textContent = "An error occurred while adding to wishlist.";

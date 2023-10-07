@@ -126,14 +126,9 @@
                             <!-- Conditional rendering of 'Cancel' button -->
                             <td class="cart__close">
                               <% if (product.orderstatus === 'DELIVERED') { %>
-                                <a href="/returnorder?id=<%= encodeURIComponent(product._id) %>&globalid=<%= encodeURIComponent(product.Globalid) %>" class="btn btn-danger return-product text-white">
-                                  Return
-                                </a>
+                                <a href="#" class="btn btn-danger return-product text-white" onclick="confirmReturn('<%= encodeURIComponent(product._id) %>', '<%= encodeURIComponent(product.Globalid) %>')">Return</a>
                               <% } else if (product.orderstatus !== 'CANCEL' && product.orderstatus !== 'RETURN') { %>
-                                <a href="/deleteorder?id=<%= encodeURIComponent(product._id) %>&globalid=<%= encodeURIComponent(product.Globalid) %>" class="btn btn-danger return-product text-white">
-
-                              Cancel
-                                </a>
+                                <a href="#" class="btn btn-danger return-product text-white" onclick="confirmCancellation('<%= encodeURIComponent(product._id) %>', '<%= encodeURIComponent(product.Globalid) %>')">Cancel</a>
                               <% } %>
                             </td>
                             
@@ -154,106 +149,69 @@
   </div>
   <% } %>
 </section>
-<!-- Shop Cart Section End -->
-
-<!-- <script>
 
 
-const moreInfoButtons = document.querySelectorAll('.more-info-button');
-
-moreInfoButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const productOrderid = button.getAttribute('data-product-orderid');
-   
-    // Make an AJAX request to the backend
-    fetch(`/moreinfo?productOrderid=${productOrderid}`)
-      .then(response => response.json())
-      .then(data => {
-        document.querySelector(".shop__cart__table").innerHTML = "";
-          var close = document.getElementById("close");
-
-          document.querySelector(".detailshow").innerHTML = `
-  <div class="container">
-<div class="row justify-content-center">
-  <div class="col-md-8">
-    <div class="detailshow">
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Order ID:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data._id}</p>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Product Name:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.model}</p>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Product Price:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.price}/-</p>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Payment Method:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.paymentmethod}</p>
-        </div>
-      </div>
 
 
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Order Status:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.orderstatus}</p>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Product Quantity:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.quantity}</p>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Delivery Address:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.orderaddress}</p>
-        </div>
-      </div>
 
 
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label">Contact NO:</label>
-        <div class="col-md-8">
-          <p class="form-control-static">${data.phonenumber}</p>
-        </div>
-      </div>
-      
-      
-    </div>
-  </div>
-  
-</div>
 
-</div>`;
-close.innerHTML = "  Back"
 
-       
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  });
-});
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
+<script>
+  function confirmCancellation(productId, globalId) {
+    // Display a SweetAlert confirmation dialog
+    Swal.fire({
+      icon: 'question',
+      title: 'Confirmation',
+      text: 'Do you want to cancel?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If the user clicks "Yes" in SweetAlert, redirect to the specified URL
+        window.location.href = "/deleteorder?id=" + productId + "&globalid=" + globalId;
+      }
+    });
+  }
+  </script>
 
-</script> -->
 
+<script>
+  function confirmReturn(productId, globalId) {
+    // Display a SweetAlert confirmation dialog
+    Swal.fire({
+      icon: 'question',
+      title: 'Confirmation',
+      text: 'Do you want to return this item?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If the user clicks "Yes" in SweetAlert, navigate to the specified URL
+        window.location.href = "/returnorder?id=" + productId + "&globalid=" + globalId;
+      }
+    });
+  }
+  </script>
+
+  
+  
+  
+  
+  
+  
+  
 <script>
 
 

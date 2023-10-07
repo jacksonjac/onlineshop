@@ -32,12 +32,12 @@
 
 					<form id="login-form" action="/loginpost" method="post" onsubmit="return validateform()">
 						<div class="form-outline mb-4">
-						  <input type="email" id="emailInput" name="email" class="form-control form-control-lg" required />
+						  <input type="email" id="emailInput" name="email" class="form-control form-control-lg"  />
 						  <label class="form-label" for="emailInput">Email address</label>
 						</div>
 						
 						<div class="form-outline mb-4">
-						  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg" required />
+						  <input type="password" id="passwordInput" name="password" class="form-control form-control-lg" />
 						  <label class="form-label" for="passwordInput">Password</label>
 						  <div class="invalid-feedback">Please enter your password.</div>
 						</div>
@@ -49,7 +49,7 @@
 						</div>
 					  </form>
 					  <% if (typeof message !== "undefined") { %>
-						<p style="color: rgb(228, 21, 21)"><%= message %></p>
+						<p style="color: rgb(150, 10, 10) " ><%= message %></p>
 					<% } %>
 					 
 					<a class="small text-muted" href="/forgotpassword">Forgot password?</a>
@@ -70,7 +70,7 @@
 
 
   
-	
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
 	function validateform() {
 	  var email = document.getElementById("emailInput").value;
@@ -79,17 +79,42 @@
 	  
 	  var alphanumericRegex = /^[a-zA-Z0-9]*$/;
 	  
-	  if (email == null || email === "") {  
-		error.innerHTML = "Email can't be blank";
+	  if (email == null || email.trim() === "") {  
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'What you Think !!, Please type valid Email',
+  
+})
+
+		
 		return false;  
 	  } else if (password.trim() === "") {  
-		error.innerHTML = "Password space not allowed";
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'What you Think !!, Please type valid Password',
+  
+})
 		return false;  
 	  } else if (password.length < 6) {
-		error.innerHTML = "Minimum length 8";
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Password Should be Minimum 8 Digit',
+  
+})
 		return false;
 	  } else if (!alphanumericRegex.test(password)) {
-		error.innerHTML = "Password must be alphanumeric only";
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Password must be alphanumeric only',
+  
+})
+		
 		return false;
 	  }
 	  

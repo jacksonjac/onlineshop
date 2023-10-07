@@ -885,6 +885,8 @@ const EditOrderstatus = async (req, res) => {
     // Update the status of the user-specific order
     orderToUpdate.orderstatus = status;
 
+   
+
     // Save the updated user data
     await userData.save();
 
@@ -893,6 +895,11 @@ const EditOrderstatus = async (req, res) => {
 
     if (!globalOrderToUpdate) {
       return res.status(404).json({ message: "Global Order not found" });
+    }
+    if (status === "DELIVERED") {
+      // Set the order date to the current date
+     console.log("jlkfsdj")
+      globalOrderToUpdate.createdAt = new Date();
     }
 
     // Update the status of the global order

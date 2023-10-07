@@ -24,14 +24,14 @@
                  <h1>Genqmobz</h1>
                 </a>
                 <p class="text-center">Your Social Campaigns</p>
-                <form action="/admin/adminlogin" method="post">
+                <form action="/admin/adminlogin" method="post"  onsubmit="return validateform()">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  required onkeyup="validateInput(this.value)" >
+                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" required  onkeyup="validateInput(this.value)">
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" >
                   </div>
                  
                  
@@ -50,24 +50,61 @@
   </div>
   <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript">
-    var pattern = /\s/g;
-    var alertmsg = document.getElementById("errorlog"); // Use the correct id
-    var submitButton = document.getElementById("submitbutton");
+  
 
-    function validateInput(data) {
-        var isSpace = pattern.test(data);
-        var isNegativeNumber = parseFloat(data) < 0; // Convert input to float and check if negative
 
-        if (isSpace || isNegativeNumber) {
-            alertmsg.innerHTML = "Invalid input";
-            submitButton.style.display = "none"; // Hide the submit button
-        } else {
-            alertmsg.innerHTML = "";
-            submitButton.style.display = "block"; // Show the submit button
-        }
-    }
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+	function validateform() {
+	  var email = document.getElementById("exampleInputEmail1").value;
+	  var password = document.getElementById("exampleInputPassword1").value;
+	  var error = document.getElementById("error-message");
+	  
+	  var alphanumericRegex = /^[a-zA-Z0-9]*$/;
+	  
+	  if (email == null || email.trim() === "") {  
+    
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'What you Think !!, Please type valid Email',
+  
+})
+
+		
+		return false;  
+	  } else if (password.trim() === "") {  
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'What you Think !!, Please type valid Password',
+  
+})
+		return false;  
+	  } else if (password.length < 6) {
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Password Should be Minimum 8 Digit',
+  
+})
+		return false;
+	  } else if (!alphanumericRegex.test(password)) {
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Password must be alphanumeric only',
+  
+})
+		
+		return false;
+	  }
+	  
+	  error.innerHTML = ""; // Clear error message if all checks pass
+	  return true; // Form submission will proceed
+	}
+	</script>
 </body>
 
 </html>

@@ -60,14 +60,35 @@
                     <div class="col-md-10">
                       <div class="progress" style="height: 6px; border-radius: 16px;">
                         <div class="progress-bar" role="progressbar"
-                          style="width: 65%; border-radius: 16px; background-color: #a8729a;" aria-valuenow="65"
-                          aria-valuemin="0" aria-valuemax="100"></div>
+                          style="
+                            width: <%= order.orderstatus === 'DELIVERED' ? '100%' : 
+                                     (order.orderstatus === 'CANCEL' ? '100%' : 
+                                     (order.orderstatus === 'PENDING' ? '10%' :
+                                     (order.orderstatus === 'ARRIVED' ? '50%' :
+                                     (order.orderstatus === 'RETURN' ? '100%' : '65%')))) %>;
+                            border-radius: 16px;
+                            background-color: <%= order.orderstatus === 'DELIVERED' ? '#28a745' : 
+                                               (order.orderstatus === 'CANCEL' ? '#dc3545' :
+                                               (order.orderstatus === 'PENDING' ? '#ff9800' :
+                                               (order.orderstatus === 'ARRIVED' ? '#007bff' :
+                                               (order.orderstatus === 'RETURN' ? '#8b0000' : '#a8729a')))) %>;
+                          "
+                          aria-valuenow="<%= order.orderstatus === 'DELIVERED' ? '100' :
+                                        (order.orderstatus === 'CANCEL' ? '100' :
+                                        (order.orderstatus === 'PENDING' ? '10' :
+                                        (order.orderstatus === 'ARRIVED' ? '50' :
+                                        (order.orderstatus === 'RETURN' ? '100' : '65')))) %>"
+                          aria-valuemin="0"
+                          aria-valuemax="100"></div>
                       </div>
                       <div class="d-flex justify-content-around mb-1">
                         <p class="text-muted mt-1 mb-0 small ms-xl-5">Order Status</p>
                         <p class="text-muted mt-1 mb-0 small ms-xl-5"><%= order.orderstatus %></p>
                       </div>
                     </div>
+                    
+                    
+                    
                   </div>
                 </div>
               </div>

@@ -449,10 +449,8 @@ const addtocart = async (req, res) => {
       (item) => item.model === theproduct.model
     );
 
-    if (cartItem) {
-      cartItem.quantity += 1;
-    } else {
-      // If the product is not in the cart, add it as a new cart item
+   
+      
       user.cartitem.push({
         model: theproduct.model,
         category: theproduct.category,
@@ -462,7 +460,7 @@ const addtocart = async (req, res) => {
         image: theproduct.images[0],
         quantity: 1,
       });
-    }
+    
     await user.save();
 
     // Calculate total quantity of products in the cart
@@ -634,7 +632,12 @@ const linkaddtocart = async (req, res) => {
         .status(500)
         .render("public/error", { error: " Server Error Try Again later" });
     }
+    const totalCartQuantity = user.cartitem.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
 
+    console.log(totalCartQuantity,"fdsfsfsdfsdfsdfdsf")
     const grandTotal = user.cartitem.reduce(
       (total, item) => total + item.price * item.quantity,
       0
@@ -647,6 +650,7 @@ const linkaddtocart = async (req, res) => {
       username,
       grandTotal,
       userid,
+      totalCartQuantity
     });
   } catch (error) {
     // Handle any errors that occur during the database query or rendering

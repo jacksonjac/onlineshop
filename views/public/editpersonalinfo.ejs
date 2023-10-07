@@ -93,31 +93,64 @@
 	  </div>
 	</div>
   </section>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
 	function validateForm() {
 	  var fullName = document.getElementById("fullName").value;
 	  var email = document.getElementById("email").value;
 	  var error = document.getElementById("error-message");
-	
+	 
 	  // Simple email validation regex
 	  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	
-	  if (fullName === ""||fullName.trim() === "") {
-		error.innerHTML = "Full Name can't be blank";
+	  
+	  // Regular expression to check if the full name contains any numeric characters
+	  var fullNameRegex = /^[^0-9]+$/;
+  
+	  if (fullName === "" || fullName.trim() === "") {
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Full Name can't be blank",
+  
+})
+		
 		return false;
-	  } else if (email === "") {
-		error.innerHTML = "Email can't be blank";
+	  } else if (!fullNameRegex.test(fullName)) {
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Full Name cannot contain numeric characters",
+  
+})
+		
+		return false;
+	  } else if (email.trim() === "") {
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Email can't be blank",
+  
+})
+		
 		return false;
 	  } else if (!emailRegex.test(email)) {
-		error.innerHTML = "Invalid email address";
+
+		Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: "Invalid email address",
+  
+})
+		
 		return false;
 	  }
-	
+  
 	  error.innerHTML = ""; // Clear error message if all checks pass
 	  return true; // Form submission will proceed
 	}
-	</script>
+  </script>
 
 
 

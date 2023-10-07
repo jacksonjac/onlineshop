@@ -21,25 +21,10 @@ const uniqueFileName = file.fieldname + "-" + Date.now() + path.extname(file.ori
   },
 });
 
-const imageFileFilter = (req, file, cb) => {
-  const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"]; // Add more image extensions if needed
-  const fileExtension = path.extname(file.originalname).toLowerCase();
 
-  if (allowedExtensions.includes(fileExtension)) {
-    cb(null, true); 
-  } else {
-    cb(new Error("Invalid file type. Only images are allowed."), false); 
-  }
-};
-const handleUploadError = (err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    // Multer error (e.g., file too large)
-    res.status(400).render("errorpage", { error: "File upload error: " + err.message });
-  } else {
-    // Custom error (e.g., invalid file type)
-    res.status(400).render("errorpage", { error: "Invalid file type. Only images are allowed." });
-  }
-};
+
+ 
+
 
 
 
@@ -47,11 +32,11 @@ const handleUploadError = (err, req, res, next) => {
 
 // Initialize multer with the storage configuration
 const upload = multer({
-  storage: storage,
-  fileFilter: imageFileFilter, // Use the image filter
+  storage: storage
+  
 });
 
-app.use(handleUploadError);
+
 
 
 
