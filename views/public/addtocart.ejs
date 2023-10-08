@@ -215,7 +215,7 @@
       amountElement.innerText = data.productPrice;
       grandTotalElement.innerText = ` ${data.thetotalprice}/-`;
       grandTotalElement2.innerText = ` ${data.thetotalprice}/-`;
-
+      window.location.reload()
     } else {
       console.error('Failed to increase quantity');
     }
@@ -270,7 +270,7 @@ async function decreaseQuantity(productModel) {
             grandTotalElement.innerText =` ${data.thetotalprice}/-`;
             grandTotalElement2.innerText =` ${data.thetotalprice}/-`;
             
-           
+           window.location.reload()
         } else {
             console.error('Failed to decrease quantity');
         }

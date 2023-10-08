@@ -2024,10 +2024,12 @@ const checkoutpayment = async (req, res) => {
 const checkpaymentmethod = async (req, res) => {
   try {
     const userid = req.session.user_id;
-
-    const discount = req.query.discount
-
+    var grandTotal = req.query.total
+    var discount = req.query.discount
+    var couponprice = discount
     console.log(discount)
+
+    console.log(grandTotal,"gransldkfj")
 
     // Find the user by their ID
     const user = await Users.findById(userid);
@@ -2044,20 +2046,38 @@ const checkpaymentmethod = async (req, res) => {
     for (const cartItem of user.cartitem) {
       totalprice += cartItem.price * cartItem.quantity;
     }
+    
 
-    if (!user.defaultaddress) {
+    if (!user.defaultaddress || user.defaultaddress.length === 0) {
+
+      console.log(userid,"this is user data")
+      const user = await Users.findById(userid);
+      const allCartProducts = user.cartitem;
+    const totalitems = allCartProducts.length;
+    const allUserAddresses = user.address;
+    const defaultAddress = user.defaultaddress[0];
+
+     
+
       // User doesn't have a default address, render the page with a message
-      return res.render("public/checkpaymentmethod", {
-        userid,
-        totalItems,
-        totalprice, // You can set this to 0 or any default value
-        discount, // You can set this to 0 or any default value
-        message: "Please set your default address.", // Add the message here
+      return res.render("public/checkoutpage", {
+        allCartProducts,
+        defaultAddress,
+        totalitems, 
+        discount,
+        allUserAddresses,
+        userid, 
+        couponprice,
+        grandTotal,
+        message: "Please selet your Address.", 
       });
+    }else{
+      res.render("public/checkpaymentmethod", { userid, totalItems, totalprice ,discount});
+
     }
 
    
-    res.render("public/checkpaymentmethod", { userid, totalItems, totalprice ,discount});
+    
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
