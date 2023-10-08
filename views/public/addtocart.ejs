@@ -118,9 +118,13 @@
                               <td class="cart__price" >&#8377;<%= product.price %>/-</td>
                               <td class="cart__quantity">
                                 <div class="quantity-control">
-                                    <button class="quantity-button decrease-button" onclick="decreaseQuantity('<%= product.model %>')">-</button>
+                                  <a href="/decrement?model=<%= product.model %>">
+                                    <button class="quantity-button decrease-button">-</button>
+                                </a>
                                     <input class="quantity-input" type="text" style="width: 38px;" value="<%= product.quantity %>" min="1" id="quantity_<%= product.model %>" readonly>
-                                    <button class="quantity-button increase-button" onclick="increaseQuantity('<%= product.model %>')">+</button>
+                                    <a href="/increment?model=<%= product.model %>">
+                                      <button class="quantity-button decrease-button">+</button>
+                                  </a>
                                 </div>
                             </td>
                               <td class="cart__total " id="Amount_<%= product.model %>"><%= grandTotal %>/- </td>
@@ -215,7 +219,7 @@
       amountElement.innerText = data.productPrice;
       grandTotalElement.innerText = ` ${data.thetotalprice}/-`;
       grandTotalElement2.innerText = ` ${data.thetotalprice}/-`;
-      window.location.reload()
+      
     } else {
       console.error('Failed to increase quantity');
     }
@@ -270,7 +274,7 @@ async function decreaseQuantity(productModel) {
             grandTotalElement.innerText =` ${data.thetotalprice}/-`;
             grandTotalElement2.innerText =` ${data.thetotalprice}/-`;
             
-           window.location.reload()
+           
         } else {
             console.error('Failed to decrease quantity');
         }

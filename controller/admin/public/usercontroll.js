@@ -445,12 +445,15 @@ const addtocart = async (req, res) => {
     }
 
     // Check if the product is already in the cart
-    const cartItem = user.cartitem.find(
+    const existingCartItemIndex = user.cartitem.findIndex(
       (item) => item.model === theproduct.model
     );
 
-   
-      
+    if (existingCartItemIndex !== -1) {
+      // If the product is already in the cart, increase the quantity
+      user.cartitem[existingCartItemIndex].quantity += 1;
+    } else {
+      // If the product is not in the cart, add it as a new item
       user.cartitem.push({
         model: theproduct.model,
         category: theproduct.category,
@@ -460,7 +463,8 @@ const addtocart = async (req, res) => {
         image: theproduct.images[0],
         quantity: 1,
       });
-    
+    }
+
     await user.save();
 
     // Calculate total quantity of products in the cart
@@ -1687,7 +1691,7 @@ const increments = async (req, res) => {
       });
     }
 
-    const productModel = req.body.productModel;
+    const productModel = req.query.model;
 
     const cartItem = userdata.cartitem.find(
       (item) => item.model === productModel
@@ -1711,11 +1715,7 @@ const increments = async (req, res) => {
     console.log(cartItem.price * cartItem.quantity, "the productprice");
     const productPrice = cartItem.price * cartItem.quantity;
     // Send the updated total price and individual product price in the JSON response
-    res.json({
-      thetotalprice: thetotalprice,
-      productPrice: productPrice,
-      theproductquandity: cartItem.quantity,
-    });
+    res.redirect("/linkaddtocart")
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
@@ -1744,7 +1744,7 @@ const decrement = async (req, res) => {
       });
     }
 
-    const productModel = req.body.productModel;
+    const productModel = req.query.model;
     const cartItem = userdata.cartitem.find(
       (item) => item.model === productModel
     );
@@ -1766,11 +1766,7 @@ const decrement = async (req, res) => {
     await userdata.save();
 
     // Send the updated total price and individual product price in the JSON response
-    res.json({
-      thetotalprice,
-      productPrice: cartItem.price * cartItem.quantity,
-      theproductquandity: cartItem.quantity,
-    });
+    res.redirect("/linkaddtocart")
   } catch (error) {
     console.log(error.message);
     res.status(500).render("public/error", {
