@@ -1,5 +1,4 @@
 <%- include("./includes/header") %>
-
 <style>
     .quantity-control {
   display: flex;
@@ -44,20 +43,6 @@
 #findcoupon:hover {
   cursor: grab; /* Change the cursor style on hover to 'grab' (or any other desired style) */
 }
-
-  /* Add a red color to the icon */
-  #close {
-    color: red;
-    cursor: pointer; /* Add a pointer cursor on hover */
-  }
-
-  /* Change color on hover */
-  #close:hover {
-    color: darkred;
-    cursor: pointer; /* Change the color on hover */
-    
-  }
-
 </style>
 <div class="breadcrumb-option">
   <div class="container">
@@ -118,16 +103,12 @@
                               <td class="cart__price" >&#8377;<%= product.price %>/-</td>
                               <td class="cart__quantity">
                                 <div class="quantity-control">
-                                  <a href="/decrement?model=<%= product.model %>">
-                                    <button class="quantity-button decrease-button">-</button>
-                                </a>
+                                    <button class="quantity-button decrease-button" onclick="decreaseQuantity('<%= product.model %>')">-</button>
                                     <input class="quantity-input" type="text" style="width: 38px;" value="<%= product.quantity %>" min="1" id="quantity_<%= product.model %>" readonly>
-                                    <a href="/increment?model=<%= product.model %>">
-                                      <button class="quantity-button decrease-button">+</button>
-                                  </a>
+                                    <button class="quantity-button increase-button" onclick="increaseQuantity('<%= product.model %>')">+</button>
                                 </div>
                             </td>
-                              <td class="cart__total " id="Amount_<%= product.model %>"><%= grandTotal %>/- </td>
+                              <td class="cart__total " id="Amount_<%= product.model %>"><%= product.price %>/- </td>
                               <td class="cart__close">
                                 <a href="/removecartproduct?model=<%= encodeURIComponent(product.model) %>&grandTotal=<%= grandTotal %>" class="remove-product">
                                     <span class="icon_close"></span>
@@ -158,9 +139,7 @@
               <p style="color: red;"  id="message"></p>
               <p style="color: rgb(13, 49, 2);"  id="messagesucess"></p>
           </div>
-         
-          <i id="close"  ></i>
-          
+          <span id="close" style="color: red;"></span>
 
          
          
@@ -198,6 +177,7 @@
 
 <script>
    async function increaseQuantity(productModel) {
+    
   try {
     const response = await fetch('/increment', {
       method: 'POST',
@@ -219,7 +199,7 @@
       amountElement.innerText = data.productPrice;
       grandTotalElement.innerText = ` ${data.thetotalprice}/-`;
       grandTotalElement2.innerText = ` ${data.thetotalprice}/-`;
-      
+
     } else {
       console.error('Failed to increase quantity');
     }

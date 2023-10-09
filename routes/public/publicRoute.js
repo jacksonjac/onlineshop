@@ -45,8 +45,8 @@ publicRoute.get("/buynow",authentication.userlogged,controller.userstatus,contro
 publicRoute.get("/addtocart",authentication.userlogged,controller.userstatus,controller.addtocart);
 publicRoute.get("/linkaddtocart",authentication.userlogged,controller.userstatus,controller.linkaddtocart);
 publicRoute.get("/removecartproduct",authentication.userlogged,controller.userstatus,controller.removecartproduct);
-publicRoute.get("/increment",authentication.userlogged,controller.userstatus,controller.increments);
-publicRoute.get("/decrement",authentication.userlogged,controller.userstatus,controller.decrement);
+publicRoute.post("/increment",authentication.userlogged,controller.userstatus,controller.increments);
+publicRoute.post("/decrement",authentication.userlogged,controller.userstatus,controller.decrement);
 
 //category
 publicRoute.get("/category", controller.getcategory);
